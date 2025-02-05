@@ -1,0 +1,45 @@
+.pills-container {
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .pills-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .pills-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .pill {
+    text-decoration: none;
+    padding: 8px 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 20px;
+    color: #333;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  
+  .pill:hover {
+    border-color: #333;
+    background: #f8f8f8;
+  }
+  
+  @media (max-width: 768px) {
+    .pills-wrapper {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .pills-container {
+      padding: 15px 0;
+    }
+  }

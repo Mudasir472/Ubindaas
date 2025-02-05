@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import '../../styles/components/catagory-nav.css';
+import '../../styles/components/category-nav.css';
 
 function CategoryNav() {
   return (

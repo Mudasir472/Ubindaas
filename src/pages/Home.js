@@ -1,17 +1,15 @@
-import React from 'react';
+import CollectionPills from '../components/layout/CollectionPills';
 import '../styles/pages/home.css';
 
-const Home = () => {
+function Home() {
   return (
     <div className="home-page">
-      <div className="home-banner">
-        <h1>Welcome to UbinDaas</h1>
-      </div>
+      <CollectionPills />
       <div className="home-content">
-        {/* Content will go here */}
+        {/* Product grid will be added here */}
       </div>
     </div>
   );
-};
+}
 
 export default Home;
