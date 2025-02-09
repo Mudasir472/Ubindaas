@@ -1,0 +1,101 @@
+/* src/styles/components/filter-sidebar.css */
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+  
+  .filter-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 100vh;
+    background: white;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-header {
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .filter-header h3 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .close-filter {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .filter-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  
+  .filter-section {
+    margin-bottom: 24px;
+  }
+  
+  .filter-section h4 {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  
+  .filter-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .filter-footer {
+    padding: 20px;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    gap: 12px;
+  }
+  
+  .clear-btn, .apply-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .clear-btn {
+    background: white;
+    border: 1px solid #e5e5e5;
+  }
+  
+  .apply-btn {
+    background: black;
+    color: white;
+    border: none;
+  }
