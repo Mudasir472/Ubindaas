@@ -22,6 +22,8 @@ const App = () => {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            
           </Routes>
         </main>
         {/* Footer component will be added later */}
