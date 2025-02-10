@@ -8,7 +8,16 @@ function RelatedProducts({ currentProductId }) {
 
   const relatedProducts = [
     {
-      id: 1,
+      id: 2,
+      title: "GOTHIC CHAINED BLACK DENIM TOP",
+      price: 1099,
+      originalPrice: 2899,
+      discount: 62,
+      rating: 4.62,
+      image: "https://freakins.com/cdn/shop/products/MyFreakins01272.jpg?v=1670596442&width=700"
+    },
+    {
+      id: 3,
       title: "DENIM BUSTIER TOP",
       price: 999,
       originalPrice: 2699,
@@ -16,13 +25,21 @@ function RelatedProducts({ currentProductId }) {
       rating: 4.75,
       image: "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
     },
-    // Add more related products
+    {
+      id: 4,
+      title: "JEAN CORSET TOP CURVE",
+      price: 999,
+      originalPrice: 2199,
+      discount: 55,
+      rating: 4.62,
+      image: "https://freakins.com/cdn/shop/files/09JUNEPART2_8062-Edit.jpg?v=1718194545&width=700"
+    }
   ].filter(product => product.id !== currentProductId);
 
   return (
     <div className="related-products">
       <h2>You May Also Like</h2>
-      <div className="products-slider">
+      <div className="products-grid">
         {relatedProducts.map(product => (
           <div 
             key={product.id} 
@@ -31,9 +48,9 @@ function RelatedProducts({ currentProductId }) {
           >
             <div className="product-image">
               <img src={product.image} alt={product.title} />
-              <span className="discount-tag">{product.discount}% OFF</span>
+              <span className="discount-tag">-{product.discount}%</span>
             </div>
-            <div className="product-details">
+            <div className="product-info">
               <h3>{product.title}</h3>
               <div className="rating">
                 <FiStar />
