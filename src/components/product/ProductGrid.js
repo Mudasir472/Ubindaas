@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import FilterSidebar from './FilterSideBar';
+import QuickView from './QuickView';
 import { FiFilter } from 'react-icons/fi';
 import '../../styles/components/product-grid.css';
 
 function ProductGrid() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeFilters, setActiveFilters] = useState({
     categories: [],
     priceRanges: [],
     discounts: []
   });
+
+  const handleQuickView = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleCloseQuickView = () => {
+    setSelectedProduct(null);
+  };
 
   const initialProducts = [
     {
@@ -140,7 +150,8 @@ function ProductGrid() {
             value={sortBy}
           >
             <option value="">Sort by</option>
-            <option value="price-low">Price: Low to High</option>
+            <option value="price-low
+            ">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
             <option value="rating">Rating</option>
           </select>
@@ -159,9 +170,16 @@ function ProductGrid() {
           <ProductCard 
             key={product.id} 
             product={product}
+            onQuickView={()=> handleQuickView(product)}
           />
         ))}
       </div>
+      {selectedProduct && (
+        <QuickView 
+          product={selectedProduct} 
+          onClose={handleCloseQuickView}
+        />
+      )}
     </div>
   );
 }
