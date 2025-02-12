@@ -1,0 +1,174 @@
+.orders-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .order-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .order-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+  
+  .order-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8f8;
+  }
+  
+  .order-info {
+    position: relative;
+    padding-left: 15px;
+  }
+  
+  .order-info::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 70%;
+    background: #ff0000;
+    border-radius: 2px;
+  }
+  
+  .order-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .order-status::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+    opacity: 0.1;
+  }
+  
+  .status-delivered {
+    color: #2e7d32;
+  }
+  
+  .status-processing {
+    color: #ed6c02;
+  }
+  
+  .status-cancelled {
+    color: #d32f2f;
+  }
+  
+  .order-items {
+    padding: 20px;
+  }
+  
+  .order-item {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f8f8f8;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .order-item:hover {
+    transform: scale(1.02);
+  }
+  
+  .item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .order-item:hover .item-image img {
+    transform: scale(1.1);
+  }
+  
+  .order-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8f8;
+  }
+  
+  .track-order-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #000;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .track-order-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    transition: transform 0.5s ease;
+  }
+  
+  .track-order-btn:hover::after {
+    transform: translate(-50%, -50%) scale(2);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .order-item {
+      flex-direction: column;
+    }
+    
+    .item-image {
+      width: 100%;
+      height: 200px;
+    }
+  }

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FiStar, FiHeart, FiMinus, FiPlus, FiTruck, FiRefreshCcw, FiCheck, FiX } from 'react-icons/fi';
+import { Volume2, VolumeX, X } from 'lucide-react';
 import SizeGuideModal from '../components/product/SizeGuideModal';
 import RelatedProducts from '../components/product/RelatedProducts';
 import '../styles/pages/product-details.css';
+import Footer from '../components/layout/Footer';
 
 function ProductDetails() {
   const { id } = useParams();
@@ -16,6 +18,8 @@ function ProductDetails() {
   const [pincode, setPincode] = useState('');
   const [deliveryStatus, setDeliveryStatus] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   // Mock Product Data
   const product = {
@@ -285,6 +289,38 @@ function ProductDetails() {
 
       {/* Related Products */}
       <RelatedProducts currentProductId={parseInt(id)} />
+      <Footer/>
+      
+      {/* Product Video Player */}
+      <div className={`product-video-player ${!isMinimized ? 'expanded' : ''}`}>
+        <div className="video-container">
+          <video 
+            src="/api/placeholder/400/320"
+            autoPlay
+            loop
+            muted={isMuted}
+            className="video-element"
+          />
+          
+          <div className="video-controls">
+            <div className="video-title">Elegance in...</div>
+            <div className="control-buttons">
+              <button 
+                onClick={() => setIsMuted(!isMuted)}
+                className="control-btn"
+              >
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
+              <button 
+                onClick={() => setIsMinimized(!isMinimized)}
+                className="control-btn"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -68,3 +68,41 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+-------------------------------------------------------
+
+Remaining -:
+
+1. The User Dashboard:  Done
+
+Order history
+Wishlist
+Account settings
+Saved addresses
+Address management
+
+
+2. Profile Management:
+
+Personal information
+Change password
+
+
+
+
+3. Cart System:
+
+Add to cart
+Cart management
+Save for later
+Price calculations
+
+
+4. Checkout Process:
+
+Shipping information
+Payment integration
+Order confirmation
+Order tracking
