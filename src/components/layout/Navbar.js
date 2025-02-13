@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FiSearch, FiUser, FiShoppingCart, FiHeart, FiPackage, FiMapPin, FiLogOut } from 'react-icons/fi';
 import CategoryNav from './CategoryNav';
@@ -7,15 +7,15 @@ import '../../styles/components/navbar.css';
 function Navbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const isAuthenticated = localStorage.getItem('token');
-
-  const handleProfileClick = (e) => {
-    e.preventDefault();
+  const navigate = useNavigate();
+  const handleProfileClick = () => {
     if (isAuthenticated) {
-      setShowProfileMenu(!showProfileMenu);
+      navigate('/profile');
     } else {
-      // Redirect to login
-      window.location.href = '/login';
+      navigate('/login', { state: { from: '/profile' } });
     }
+  
+  
   };
 
   return (
@@ -37,7 +37,7 @@ function Navbar() {
           </div>
           
           <div className="profile-container">
-            <button className="profile-btn" onClick={handleProfileClick}>
+            <button className="profile-btn nav-icon" onClick={handleProfileClick}>
               <FiUser />
             </button>
             

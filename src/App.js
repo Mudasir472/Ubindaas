@@ -5,17 +5,16 @@ import Shop from './pages/Shop';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
-import Account from './pages/Account';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Dashboard from './pages/Profile/ProfileDashboard'; // This will be the main profile page
+import Orders from './pages/Profile/Orders';
+import Profile from './pages/Profile/Profile';
+import Wishlist from './pages/Profile/Wishlist';
+import Addresses from './pages/Profile/Addresses';
 import ProtectedRoute from './components/ProtectedRoute';
-import Orders from './pages/Dashboard/Order';
-import Profile from './pages/Dashboard/Profile';
-import Wishlist from './pages/Dashboard/Wishlist';
-import Addresses from './pages/Dashboard/Addresses';
 
 const App = () => {
   return (
@@ -24,43 +23,54 @@ const App = () => {
         <Navbar />
         <main>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/signup' element={<Signup/>}/>
-            <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/dashboard/orders" element={
-          <ProtectedRoute>
-            <Orders />
-          </ProtectedRoute>
-        } />
-        <Route path="/dashboard/profile" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-        <Route path="/dashboard/wishlist" element={
-          <ProtectedRoute>
-            <Wishlist />
-          </ProtectedRoute>
-        } />
-        <Route path="/dashboard/addresses" element={
-          <ProtectedRoute>
-            <Addresses />
-          </ProtectedRoute>
-        } />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            
+            {/* Protected Routes */}
+            <Route path="/cart" element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            } />
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } />
+
+            {/* Profile Routes */}
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile/settings" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile/orders" element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile/wishlist" element={
+              <ProtectedRoute>
+                <Wishlist />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile/addresses" element={
+              <ProtectedRoute>
+                <Addresses />
+              </ProtectedRoute>
+            } />
           </Routes>
         </main>
-        {/* Footer component will be added later */}
+        <Footer />
       </div>
     </BrowserRouter>
   );

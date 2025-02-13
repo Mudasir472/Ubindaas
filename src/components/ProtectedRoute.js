@@ -1,9 +1,14 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = !!localStorage.getItem("authToken"); // Convert to boolean
+function ProtectedRoute({ children }) {
+  const location = useLocation();
+  const isAuthenticated = localStorage.getItem('token');
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location.pathname }} />;
+  }
+
+  return children;
+}
 
 export default ProtectedRoute;

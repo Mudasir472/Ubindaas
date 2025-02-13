@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import '../../styles/pages/auth.css';
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/profile';
+
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [errors, setErrors] = useState({});
-
-  // Redirect to dashboard if already logged in
-  useEffect(() => {
-    if (localStorage.getItem('authToken')) {
-      navigate('/dashboard');
-    }
-  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,14 +51,15 @@ function Login() {
     e.preventDefault();
     
     if (validateForm()) {
-      // Simulate login
-      localStorage.setItem('authToken', 'user_authenticated');
-      console.log('Login successful:', formData);
+      // For now, just set a dummy token and user data
+      localStorage.setItem('token', 'dummy_token');
+      localStorage.setItem('user', JSON.stringify({
+        name: 'User',
+        email: formData.email
+      }));
 
-      // Ensure localStorage updates before redirecting
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 100);
+      // Navigate to the 'from' location or default to profile
+      navigate(from, { replace: true });
     }
   };
 
