@@ -694,3 +694,101 @@
 .control-btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+
+/* Reviews Section */
+.reviews-section {
+  padding: 20px 0;
+}
+
+.reviews-header {
+  margin-bottom: 30px;
+}
+
+.rating-summary {
+  text-align: center;
+}
+
+.rating-summary h3 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.stars .filled {
+  fill: #ffd700;
+  color: #ffd700;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-item {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.verified-badge {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.review-date {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.review-comment {
+  line-height: 1.6;
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #25d366;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #128c7e;
+  transform: translateY(-2px);
+}
+
+.whatsapp-btn img {
+  width: 24px;
+  height: 24px;
+}
