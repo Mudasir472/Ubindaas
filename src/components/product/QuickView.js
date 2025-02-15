@@ -16,50 +16,50 @@ function QuickView({ product, onClose }) {
         </button>
         
         <div className="quick-view-content">
-          <div className="product-image">
+          <div className="product-image1">
             <img src={image} alt={title} />
             {discount && (
-              <span className="discount-badge">
+              <span className="discount-badge1">
                 {discount}% OFF
               </span>
             )}
           </div>
 
-          <div className="product-details">
+          <div className="product-details1">
             <h2 className="product-title">{title}</h2>
             
-            <div className="rating-container">
-              <FiStar className="star-icon" />
+            <div className="rating-container1">
+              <FiStar className="star-icon1" />
               <span>{rating}</span>
             </div>
 
-            <div className="price-container">
-              <span className="current-price">₹{price}</span>
+            <div className="price-container1">
+              <span className="current-price1">₹{price}</span>
               {originalPrice && (
-                <span className="original-price">₹{originalPrice}</span>
+                <span className="original-price1">₹{originalPrice}</span>
               )}
               {discount && (
-                <span className="discount-text">{discount}% OFF</span>
+                <span className="discount-text1">{discount}% OFF</span>
               )}
             </div>
 
-            <div className="size-section">
+            <div className="size-section1">
               <h3>Select Size</h3>
-              <div className="size-buttons">
+              <div className="size-buttons1">
                 {sizes.map(size => (
-                  <button key={size} className="size-btn">
+                  <button key={size} className="size-btn1">
                     {size}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="action-buttons">
-              <button className="add-to-cart">
+            <div className="action-buttons1">
+              <button className="add-to-cart1">
                 <FiShoppingBag />
                 Add to Cart
               </button>
-              <button className="wishlist">
+              <button className="wishlist1">
                 <FiHeart />
                 Wishlist
               </button>

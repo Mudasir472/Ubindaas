@@ -1,0 +1,67 @@
+.size-guide {
+    background-color: white;
+    color: black;
+    padding: 2rem;
+  }
+  
+  .size-guide__title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .size-guide__icon {
+    margin-right: 0.5rem;
+  }
+  
+  .size-guide__section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .size-guide__section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .size-guide__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  
+  .size-guide__table th,
+  .size-guide__table td {
+    padding: 0.5rem;
+    text-align: left;
+    border: 1px solid black;
+  }
+  
+  .size-guide__table th {
+    background-color: black;
+    color: white;
+  }
+  
+  .size-guide__illustration {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  
+  .size-guide__instruction-heading {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .size-guide__instruction-list {
+    font-size: 0.875rem;
+    list-style-type: decimal;
+    list-style-position: inside;
+  }

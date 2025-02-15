@@ -1,3 +1,4 @@
+// RelatedProducts.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiStar } from 'react-icons/fi';
@@ -37,34 +38,41 @@ function RelatedProducts({ currentProductId }) {
   ].filter(product => product.id !== currentProductId);
 
   return (
-    <div className="related-products">
-      <h2>You May Also Like</h2>
-      <div className="products-grid">
-        {relatedProducts.map(product => (
-          <div 
-            key={product.id} 
-            className="product-card"
-            onClick={() => navigate(`/product/${product.id}`)}
-          >
-            <div className="product-image">
-              <img src={product.image} alt={product.title} />
-              <span className="discount-tag">-{product.discount}%</span>
-            </div>
-            <div className="product-info">
-              <h3>{product.title}</h3>
-              <div className="rating">
-                <FiStar />
-                <span>{product.rating}</span>
+    <section className="related-products">
+      <div className="container">
+        <h2 className="section-title">You May Also Like</h2>
+        <div className="products-grid">
+          {relatedProducts.map(product => (
+            <div 
+              key={product.id} 
+              className="product-card"
+              onClick={() => navigate(`/product/${product.id}`)}
+            >
+              <div className="product-image-container">
+                <img 
+                  src={product.image} 
+                  alt={product.title} 
+                  className="product-image"
+                />
+                <span className="discount-badge">-{product.discount}%</span>
               </div>
-              <div className="price">
-                <span className="current-price">₹{product.price}</span>
-                <span className="original-price">₹{product.originalPrice}</span>
+              <div className="product-details">
+                <h3 className="product-title">{product.title}</h3>
+                <div className="rating-container">
+                  <FiStar className="star-icon" />
+                  <span className="rating-value">{product.rating}</span>
+                </div>
+                <div className="price-container">
+                  <span className="current-price">₹{product.price}</span>
+                  <span className="original-price">₹{product.originalPrice}</span>
+                  <span className="discount-text">{product.discount}% Off</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

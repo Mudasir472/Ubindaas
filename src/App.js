@@ -1,4 +1,6 @@
 import React from 'react';
+import '@fontsource/poppins'; // Defaults to weight 400 (Regular)
+import '@fontsource/poppins/700.css'; // Optional: Import a specific weight
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Shop from './pages/Shop';

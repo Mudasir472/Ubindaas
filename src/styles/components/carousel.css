@@ -1,0 +1,192 @@
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 600px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    position: relative;
+    height: 100%;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-content {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+.slide-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.5s forwards;
+}
+
+.slide-description {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.5s 0.2s forwards;
+}
+
+.slide-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.5s 0.4s forwards;
+}
+
+.slide-button:hover {
+    background-color: black;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Navigation Buttons */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.carousel-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav.prev {
+    left: 20px;
+}
+
+.carousel-nav.next {
+    right: 20px;
+}
+
+/* Progress Bars */
+.carousel-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    z-index: 3;
+}
+
+.progress-bar {
+    height: 4px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 2px;
+}
+
+.progress-bar.active {
+    background: white;
+    animation: progress 5s linear;
+}
+
+/* Indicators */
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Animations */
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes progress {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .carousel {
+        height: 400px;
+    }
+
+    .slide-title {
+        font-size: 2rem;
+    }
+
+    .slide-description {
+        font-size: 1rem;
+    }
+
+    .carousel-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}

@@ -27,8 +27,8 @@ function Navbar() {
         </div>
         
         <Link to="/" className="logo">
-          UbinDaas
-        </Link>
+  <img src="/logo.jpeg" alt="UbinDaas Logo" style={{ height: "50px", width: "auto" }}  />
+</Link>
         
         <div className="nav-actions">
           <div className="search-container">
