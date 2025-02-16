@@ -34,6 +34,7 @@ function ProductCard({ product, onQuickView }) {
           Quick View
         </button>
       </div>
+      
       <div className="product-info">
         <h3 className="product-title">{title}</h3>
         <div className="price-container">

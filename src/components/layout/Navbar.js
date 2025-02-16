@@ -1,43 +1,81 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { FiSearch, FiUser, FiShoppingCart, FiHeart, FiPackage, FiMapPin, FiLogOut } from 'react-icons/fi';
+import { 
+  FiSearch, 
+  FiUser, 
+  FiShoppingCart, 
+  FiHeart, 
+  FiPackage, 
+  FiMapPin, 
+  FiLogOut,
+  FiMenu,
+  FiX
+} from 'react-icons/fi';
 import CategoryNav from './CategoryNav';
 import '../../styles/components/navbar.css';
 
 function Navbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showSearchOverlay, setShowSearchOverlay] = useState(false);
   const isAuthenticated = localStorage.getItem('token');
   const navigate = useNavigate();
+
   const handleProfileClick = () => {
     if (isAuthenticated) {
       navigate('/profile');
     } else {
       navigate('/login', { state: { from: '/profile' } });
     }
-  
-  
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setShowProfileMenu(false);
+    window.location.href = '/';
+  };
+
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+    setShowProfileMenu(false);
   };
 
   return (
     <header className="navbar">
       <div className="navbar-top">
-        <div className="nav-links">
-          <Link to="/">Women</Link>
-          <Link to="/">Men</Link>
-        </div>
+        {/* Mobile Menu Button */}
+        <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+          {showMobileMenu ? <FiX /> : <FiMenu />}
+        </button>
         
         <Link to="/" className="logo">
-  <img src="/logo.jpeg" alt="UbinDaas Logo" style={{ height: "50px", width: "auto" }}  />
-</Link>
+          <img 
+            src="/logo.jpeg" 
+            alt="UbinDaas Logo" 
+            style={{ height: "50px", width: "auto" }} 
+          />
+        </Link>
         
         <div className="nav-actions">
+          {/* Desktop Search */}
           <div className="search-container">
             <input type="text" placeholder="What are you looking for?" />
             <FiSearch className="search-icon" />
           </div>
+
+          {/* Mobile Search Icon */}
+          <button 
+            className="search-icon-mobile" 
+            onClick={() => setShowSearchOverlay(true)}
+          >
+            <FiSearch />
+          </button>
           
           <div className="profile-container">
-            <button className="profile-btn nav-icon" onClick={handleProfileClick}>
+            <button 
+              className="profile-btn nav-icon" 
+              onClick={handleProfileClick}
+            >
               <FiUser />
             </button>
             
@@ -61,10 +99,7 @@ function Navbar() {
                 </Link>
                 <button 
                   className="menu-item logout"
-                  onClick={() => {
-                    localStorage.removeItem('token');
-                    window.location.href = '/';
-                  }}
+                  onClick={handleLogout}
                 >
                   <FiLogOut />
                   <span>Logout</span>
@@ -79,6 +114,49 @@ function Navbar() {
           </Link>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="mobile-menu">
+          <div className="mobile-menu-content">
+            <Link 
+              to="/" 
+              className="mobile-menu-item"
+              onClick={() => setShowMobileMenu(false)}
+            >
+              Women
+            </Link>
+            <Link 
+              to="/" 
+              className="mobile-menu-item"
+              onClick={() => setShowMobileMenu(false)}
+            >
+              Men
+            </Link>
+            {/* Add more menu items as needed */}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Search Overlay */}
+      {showSearchOverlay && (
+        <div className="search-overlay active">
+          <div className="search-overlay-header">
+            <button 
+              className="close-search"
+              onClick={() => setShowSearchOverlay(false)}
+            >
+              <FiX />
+            </button>
+            <input 
+              type="text" 
+              placeholder="What are you looking for?"
+              autoFocus
+            />
+          </div>
+        </div>
+      )}
+
       <CategoryNav />
     </header>
   );
