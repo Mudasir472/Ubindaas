@@ -7,8 +7,9 @@ import '../styles/pages/home.css';
 function Home() {
   return (
     <div className="home-page">
-      <CollectionPills />
+      
       <Carousel/>
+      <CollectionPills />
       <ProductGrid />
       
     </div>
