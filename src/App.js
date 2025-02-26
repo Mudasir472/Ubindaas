@@ -17,6 +17,15 @@ import Profile from './pages/Profile/Profile';
 import Wishlist from './pages/Profile/Wishlist';
 import Addresses from './pages/Profile/Addresses';
 import ProtectedRoute from './components/ProtectedRoute';
+import SizeGuide from './pages/Others/SizeGuide';
+import FAQs from "./pages/Others/FAQs";
+import ContactUs from "./pages/Others/ContactUs";
+import AboutUs from "./pages/Others/AboutUs";
+import ShippingPolicy from "./pages/Others/ShippingPolicy";
+import ReturnPolicy   from "./pages/Others/ReturnPolicy";
+import PrivacyPolicy from "./pages/Others/PrivacyPolicy";
+import TermConditions  from "./pages/Others/TermConditions";
+import AddressConfirmation from './pages/checkout/AddressConfirmation';
 
 const App = () => {
   return (
@@ -31,7 +40,20 @@ const App = () => {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            
+            <Route path='/sizeguide' element={<SizeGuide/>} />
+            <Route path='/FAQs' element={<FAQs/>}/>
+            <Route path='/ContactUs' element={<ContactUs />} />
+            <Route path='/AboutUs' element={<AboutUs />} />
+            <Route path='/ShippingPolicy' element={<ShippingPolicy />} />
+            <Route path='/ReturnPolicy' element={<ReturnPolicy />} />
+            <Route path='/PrivacyPolicy' element={<PrivacyPolicy />} />
+            <Route path='/TermConditions' element={<TermConditions />} />
+
+
+
+
+
+
             {/* Protected Routes */}
             <Route path="/cart" element={
               <ProtectedRoute>
@@ -70,6 +92,14 @@ const App = () => {
                 <Addresses />
               </ProtectedRoute>
             } />
+              <Route
+    path="/checkout/address"
+    element={
+      <ProtectedRoute>
+        <AddressConfirmation />
+      </ProtectedRoute>
+    }
+  />
           </Routes>
         </main>
         <Footer />

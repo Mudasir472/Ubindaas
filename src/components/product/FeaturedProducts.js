@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import FilterSidebar from './FilterSideBar';
 import QuickView from './QuickView';
-import { FiFilter } from 'react-icons/fi';
 import '../../styles/components/product-grid.css';
 
-function ProductGrid() {
+function FeaturesProducts() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeFilters, setActiveFilters] = useState({
     categories: [],
@@ -154,10 +152,6 @@ function ProductGrid() {
     setIsFilterOpen(false);
   };
 
-  const handleSort = (e) => {
-    setSortBy(e.target.value);
-  };
-
   useEffect(() => {
     let result = [...products];
 
@@ -192,44 +186,20 @@ function ProductGrid() {
       }
     }
 
-    if (sortBy) {
-      result.sort((a, b) => {
-        switch (sortBy) {
-          case 'price-low':
-            return a.price - b.price;
-          case 'price-high':
-            return b.price - a.price;
-          case 'rating':
-            return b.rating - a.rating;
-          default:
-            return 0;
-        }
-      });
-    }
-
     setFilteredProducts(result);
-  }, [activeFilters, sortBy, products]);
+  }, [activeFilters, products]);
 
   return (
     <div className="products-section">
-      <div className="filters-bar">
-
-      <div className="sort-options">
-    <h2 style={{ display: 'flex', justifyContent: 'center' }}>
-        <img src="/new-arrival.png" style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" />
-    </h2>
-</div>
-          <button 
-          className="filter-btn"
-          onClick={() => setIsFilterOpen(true)}
-        >
-          <FiFilter />
-          {Object.values(activeFilters).flat().length > 0 
-            ? `Filters (${Object.values(activeFilters).flat().length})` 
-            : 'Filters'}
-        </button>
-      </div>
-
+      <h1 style={{
+        textAlign: 'center', 
+        fontSize: '24px', 
+        fontWeight: 'bold', 
+        marginBottom: '24px'
+      }}>
+        Featured Products
+      </h1>
+      
       <FilterSidebar 
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
@@ -256,4 +226,4 @@ function ProductGrid() {
   );
 }
 
-export default ProductGrid;
+export default FeaturesProducts;

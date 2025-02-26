@@ -41,6 +41,7 @@
   position: relative;
   padding-top: 133%; /* 4:3 Aspect ratio */
   overflow: hidden;
+  
 }
 
 .product-image {
@@ -51,6 +52,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  
 }
 
 .product-card:hover .product-image {

@@ -2,6 +2,7 @@
     width: 100%;
     overflow: hidden;
     position: relative;
+    border-radius: 20px; /* Added for curved corners */
 }
 
 .carousel {
@@ -20,12 +21,14 @@
     min-width: 100%;
     position: relative;
     height: 100%;
+    border-radius: 20px; /* Added for curved corners */
+    overflow: hidden; /* Added to maintain curved corners */
 }
 
 .carousel-image {
     width: 100%;
-    height: 100%;
     object-fit: cover;
+    border-radius: 20px; /* Added this line for curved corners */
 }
 
 .slide-content {
@@ -175,15 +178,15 @@
     .carousel {
         height: 400px;
     }
-
+    
     .slide-title {
         font-size: 2rem;
     }
-
+    
     .slide-description {
         font-size: 1rem;
     }
-
+    
     .carousel-nav {
         width: 40px;
         height: 40px;

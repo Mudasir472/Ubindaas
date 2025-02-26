@@ -2,6 +2,9 @@ import Carousel from '../components/layout/Carousel';
 import CollectionPills from '../components/layout/CollectionPills';
 import ProductGrid from '../components/product/ProductGrid';
 import '../styles/pages/home.css';
+import Ratting from '../components/common/Ratting';
+import ProductStories from '../components/product/ProductStories';
+import FeaturesProducts from '../components/product/FeaturedProducts';
 
 
 function Home() {
@@ -11,7 +14,11 @@ function Home() {
       <Carousel/>
       <CollectionPills />
       <ProductGrid />
-      
+      <Ratting />
+      <FeaturesProducts/>
+      <h1 className="shop-heading">Shop Bold. Shop Bindass</h1>
+
+      <ProductStories/>
     </div>
   );
 }

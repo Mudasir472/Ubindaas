@@ -1,0 +1,32 @@
+/* PrivacyPolicy.css */
+
+/* Additional custom styles can be added here if needed */
+.container {
+    min-height: 100vh;
+    background-color: #ffffff;
+  }
+  
+  /* Override default list styles if needed */
+  ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Ensure proper text wrapping */
+  p {
+    word-wrap: break-word;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+    
+    h1 {
+      font-size: 1.75rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+  }

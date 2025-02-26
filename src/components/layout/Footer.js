@@ -10,9 +10,9 @@ const Footer = () => {
         <div className="footer-section">
           <h4>INFORMATION</h4>
           <ul>
-            <li><a href="/about">SHIPPING POLICY</a></li>
-            <li><a href="/contact">RETURNS & EXCHANGES</a></li>
-            <li><a href="/privacy-policy">PRIVACY POLICY</a></li>
+            <li><a href="/ShippingPolicy">SHIPPING POLICY</a></li>
+            <li><a href="/ReturnPolicy">RETURNS & EXCHANGES</a></li>
+            <li><a href="/PrivacyPolicy">PRIVACY POLICY</a></li>
             <li><a href="/terms">LOYALTY POINTS</a></li>
           </ul>
         </div>
@@ -21,13 +21,9 @@ const Footer = () => {
         <div className="footer-section">
           <h4>SHOP</h4>
           <ul>
-            <li><a href="/about">DRESSES</a></li>
-            <li><a href="/contact">TOPS</a></li>
-            <li><a href="/privacy-policy">TROUSERS</a></li>
-            <li><a href="/terms">SKIRTS</a></li>
-            <li><a href="/terms">SKIRTS</a></li>
-            <li><a href="/terms">SETS</a></li>
-            <li><a href="/terms">WORK WEAR</a></li>
+            <li><a href="/about">Men</a></li>
+            <li><a href="/contact">Women</a></li>
+           
           </ul>
         </div>
 
@@ -35,10 +31,12 @@ const Footer = () => {
         <div className="footer-section">
           <h4>COMPANY</h4>
           <ul>
-            <li><a href="/faq">ABOUT US</a></li>
-            <li><a href="/help-center">CONTACT US</a></li>
-            <li><a href="/shipping">FAQs</a></li>
-            <li><a href="/shipping">SIZE GUIDE</a></li>
+            <li><a href="/AboutUs">ABOUT US</a></li>
+            <li><a href="/ContactUs">CONTACT US</a></li>
+            <li><a href="/FAQs">FAQs</a></li>
+            <li><a href="/sizeguide">SIZE GUIDE</a></li>
+            <li><a href="/TermConditions">TERMS & CONDITIONS</a></li>
+
           </ul>
         </div>
 
@@ -55,13 +53,13 @@ const Footer = () => {
 
       {/* Social Links & Copyright */}
       <div className="footer-bottom">
-        <p>&copy; 2025 DEST UBINDASS. All rights reserved.</p>
+        <p>&copy; 2025 UBINDASS. All rights reserved.</p>
         <div className="social-links">
           <a href="https://www.facebook.com">Facebook</a>
           <a href="https://www.twitter.com">Twitter</a>
           <a href="https://www.instagram.com">Instagram</a>
         </div>
-        <p>&copy; DESIGNED & DEVELOPED BY <a href="https://opamtech.com" target="_blank">OPAM TECHNOLOGY</a></p>
+        <p>DESIGNED & DEVELOPED BY <a href="https://opamtech.com" target="_blank">OPAM TECHNOLOGY</a></p>
       </div>
     </footer>
   );

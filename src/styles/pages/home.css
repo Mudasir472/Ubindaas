@@ -20,3 +20,11 @@
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
   }
+
+  .shop-heading {
+    text-align: center;
+    font-family: 'Brush Script MT', cursive;
+    color: #007bff;
+    font-size: 3rem;
+  }
+  

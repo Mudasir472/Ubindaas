@@ -1,0 +1,323 @@
+.stories-container {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+  }
+  
+  .stories-scroll {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 40px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .stories-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .story-card {
+    flex: 0 0 auto;
+    width: 300px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .story-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .story-media-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+  }
+  
+  .story-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  
+  .story-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .story-card:hover .story-image {
+    opacity: 0;
+  }
+  
+  .story-card:hover .story-video {
+    opacity: 1;
+  }
+  
+  .story-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 10px 10px;
+    background: linear-gradient(to top, 
+      rgba(12, 27, 168, 0.6) 0%,
+      rgba(18, 63, 207, 0.176) 50%,
+      transparent 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    z-index: 2;
+  }
+  
+  .product-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+  }
+  
+  .product-price {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 8px 0 0;
+    font-size: 16px;
+  }
+  
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+  
+  .scroll-button:hover {
+    background: white;
+  }
+  
+  .scroll-button.left {
+    left: 10px;
+  }
+  
+  .scroll-button.right {
+    right: 10px;
+  }
+  
+  .story-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    position: relative;
+    width: fit-content;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: black;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+    z-index: 10;
+  }
+  
+  .modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .modal-video {
+    max-width: 100%;
+    max-height: 80vh;
+    display: block;
+  }
+  
+  .modal-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: background 0.3s ease;
+    z-index: 10;
+  }
+  
+  .modal-nav-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .modal-nav-button.prev {
+    left: 16px;
+  }
+  
+  .modal-nav-button.next {
+    right: 16px;
+  }
+  
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 4px;
+    padding: 16px;
+    z-index: 10;
+  }
+  
+  .progress-segment {
+    height: 4px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    transition: background 0.3s ease;
+  }
+  
+  .progress-segment.active {
+    background: white;
+  }
+  
+  .modal-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+  
+  .modal-add-to-cart {
+    background: white;
+    color: black;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .modal-add-to-cart:hover {
+    background: #f0f0f0;
+  }
+  
+  /* Animation classes */
+  .fade-enter {
+    opacity: 0;
+  }
+  
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+  
+  .fade-exit {
+    opacity: 1;
+  }
+  
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .story-card {
+      width: 220px;
+    }
+  
+    .story-image {
+      height: 320px;
+    }
+  
+    .modal-content {
+      margin: 16px;
+    }
+  
+    .modal-video {
+      height: 350px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .story-card {
+      width: 180px;
+    }
+  
+    .story-image {
+      height: 260px;
+    }
+  
+    .modal-video {
+      height: 300px;
+    }
+  
+    .scroll-button {
+      width: 32px;
+      height: 32px;
+    }
+  }

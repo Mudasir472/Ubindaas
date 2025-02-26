@@ -1,0 +1,144 @@
+/* ContactUs.css */
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .breadcrumb {
+    margin-bottom: 30px;
+    color: #666;
+  }
+  
+  .breadcrumb .separator {
+    margin: 0 10px;
+    color: #999;
+  }
+  
+  .contact-content {
+    text-align: center;
+  }
+  
+  .contact-content h2 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+  
+  .contact-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-text {
+    max-width: 550px;
+    margin: 0 auto 50px;
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  .contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .contact-box {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .contact-box .icon {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .contact-box h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+  
+  .contact-box p {
+    color: #666;
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .question-heading {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  
+  .contact-form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .form-input.full-width {
+    width: 100%;
+  }
+  
+  .form-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    resize: vertical;
+  }
+  
+  .submit-button {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  
+  .submit-button:hover {
+    opacity: 0.9;
+  }
+  
+  @media (max-width: 768px) {
+    .contact-info-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    
+    .contact-content h1 {
+      font-size: 28px;
+    }
+    
+    .question-heading {
+      font-size: 24px;
+    }
+  }
