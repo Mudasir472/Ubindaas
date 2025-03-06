@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiPhone } from 'react-icons/fi';
 import '../../styles/pages/auth.css';
+import { LoginContext } from '../../context/AuthContext';
+import toast from 'react-hot-toast';
 
 function Signup() {
+  const { loginData, setLoginData } = useContext(LoginContext)
+
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -31,7 +36,7 @@ function Signup() {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     }
@@ -62,14 +67,25 @@ function Signup() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
-      // Handle signup logic here
-      console.log('Signup form submitted:', formData);
-      // On successful signup, redirect to login
-      navigate('/login');
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/api/auth/register`,
+          formData
+        );
+        console.log(response.data);
+        setLoginData(response.data?.result?.user)
+        localStorage.setItem('authToken', JSON.stringify(response.data?.result?.authToken))
+        localStorage.setItem('user', JSON.stringify(response.data?.result?.user))
+        toast.success("Signup Successfully");
+        navigate('/');
+      } catch (err) {
+        toast.error(err.message)
+        console.error("Signup error:", err);
+      }
     }
   };
 
@@ -180,7 +196,7 @@ function Signup() {
           </form>
 
           <p className="auth-switch">
-            Already have an account? 
+            Already have an account?
             <Link to="/login"> Sign in</Link>
           </p>
         </div>

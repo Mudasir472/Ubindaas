@@ -8,7 +8,7 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem("authToken");
+  const isAuthenticated = !!localStorage.getItem("user"); //it was authToken
 
   const handleCheckout = () => {
     const authToken = localStorage.getItem("authToken");

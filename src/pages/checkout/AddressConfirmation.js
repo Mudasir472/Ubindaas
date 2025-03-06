@@ -1,20 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/pages/checkout.css';
+import axios from 'axios';
 
 const AddressConfirmation = () => {
+  const [useraddresses, setUserAddresses] = useState([
+    {
+      id: 1,
+      name: 'John Doe',
+      type: 'Home',
+      address: '123 Main St',
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      pincode: '400001',
+      phone: '9876543210',
+      isDefault: true
+    }
+    // Add more addresses
+  ]);
+
   const navigate = useNavigate();
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '',
-    mobileNumber: '',
-    pincode: '',
-    address: '',
-    locality: '',
+    type: '',
+    street: '',
     city: '',
     state: '',
+    pincode: '',
+    country: '',
     isDefault: false
   });
 
@@ -26,19 +41,19 @@ const AddressConfirmation = () => {
   const fetchAddresses = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/addresses', {
+      const response = await axios.get('http://localhost:5000/api/customer/addresses', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+        },
+        withCredentials: true,
       });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setAddresses(data);
-        // Select default address if exists
-        const defaultAddress = data.find(addr => addr.isDefault);
-        setSelectedAddress(defaultAddress || data[0]);
-      }
+      console.log(response);
+
+      const data = response?.data?.data;
+      setAddresses(data);
+      const defaultAddress = Array.isArray(data) && data?.find(addr => addr.isDefault);
+      setSelectedAddress(defaultAddress || data[0]);
+
     } catch (error) {
       console.error('Error fetching addresses:', error);
     }
@@ -56,29 +71,31 @@ const AddressConfirmation = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/addresses', {
-        method: 'POST',
+
+      const response = await axios.post('http://localhost:5000/api/customer/addresses', formData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData)
+        withCredentials: true,
       });
 
-      if (response.ok) {
-        const newAddress = await response.json();
-        setAddresses(prev => [...prev, newAddress]);
+
+      if (response.status === 200 || response.status === 201) {
+        const newAddress = response.data;
+        console.log(newAddress);
+        setAddresses(prev => Array.isArray(prev) ? [...prev, newAddress] : [newAddress]);
         setSelectedAddress(newAddress);
         setShowAddForm(false);
+
         // Reset form
         setFormData({
-          fullName: '',
-          mobileNumber: '',
-          pincode: '',
-          address: '',
-          locality: '',
+          type: '',
+          street: '',
           city: '',
           state: '',
+          pincode: '',
+          country: '',
           isDefault: false
         });
       }
@@ -86,6 +103,7 @@ const AddressConfirmation = () => {
       console.error('Error saving address:', error);
     }
   };
+
 
   const handleProceedToPayment = () => {
     if (!selectedAddress) {
@@ -103,8 +121,8 @@ const AddressConfirmation = () => {
 
       {!showAddForm && (
         <div className="saved-addresses">
-          {addresses.map((address) => (
-            <div 
+          {Array.isArray(addresses) && addresses?.map((address) => (
+            <div
               key={address._id}
               className={`address-card ${selectedAddress?._id === address._id ? 'selected' : ''}`}
               onClick={() => setSelectedAddress(address)}
@@ -114,16 +132,12 @@ const AddressConfirmation = () => {
                 {address.isDefault && <span className="default-badge">Default</span>}
               </div>
               <p>{address.mobileNumber}</p>
-              <p>{address.address}</p>
-              <p>{address.locality}</p>
-              <p>{`${address.city}, ${address.state} - ${address.pincode}`}</p>
+              <p>{address.street}</p>
+              <p>{`${address.city}, ${address.state} - ${address.pincode}, ${address.country}`}</p>
             </div>
           ))}
-          
-          <button 
-            className="add-address-btn"
-            onClick={() => setShowAddForm(true)}
-          >
+
+          <button className="add-address-btn" onClick={() => setShowAddForm(true)}>
             + Add New Address
           </button>
         </div>
@@ -132,48 +146,19 @@ const AddressConfirmation = () => {
       {showAddForm && (
         <form className="address-form" onSubmit={handleAddressSubmit}>
           <h2>Add New Address</h2>
-          
+
           <div className="form-grid">
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Full Name"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              required
-            />
-            
-            <input
-              type="tel"
-              name="mobileNumber"
-              placeholder="Mobile Number"
-              value={formData.mobileNumber}
-              onChange={handleInputChange}
-              required
-            />
+            <select name="type" value={formData.type} onChange={handleInputChange} required>
+              <option value="home">Home</option>
+              <option value="work">Work</option>
+              <option value="other">Other</option>
+            </select>
 
             <input
               type="text"
-              name="pincode"
-              placeholder="Pincode"
-              value={formData.pincode}
-              onChange={handleInputChange}
-              required
-            />
-
-            <textarea
-              name="address"
-              placeholder="Address (House No, Street, Area)"
-              value={formData.address}
-              onChange={handleInputChange}
-              required
-            />
-
-            <input
-              type="text"
-              name="locality"
-              placeholder="Locality/Town"
-              value={formData.locality}
+              name="street"
+              placeholder="Street (House No, Area)"
+              value={formData.street}
               onChange={handleInputChange}
               required
             />
@@ -192,6 +177,24 @@ const AddressConfirmation = () => {
               name="state"
               placeholder="State"
               value={formData.state}
+              onChange={handleInputChange}
+              required
+            />
+
+            <input
+              type="text"
+              name="pincode"
+              placeholder="Pincode"
+              value={formData.pincode}
+              onChange={handleInputChange}
+              required
+            />
+
+            <input
+              type="text"
+              name="country"
+              placeholder="Country"
+              value={formData.country || 'India'}
               onChange={handleInputChange}
               required
             />
@@ -217,7 +220,7 @@ const AddressConfirmation = () => {
       )}
 
       <div className="checkout-actions">
-        <button 
+        <button
           className="proceed-button"
           onClick={handleProceedToPayment}
           disabled={!selectedAddress}
@@ -227,6 +230,7 @@ const AddressConfirmation = () => {
       </div>
     </div>
   );
+
 };
 
 export default AddressConfirmation;

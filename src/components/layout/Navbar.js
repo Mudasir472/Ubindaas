@@ -1,11 +1,15 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, ChevronDown, Menu, X, ShoppingCart, Heart, User } from 'lucide-react';
 import '../../styles/components/navbar.css';
 import logo from "../../assets/logo.jpeg";
+import axios from "axios";
+
+
 
 // Categories data
-const categories = {
+const allcategories = {
+
   "Women's Fashion": {
     subcategories: [
       {
@@ -20,8 +24,6 @@ const categories = {
         title: "Activewear & Sportswear",
         items: ["T-shirts", "Shorts", "Sets", "Jackets", "Track Pants", "Innerwear"]
       }
-     
-     
     ]
   },
   "Men's Fashion": {
@@ -38,11 +40,11 @@ const categories = {
         title: "Activewear",
         items: ["T-Shirts & Jerseys", "Sports Shorts", "Sports Jackets", "Joggers"]
       }
-      
-    
+
+
     ]
   },
- 
+
 };
 
 // Memoized Navigation Icons component with Lucide icons
@@ -63,7 +65,39 @@ const NavigationIcons = memo(() => (
 const DashNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [categories, setCategories] = useState({});
+  const gender = 'men'
+  useEffect(() => {
+    const fetchCategories = async () => {
+      
+      try {
+        const response = await axios.get(`http://localhost:5000/api/categories/${gender}`);
+        if (response.data.success) {
+          // setCategories(formattedCategories);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
 
+    fetchCategories();
+  }, [gender]);
+  // const formatCategories = (categories) => {
+  //   const formatted = {};
+  //   categories.forEach((cat) => {
+  //     if (!formatted[cat.name]) {
+  //       formatted[cat.name] = { subcategories: [] };
+  //     }
+
+  //     if (cat.subcategoryTitle && cat.subcategoryItems) {
+  //       formatted[cat.name].subcategories.push({
+  //         title: cat.subcategoryTitle,
+  //         items: cat.subcategoryItems || [], 
+  //       });
+  //     }
+  //   });
+  //   return formatted;
+  // };
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
     setActiveCategory(null);
@@ -81,7 +115,7 @@ const DashNavBar = () => {
             <img src={logo} alt="Logo" className="logo-img" />
           </Link>
 
-          <div className="categories-wrapper">
+          {/* <div className="categories-wrapper">
             <div className="dropdown">
               <button className="dropdown-btn">
                 <span>Categories </span>
@@ -115,15 +149,51 @@ const DashNavBar = () => {
                 ))}
               </div>
             </div>
+          </div> */}
+          <div className="categories-wrapper">
+            <div className="dropdown">
+              <button className="dropdown-btn">
+                <span>Categories</span>
+                <ChevronDown size={16} />
+              </button>
+              <div className="dropdown-content">
+                {Object.entries(allcategories).map(([category, { subcategories }]) => (
+                  <div key={category} className="category-item">
+                    <span>{category}</span>
+                    {subcategories.length > 0 && (
+                      <div className="subcategories-panel">
+                        <div className="subcategories-grid">
+                          {subcategories.map((section, idx) => (
+                            <div key={idx} className="subcategory-column">
+                              <h3>{section.title}</h3>
+                              <ul>
+                                {section.items.map((item, itemIdx) => (
+                                  <li key={itemIdx}>
+                                    <Link to={`/category/${item.toLowerCase().replace(/\s+/g, "-")}`}>
+                                      {item}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+
         </div>
 
         <div className="navbar-center">
           <div className="search-container">
             <Search className="search-icon" size={18} />
-            <input 
-              type="text" 
-              placeholder="Search for products, brands and more" 
+            <input
+              type="text"
+              placeholder="Search for products, brands and more"
               aria-label="Search"
             />
             <button className="search-btn">Search</button>
@@ -148,18 +218,17 @@ const DashNavBar = () => {
           <div className="mobile-categories">
             {Object.entries(categories).map(([category, { subcategories }]) => (
               <div key={category} className="mobile-category">
-                <button 
+                <button
                   className="mobile-category-btn"
                   onClick={() => toggleCategory(category)}
                 >
                   <span>{category}</span>
-                  <ChevronDown 
-                    className={`transform transition-transform ${
-                      activeCategory === category ? 'rotate-180' : ''
-                    }`}
+                  <ChevronDown
+                    className={`transform transition-transform ${activeCategory === category ? 'rotate-180' : ''
+                      }`}
                   />
                 </button>
-                
+
                 {activeCategory === category && subcategories.length > 0 && (
                   <div className="mobile-subcategories">
                     {subcategories.map((section, idx) => (

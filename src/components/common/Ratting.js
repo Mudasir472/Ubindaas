@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/components/Ratting.css';
+import axios from 'axios';
 
 // Star icon component
 const StarIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFD700" width="20" height="20">
-    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
   </svg>
 );
+
+
 
 // Customer review data type
 const reviews = [
@@ -18,7 +21,7 @@ const reviews = [
   },
   {
     image: "https://www.lavanyathelabel.com/cdn/shop/files/Gupta_Ritika.jpg?v=1740115458",
-    name: "Gupta Ritika", 
+    name: "Gupta Ritika",
     review: "Awesome dress as I expected from the. The material of the cloth is really wonderful and the shine of the dress is fabulous.",
     stars: 5
   },
@@ -34,10 +37,23 @@ const reviews = [
     review: "The multi purpose lehenga and the look, fit & fabric is really amazing ❤️❤️",
     stars: 5
   },
- 
-];
 
+];
 const Ratting = () => {
+  const [allReviews, setAllReviews] = useState(null);  //use this allReviews in this comp...
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/ratings/getAllRatings');
+      setAllReviews(response?.data?.ratings);
+
+    } catch (err) {
+      console.log(err);
+
+    }
+  }
+  useEffect(() => {
+    fetchReviews();
+  }, [])
   return (
     <div className="customer-reviews">
       <h2 className="reviews-title">CUSTOMER REVIEWS</h2>

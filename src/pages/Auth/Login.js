@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import '../../styles/pages/auth.css';
+import { LoginContext } from '../../context/AuthContext';
+import toast from "react-hot-toast"
+
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/profile';
+  const { loginData, setLoginData } = useContext(LoginContext)
 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,7 +26,7 @@ function Login() {
       ...prev,
       [name]: value
     }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -32,13 +37,13 @@ function Login() {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     }
@@ -47,19 +52,26 @@ function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (validateForm()) {
-      // For now, just set a dummy token and user data
-      localStorage.setItem('token', 'dummy_token');
-      localStorage.setItem('user', JSON.stringify({
-        name: 'User',
-        email: formData.email
-      }));
 
-      // Navigate to the 'from' location or default to profile
-      navigate(from, { replace: true });
+    if (validateForm()) {
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/api/auth/login`,
+          formData,
+          { withCredentials: true }
+        );
+        setLoginData(response.data?.result?.user)
+        localStorage.setItem('authToken', JSON.stringify(response.data?.result?.authToken))
+        localStorage.setItem('user', JSON.stringify(response.data?.result?.user))
+        // navigate('/profile')
+        navigate(from, { replace: true });
+        toast.success("Login Successfully")
+      } catch (error) {
+        toast.error(error.message)
+        console.log(error);
+      }
     }
   };
 
@@ -133,7 +145,7 @@ function Login() {
           </form>
 
           <p className="auth-switch">
-            Don't have an account? 
+            Don't have an account?
             <Link to="/signup"> Sign up</Link>
           </p>
         </div>

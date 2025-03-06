@@ -22,15 +22,17 @@ import FAQs from "./pages/Others/FAQs";
 import ContactUs from "./pages/Others/ContactUs";
 import AboutUs from "./pages/Others/AboutUs";
 import ShippingPolicy from "./pages/Others/ShippingPolicy";
-import ReturnPolicy   from "./pages/Others/ReturnPolicy";
+import ReturnPolicy from "./pages/Others/ReturnPolicy";
 import PrivacyPolicy from "./pages/Others/PrivacyPolicy";
-import TermConditions  from "./pages/Others/TermConditions";
+import TermConditions from "./pages/Others/TermConditions";
 import AddressConfirmation from './pages/checkout/AddressConfirmation';
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <BrowserRouter>
       <div className="app">
+        <Toaster reverseOrder={false} />
         <Navbar />
         <main>
           <Routes>
@@ -40,8 +42,8 @@ const App = () => {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path='/sizeguide' element={<SizeGuide/>} />
-            <Route path='/FAQs' element={<FAQs/>}/>
+            <Route path='/sizeguide' element={<SizeGuide />} />
+            <Route path='/FAQs' element={<FAQs />} />
             <Route path='/ContactUs' element={<ContactUs />} />
             <Route path='/AboutUs' element={<AboutUs />} />
             <Route path='/ShippingPolicy' element={<ShippingPolicy />} />
@@ -92,14 +94,14 @@ const App = () => {
                 <Addresses />
               </ProtectedRoute>
             } />
-              <Route
-    path="/checkout/address"
-    element={
-      <ProtectedRoute>
-        <AddressConfirmation />
-      </ProtectedRoute>
-    }
-  />
+            <Route
+              path="/checkout/address"
+              element={
+                <ProtectedRoute>
+                  <AddressConfirmation />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </main>
         <Footer />

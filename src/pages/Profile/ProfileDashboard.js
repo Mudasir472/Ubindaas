@@ -5,7 +5,6 @@ import '../../styles/pages/dashboard.css';
 
 function ProfileDashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
-
   return (
     <div className="dashboard-page">
       <div className="dashboard-container">
@@ -14,10 +13,9 @@ function ProfileDashboard() {
           <h1>My Account</h1>
           <p>Welcome back, {user?.name || 'User'}!</p>
         </div>
-
         {/* Dashboard Menu */}
         <div className="dashboard-menu">
-          <Link to="/dashboard/profile" className="menu-card">
+          <Link to="/profile/settings" className="menu-card">
             <FiUser className="card-icon" />
             <div className="card-content">
               <h3>Profile</h3>
@@ -25,7 +23,7 @@ function ProfileDashboard() {
             </div>
           </Link>
 
-          <Link to="/dashboard/orders" className="menu-card">
+          <Link to="/profile/orders" className="menu-card">
             <FiShoppingBag className="card-icon" />
             <div className="card-content">
               <h3>Orders</h3>
@@ -33,7 +31,7 @@ function ProfileDashboard() {
             </div>
           </Link>
 
-          <Link to="/dashboard/wishlist" className="menu-card">
+          <Link to="/profile/wishlist" className="menu-card">
             <FiHeart className="card-icon" />
             <div className="card-content">
               <h3>Wishlist</h3>
@@ -41,7 +39,7 @@ function ProfileDashboard() {
             </div>
           </Link>
 
-          <Link to="/dashboard/addresses" className="menu-card">
+          <Link to="/profile/addresses" className="menu-card">
             <FiMapPin className="card-icon" />
             <div className="card-content">
               <h3>Addresses</h3>

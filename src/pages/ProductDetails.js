@@ -1,8 +1,9 @@
 // src/pages/ProductDetails.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, Minus, Plus, Share2, Star, Truck, X } from 'lucide-react';
 import RelatedProducts from '../components/product/RelatedProducts';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 import "../styles/pages/product-details.css";
 
 const ProductDetails = () => {
@@ -13,6 +14,8 @@ const ProductDetails = () => {
   const [pincode, setPincode] = useState('');
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [isWishlisted, setIsWishlisted] = useState(false);
   // Mock Product Data
   const product = {
     id: 1,
@@ -38,6 +41,22 @@ const ProductDetails = () => {
       "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
     ]
   };
+  const handleAddToWishlist = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/customer/wishlist",
+        { productId: product._id, userid: user._id },
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        setIsWishlisted(true);
+      }
+    } catch (error) {
+      console.error("Error adding to wishlist:", error.response?.data || error);
+    }
+  };
+
 
   const handleQuantityChange = (change) => {
     const newQuantity = quantity + change;
@@ -95,13 +114,30 @@ const ProductDetails = () => {
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
-      <Star 
+      <Star
         key={index}
         className={index < Math.floor(rating) ? 'star filled' : 'star'}
       />
     ));
   };
 
+  // Rating here to display
+  const [ratings, setRatings] = useState([]);
+  useEffect(() => {
+    const fetchRatings = async () => {
+      try {
+        const response = await axios.get(`/api/ratings/product${product?.id}`);
+        setRatings(response.data.data);
+      } catch (err) {
+        console.log(err);
+        // setError("Error fetching ratings");
+      }
+    };
+
+    // now we can display reviews of current product on frontend
+
+    if (product?.id) fetchRatings();
+  }, [product?.id]);
   return (
     <div className="product-details">
       <div className="product-container">
@@ -109,7 +145,7 @@ const ProductDetails = () => {
         <div className="product-gallery">
           <div className="thumbnails-container">
             {product.images.map((img, idx) => (
-              <div 
+              <div
                 key={idx}
                 className={`thumbnail ${selectedImage === idx ? 'active' : ''}`}
                 onClick={() => setSelectedImage(idx)}
@@ -119,8 +155,8 @@ const ProductDetails = () => {
             ))}
           </div>
           <div className="main-image-container" onClick={() => setIsModalOpen(true)}>
-            <img 
-              src={product.images[selectedImage]} 
+            <img
+              src={product.images[selectedImage]}
               alt={product.title}
               className="main-image"
             />
@@ -170,7 +206,7 @@ const ProductDetails = () => {
           <div className="quantity-selector">
             <span>Quantity:</span>
             <div className="quantity-controls">
-              <button 
+              <button
                 className="quantity-btn"
                 onClick={() => handleQuantityChange(-1)}
                 disabled={quantity <= 1}
@@ -178,7 +214,7 @@ const ProductDetails = () => {
                 <Minus size={16} />
               </button>
               <span className="quantity">{quantity}</span>
-              <button 
+              <button
                 className="quantity-btn"
                 onClick={() => handleQuantityChange(1)}
                 disabled={quantity >= 10}
@@ -215,9 +251,9 @@ const ProductDetails = () => {
             </button>
           </div>
 
-          <button className="wishlist-button">
+          <button onClick={handleAddToWishlist} className="wishlist-button">
             <Heart size={18} />
-            WISHLIST
+            {isWishlisted ? 'WISHLISHED' : 'WISHLISH'}
           </button>
 
           <div className="product-description">
