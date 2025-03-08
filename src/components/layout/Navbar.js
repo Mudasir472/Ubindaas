@@ -8,44 +8,44 @@ import axios from "axios";
 
 
 // Categories data
-const allcategories = {
+// const allcategories = {
 
-  "Women's Fashion": {
-    subcategories: [
-      {
-        title: "Shop All Ethnic Wear",
-        items: ["Kurtis & Kurtas", "Suits", "Sarees", "Lehengas", "Bottoms", "Blouses & Fabrics", "Dupattas", "Ethnic dresses"]
-      },
-      {
-        title: "Shop All Western Wear",
-        items: ["Tops & T-shirts", "Dresses", "Jeans", "Shirts", "Trousers", "Skirts", "Shorts", "Jackets & Blazers", "Leggings", "Capris", "Jumpsuits", "Shrugs", "Sweaters", "Sweatshirts"]
-      },
-      {
-        title: "Activewear & Sportswear",
-        items: ["T-shirts", "Shorts", "Sets", "Jackets", "Track Pants", "Innerwear"]
-      }
-    ]
-  },
-  "Men's Fashion": {
-    subcategories: [
-      {
-        title: "Tops",
-        items: ["T-shirts", "Polo T-shirts", "Shirts", "Formal Shirts", "Sweatshirts", "Jackets", "Suits", "Blazers"]
-      },
-      {
-        title: "Bottoms",
-        items: ["Jeans", "Chinos", "Trousers", "Formal Trousers", "Shorts", "Joggers", "Trackpants"]
-      },
-      {
-        title: "Activewear",
-        items: ["T-Shirts & Jerseys", "Sports Shorts", "Sports Jackets", "Joggers"]
-      }
+//   "Women's Fashion": {
+//     subcategories: [
+//       {
+//         title: "Shop All Ethnic Wear",
+//         items: ["Kurtis & Kurtas", "Suits", "Sarees", "Lehengas", "Bottoms", "Blouses & Fabrics", "Dupattas", "Ethnic dresses"]
+//       },
+//       {
+//         title: "Shop All Western Wear",
+//         items: ["Tops & T-shirts", "Dresses", "Jeans", "Shirts", "Trousers", "Skirts", "Shorts", "Jackets & Blazers", "Leggings", "Capris", "Jumpsuits", "Shrugs", "Sweaters", "Sweatshirts"]
+//       },
+//       {
+//         title: "Activewear & Sportswear",
+//         items: ["T-shirts", "Shorts", "Sets", "Jackets", "Track Pants", "Innerwear"]
+//       }
+//     ]
+//   },
+//   "Men's Fashion": {
+//     subcategories: [
+//       {
+//         title: "Tops",
+//         items: ["T-shirts", "Polo T-shirts", "Shirts", "Formal Shirts", "Sweatshirts", "Jackets", "Suits", "Blazers"]
+//       },
+//       {
+//         title: "Bottoms",
+//         items: ["Jeans", "Chinos", "Trousers", "Formal Trousers", "Shorts", "Joggers", "Trackpants"]
+//       },
+//       {
+//         title: "Activewear",
+//         items: ["T-Shirts & Jerseys", "Sports Shorts", "Sports Jackets", "Joggers"]
+//       }
 
 
-    ]
-  },
+//     ]
+//   },
 
-};
+// };
 
 // Memoized Navigation Icons component with Lucide icons
 const NavigationIcons = memo(() => (
@@ -53,7 +53,7 @@ const NavigationIcons = memo(() => (
     <Link to="/cart" className="icon-link" aria-label="Shopping Cart">
       <ShoppingCart size={20} />
     </Link>
-    <Link to="/wishlist" className="icon-link" aria-label="Wishlist">
+    <Link to="profile/wishlist" className="icon-link" aria-label="Wishlist">
       <Heart size={20} />
     </Link>
     <Link to="/profile" className="icon-link" aria-label="Profile">
@@ -66,38 +66,30 @@ const DashNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [categories, setCategories] = useState({});
-  const gender = 'men'
   useEffect(() => {
     const fetchCategories = async () => {
-      
+
       try {
-        const response = await axios.get(`http://localhost:5000/api/categories/${gender}`);
-        if (response.data.success) {
-          // setCategories(formattedCategories);
-        }
+        const response = await axios.get(`http://localhost:5000/api/categories`);
+        setCategories(response?.data?.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
 
     fetchCategories();
-  }, [gender]);
-  // const formatCategories = (categories) => {
-  //   const formatted = {};
-  //   categories.forEach((cat) => {
-  //     if (!formatted[cat.name]) {
-  //       formatted[cat.name] = { subcategories: [] };
-  //     }
+  }, []);
 
-  //     if (cat.subcategoryTitle && cat.subcategoryItems) {
-  //       formatted[cat.name].subcategories.push({
-  //         title: cat.subcategoryTitle,
-  //         items: cat.subcategoryItems || [], 
-  //       });
-  //     }
-  //   });
-  //   return formatted;
-  // };
+  const categorizedData = Array.isArray(categories)
+    ? categories.reduce((acc, item) => {
+      if (!acc[item.gender]) {
+        acc[item.gender] = [];
+      }
+      acc[item.gender].push(item);
+      return acc;
+    }, {})
+    : {};
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
     setActiveCategory(null);
@@ -115,14 +107,14 @@ const DashNavBar = () => {
             <img src={logo} alt="Logo" className="logo-img" />
           </Link>
 
-          {/* <div className="categories-wrapper">
+          <div className="categories-wrapper">
             <div className="dropdown">
               <button className="dropdown-btn">
                 <span>Categories </span>
                 <ChevronDown size={16} />
               </button>
               <div className="dropdown-content">
-                {Object.entries(categories).map(([category, { subcategories }]) => (
+                {/* {Object.entries(allcategories).map(([category, { subcategories }]) => (
                   <div key={category} className="category-item">
                     <span>{category}</span>
                     {subcategories.length > 0 && (
@@ -146,11 +138,28 @@ const DashNavBar = () => {
                       </div>
                     )}
                   </div>
+                ))} */}
+                {Object.entries(categorizedData).map(([gender, items]) => (
+                  <div key={gender} className="category-item">
+                    <span>{gender.charAt(0).toUpperCase() + gender.slice(1)}</span>
+                    <div className="subcategories-panel">
+                      <ul style={{ listStyleType: 'none' }}>
+                        {items?.map((item) => (
+                          <li key={item._id}>
+                            <Link to={`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                              {item.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 ))}
+
               </div>
             </div>
-          </div> */}
-          <div className="categories-wrapper">
+          </div>
+          {/* <div className="categories-wrapper">
             <div className="dropdown">
               <button className="dropdown-btn">
                 <span>Categories</span>
@@ -184,7 +193,7 @@ const DashNavBar = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
 
         </div>
 
@@ -253,7 +262,7 @@ const DashNavBar = () => {
 
           <div className="mobile-links">
             <Link to="/Cart" className="mobile-link">Cart</Link>
-            <Link to="/wishlist" className="mobile-link">Wishlist</Link>
+            <Link to="profile/wishlist" className="mobile-link">Wishlist</Link>
             <Link to="/profile" className="mobile-link">Profile</Link>
           </div>
         </div>

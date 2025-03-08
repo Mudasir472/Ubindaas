@@ -5,6 +5,7 @@ import RelatedProducts from '../components/product/RelatedProducts';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 import "../styles/pages/product-details.css";
+import Reviews from './Reviews';
 
 const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -56,6 +57,17 @@ const ProductDetails = () => {
       console.error("Error adding to wishlist:", error.response?.data || error);
     }
   };
+
+  const fetchProducts = async () => {
+    try {
+      const resp = await axios.get('http://localhost:5000/api/products');
+      console.log("res",resp);
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
 
 
   const handleQuantityChange = (change) => {
@@ -126,7 +138,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchRatings = async () => {
       try {
-        const response = await axios.get(`/api/ratings/product${product?.id}`);
+        const response = await axios.get(`http://localhost:5000/api/ratings/product${product?.id}`);
         setRatings(response.data.data);
       } catch (err) {
         console.log(err);
@@ -268,6 +280,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
+
       {/* Image Modal */}
       {isModalOpen && (
         <div className="image-modal">
@@ -282,6 +295,14 @@ const ProductDetails = () => {
 
       {/* Related Products */}
       <RelatedProducts />
+      <div>
+        <div>
+          <h2>Review Section</h2>
+          <Reviews id={product?.id} />
+        </div>
+
+      </div>
+
     </div>
   );
 };

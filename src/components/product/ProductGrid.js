@@ -4,8 +4,11 @@ import FilterSidebar from './FilterSideBar';
 import QuickView from './QuickView';
 import { FiFilter } from 'react-icons/fi';
 import '../../styles/components/product-grid.css';
+import axios from 'axios';
 
 function ProductGrid() {
+  const [offer, setOffer] = useState(null);
+  const [allProducts, setAllProducts] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -14,6 +17,7 @@ function ProductGrid() {
     priceRanges: [],
     discounts: []
   });
+  console.log(allProducts);
 
   const handleQuickView = (product) => {
     setSelectedProduct(product);
@@ -22,6 +26,16 @@ function ProductGrid() {
   const handleCloseQuickView = () => {
     setSelectedProduct(null);
   };
+
+  const fetchAllProducts = async () => {
+    try {
+      const resp = await axios.get('http://localhost:5000/api/products/');
+      // console.log(resp?.data?.data?.products);
+      setAllProducts(resp?.data?.data?.products)
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const initialProducts = [
     {
@@ -164,7 +178,7 @@ function ProductGrid() {
     // Only apply filters if they exist
     if (Object.values(activeFilters).some(arr => arr.length > 0)) {
       if (activeFilters.categories.length > 0) {
-        result = result.filter(product => 
+        result = result.filter(product =>
           activeFilters.categories.includes(product.category)
         );
       }
@@ -210,27 +224,49 @@ function ProductGrid() {
     setFilteredProducts(result);
   }, [activeFilters, sortBy, products]);
 
+  useEffect(() => {
+    const fetchOffer = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/banners');
+        // console.log(response.data?.data);
+        setOffer(response.data?.data)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+    fetchOffer();
+  }, [])
+  const offerBanner = Array.isArray(offer)
+    ? offer.find((ele) => ele?.bannerFor === 'offer')
+    : [];
+
+
+  useEffect(() => {
+    fetchAllProducts()
+  }, [])
   return (
     <div className="products-section">
       <div className="filters-bar">
-
-      <div className="sort-options">
-    <h2 style={{ display: 'flex', justifyContent: 'center' }}>
-        <img src="/new-arrival.png" style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" />
-    </h2>
-</div>
-          <button 
+        <div className="sort-options">
+          <h2 style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src="/new-arrival.png" style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" />
+            {/* <img src={offerBanner?.image} style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" /> */}
+          </h2>
+        </div>
+        <button
           className="filter-btn"
           onClick={() => setIsFilterOpen(true)}
         >
           <FiFilter />
-          {Object.values(activeFilters).flat().length > 0 
-            ? `Filters (${Object.values(activeFilters).flat().length})` 
+          {Object.values(activeFilters).flat().length > 0
+            ? `Filters (${Object.values(activeFilters).flat().length})`
             : 'Filters'}
         </button>
       </div>
 
-      <FilterSidebar 
+      <FilterSidebar
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
         activeFilters={activeFilters}
@@ -238,17 +274,17 @@ function ProductGrid() {
       />
 
       <div className="product-grid">
-        {filteredProducts.map(product => (
-          <ProductCard 
-            key={product.id} 
+        {Array.isArray(filteredProducts) && filteredProducts.map(product => (
+          <ProductCard
+            key={product.id}
             product={product}
-            onQuickView={()=> handleQuickView(product)}
+            onQuickView={() => handleQuickView(product)}
           />
         ))}
       </div>
       {selectedProduct && (
-        <QuickView 
-          product={selectedProduct} 
+        <QuickView
+          product={selectedProduct}
           onClose={handleCloseQuickView}
         />
       )}
