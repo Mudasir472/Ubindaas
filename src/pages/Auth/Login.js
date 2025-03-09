@@ -6,6 +6,8 @@ import '../../styles/pages/auth.css';
 import { LoginContext } from '../../context/AuthContext';
 import toast from "react-hot-toast"
 
+// Define API base URL
+const API_BASE_URL = 'http://localhost:5000';
 
 function Login() {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ function Login() {
     password: ''
   });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +31,17 @@ function Login() {
       [name]: value
     }));
 
+    // Clear field-specific errors when typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
       }));
+    }
+    
+    // Clear general login error when user makes changes
+    if (loginError) {
+      setLoginError('');
     }
   };
 
@@ -54,23 +64,44 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoginError('');
 
     if (validateForm()) {
+      setIsLoading(true);
+      
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/auth/login`,
+          `${API_BASE_URL}/api/auth/login`,
           formData,
           { withCredentials: true }
         );
-        setLoginData(response.data?.result?.user)
-        localStorage.setItem('authToken', JSON.stringify(response.data?.result?.authToken))
-        localStorage.setItem('user', JSON.stringify(response.data?.result?.user))
-        // navigate('/profile')
-        navigate(from, { replace: true });
-        toast.success("Login Successfully")
+        
+        // Make sure we have valid response data
+        if (response.data?.result?.user && response.data?.result?.authToken) {
+          setLoginData(response.data.result.user);
+          localStorage.setItem('authToken', JSON.stringify(response.data.result.authToken));
+          localStorage.setItem('user', JSON.stringify(response.data.result.user));
+          
+          toast.success("Login Successful");
+          navigate(from, { replace: true });
+        } else {
+          // Handle unexpected response format
+          console.error("Unexpected response format:", response.data);
+          toast.error("Login failed: Unexpected server response");
+          setLoginError("Unexpected server response format");
+        }
       } catch (error) {
-        toast.error(error.message)
-        console.log(error);
+        console.error("Login error:", error);
+        
+        // Extract the error message from the response if available
+        const errorMessage = error.response?.data?.error || 
+                             error.message || 
+                             "Login failed. Please check your credentials.";
+        
+        toast.error(errorMessage);
+        setLoginError(errorMessage);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -81,6 +112,12 @@ function Login() {
         <div className="auth-content">
           <h1>Welcome Back</h1>
           <p>Please enter your details to sign in</p>
+
+          {loginError && (
+            <div className="error-alert">
+              {loginError}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
@@ -93,6 +130,7 @@ function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   className={errors.email ? 'error' : ''}
+                  disabled={isLoading}
                 />
               </div>
               {errors.email && <span className="error-message">{errors.email}</span>}
@@ -108,11 +146,13 @@ function Login() {
                   value={formData.password}
                   onChange={handleChange}
                   className={errors.password ? 'error' : ''}
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>
@@ -122,7 +162,7 @@ function Login() {
 
             <div className="form-options">
               <label className="remember-me">
-                <input type="checkbox" />
+                <input type="checkbox" disabled={isLoading} />
                 <span>Remember me</span>
               </label>
               <Link to="/forgot-password" className="forgot-password">
@@ -130,15 +170,15 @@ function Login() {
               </Link>
             </div>
 
-            <button type="submit" className="submit-btn">
-              Sign In
+            <button type="submit" className="submit-btn" disabled={isLoading}>
+              {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
 
             <div className="auth-divider">
               <span>OR</span>
             </div>
 
-            <button type="button" className="google-btn">
+            <button type="button" className="google-btn" disabled={isLoading}>
               <img src="/images/google-icon.png" alt="Google" />
               Sign in with Google
             </button>
