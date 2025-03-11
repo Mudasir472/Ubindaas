@@ -79,6 +79,11 @@ function Login() {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-content">
+          {/* Logo added here */}
+          {/* <div className="logo-container">
+            <img src="logo.jpeg" alt="Bindass Logo" className="bindass-logo" />
+          </div>
+           */}
           <h1>Welcome Back</h1>
           <p>Please enter your details to sign in</p>
 

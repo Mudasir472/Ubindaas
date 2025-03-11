@@ -14,11 +14,13 @@ function Home() {
       <Carousel/>
       <CollectionPills />
       <ProductGrid />
-      <Ratting />
       <FeaturesProducts/>
       <h1 className="shop-heading">Shop Bold. Shop Bindass</h1>
 
       <ProductStories/>
+      
+      <Ratting />
+
     </div>
   );
 }
