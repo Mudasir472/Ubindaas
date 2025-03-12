@@ -123,8 +123,9 @@
 }
 
 .progress-bar {
-    height: 4px;
+    height: 2px;
     flex: 1;
+    padding: 6px!important;
     background: rgba(255, 255, 255, 0.3);
     margin: 0 2px;
 }

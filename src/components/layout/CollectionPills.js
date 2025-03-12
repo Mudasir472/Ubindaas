@@ -1,10 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import '../../styles/components/collection-pills.css';
+import axios from 'axios';
+import config from '../../config';
 
 const CategoryShowcase = () => {
   const scrollRef = useRef(null);
-  
+  const [collections, setCollections] = useState(null)
+  const API_BASE_URL = config.API_BASE_URL;
   const categories = [
     {
       name: "Anushka\u2019s Collection",
@@ -42,6 +45,21 @@ const CategoryShowcase = () => {
     }
   };
 
+  const fetchCollections = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/collection`)
+      setCollections(response?.data);
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+  console.log(collections);
+
+  useEffect(() => {
+    fetchCollections();
+  }, [])
   return (
     <div className="category-container" style={{ padding: '20px 0', width: '100%', overflow: 'hidden' }}>
       <div className="category-header" style={{ textAlign: 'center', marginBottom: '40px', position: 'relative' }}>
@@ -83,7 +101,7 @@ const CategoryShowcase = () => {
         margin: '0 auto',
         padding: '0 40px'
       }}>
-        <button 
+        <button
           onClick={() => scroll('left')}
           className="scroll-button left"
           style={{
@@ -108,7 +126,7 @@ const CategoryShowcase = () => {
           <ChevronLeft size={24} />
         </button>
 
-        <div 
+        <div
           ref={scrollRef}
           className="scroll-wrapper"
           style={{
@@ -122,10 +140,10 @@ const CategoryShowcase = () => {
             padding: '20px 0'
           }}
         >
-          {categories.map((category, index) => (
-            <a 
+          {Array.isArray(collections) && collections.map((category, index) => (
+            <a
               key={index}
-              href={`/category/${category.name.toLowerCase().replace(/['s ]/g, '-')}`}
+              href={`/collections/${category._id}`}
               className="category-item"
               style={{
                 flex: '0 0 auto',
@@ -143,7 +161,7 @@ const CategoryShowcase = () => {
                 overflow: 'hidden',
               }}>
                 <img
-                  src={category.image}
+                  src={`${category?.modelImageUrl}` || `https://www.lavanyathelabel.com/cdn/shop/files/Patiala2.png?v=1735807812`}
                   alt={category.name}
                   style={{
                     position: 'absolute',
@@ -168,7 +186,7 @@ const CategoryShowcase = () => {
           ))}
         </div>
 
-        <button 
+        <button
           onClick={() => scroll('right')}
           className="scroll-button right"
           style={{

@@ -4,7 +4,7 @@ import '../../styles/pages/addresses.css';
 import axios from 'axios';
 import toast from 'react-hot-toast'
 
-function Addresses() {
+function Addresses({  }) {
   const [addresses, setAddresses] = useState([
     {
       id: 1,
@@ -20,6 +20,7 @@ function Addresses() {
     // Add more addresses
   ]);
 
+ 
   useEffect(() => {
     fetchAddresses();
   }, []);

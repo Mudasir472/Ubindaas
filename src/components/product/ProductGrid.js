@@ -17,7 +17,7 @@ function ProductGrid() {
     priceRanges: [],
     discounts: []
   });
-  console.log(allProducts);
+  // console.log(allProducts);
 
   const handleQuickView = (product) => {
     setSelectedProduct(product);

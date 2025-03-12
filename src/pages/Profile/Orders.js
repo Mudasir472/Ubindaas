@@ -60,7 +60,7 @@ function Orders() {
           {tabs.map(tab => (
             <button
               key={tab.id}
-              className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+              className={`tab-btn me-3 mb-3 ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.label}
@@ -70,53 +70,55 @@ function Orders() {
 
         <div className="orders-list">
           {
-            allOrders?.length>0?(<>
-              {allOrders?.map(order => (  //
-                <div key={order._id} className="order-card">
-                  <div className="order-header">
-                    <div className="order-info">
-                      <h3>{order.id}</h3>
-                      <span className="order-date">
-                        <FiClock />
-                        {new Date(order.date).toLocaleDateString()}
+            allOrders?.length > 0 ? (<>
+              {allOrders
+                .filter(order => activeTab === 'all' || order.status.toLowerCase() === activeTab)
+                .map(order => (  //
+                  <div key={order._id} className="order-card">
+                    <div className="order-header">
+                      <div className="order-info">
+                        <h3 className='me-3'>{order?.orderId}</h3>
+                        <span className="order-date">
+                          <FiClock />
+                          {new Date(order?.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <span className={`order-status status-${order?.status.toLowerCase()}`}>
+                        {order?.status}
                       </span>
                     </div>
-                    <span className={`order-status status-${order.status.toLowerCase()}`}>
-                      {order.status}
-                    </span>
-                  </div>
 
-                  <div className="order-items">
-                    {order.items.map(item => (
-                      <div key={item.id} className="order-item">
-                        <img src={item.image} alt={item.name} />
-                        <div className="item-details">
-                          <h4>{item.name}</h4>
-                          <p>Size: {item.size}</p>
-                          <span className="item-price">₹{item.price}</span>
+                    <div className="order-items">
+                      {order.items.map(item => (
+                        <div key={item.id} className="order-item">
+                          <img style={{ height: '125px' }} src={item.image || 'https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700'} alt={item.name} />
+                          <div className="item-details">
+                            <h4>{item?.name || 'DENIM BUSTIER TOP'}</h4>
+                            <p>Size: {item?.size || 'S'}</p>
+                            <span className="item-price">₹{item.price || '1099'}</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
 
-                  <div className="order-footer">
-                    <span className="order-total">
-                      Total: ₹{order.total}
-                    </span>
-                    <button className="track-order-btn">
-                      Track Order
-                    </button>
+                    <div className="order-footer">
+                      <span className="order-total">
+                        Total: ₹{order.totalAmount}
+                      </span>
+                      <button className="track-order-btn">
+                        Track Order
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </>):(<>
+                ))}
+            </>) : (<>
               <p className='mt-4'>
-                  {"No order yet"}
+                {"No order yet"}
               </p>
             </>)
           }
 
-          
+
         </div>
       </div>
     </div>

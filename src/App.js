@@ -27,8 +27,13 @@ import PrivacyPolicy from "./pages/Others/PrivacyPolicy";
 import TermConditions from "./pages/Others/TermConditions";
 import AddressConfirmation from './pages/checkout/AddressConfirmation';
 import toast, { Toaster } from "react-hot-toast";
+import CollectionDetails from './components/layout/CollectionDetails';
 
 const App = () => {
+
+  const cartItems = JSON.parse(localStorage.getItem('cart'))
+  console.log(cartItems);
+
   return (
     <BrowserRouter>
       <div className="app">
@@ -40,6 +45,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/collections/:collectionId" element={<CollectionDetails />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path='/sizeguide' element={<SizeGuide />} />
@@ -98,7 +105,7 @@ const App = () => {
               path="/checkout/address"
               element={
                 <ProtectedRoute>
-                  <AddressConfirmation />
+                  <AddressConfirmation cartItems={cartItems} />
                 </ProtectedRoute>
               }
             />

@@ -61,13 +61,17 @@ const ProductDetails = () => {
   const fetchProducts = async () => {
     try {
       const resp = await axios.get('http://localhost:5000/api/products');
-      console.log("res",resp);
+      console.log("res", resp?.data?.data?.products);
 
     } catch (error) {
       console.log(error);
 
     }
   }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
 
 
   const handleQuantityChange = (change) => {

@@ -11,7 +11,7 @@ const Carousel = () => {
     const [banners, setBanners] = useState([]);
     const [loading, setLoading] = useState(true);
     const [imageErrors, setImageErrors] = useState({});
-    
+
     // Define the base URL for your API and static assets
     const API_BASE_URL = config.API_BASE_URL;
     const getBanners = async () => {
@@ -19,7 +19,7 @@ const Carousel = () => {
             const response = await axios.get(`${API_BASE_URL}/api/banners`);
             const bannersData = response?.data?.data || [];
             setBanners(bannersData);
-            
+
             // Test image loading
             if (bannersData.length > 0) {
                 console.log("Banner data received:", bannersData);
@@ -27,12 +27,11 @@ const Carousel = () => {
                     if (banner.image) {
                         const testImage = new Image();
                         const imageUrl = `${API_BASE_URL}/uploads/banners/${banner.image}`;
-                        console.log(`Testing image loading for: ${imageUrl}`);
                         testImage.src = imageUrl;
                     }
                 });
             }
-            
+
             setLoading(false);
         } catch (error) {
             console.error("Error fetching banners:", error);
@@ -50,8 +49,7 @@ const Carousel = () => {
 
     // Debug info about filtered banners
     useEffect(() => {
-        console.log("All banners:", banners);
-        console.log("Filtered carousel banners:", allBanners);
+
     }, [banners, allBanners]);
 
     const nextSlide = () => {
@@ -92,11 +90,12 @@ const Carousel = () => {
     return (
         <div className="carousel-container">
             <div className="carousel">
-                <div className="carousel-progress">
+                <div className="carousel-progress pt-1">
                     {allBanners.map((_, index) => (
                         <div
                             key={index}
                             className={`progress-bar ${currentSlide === index ? 'active' : ''}`}
+                            style={{ height: '4px' }}
                         />
                     ))}
                 </div>
@@ -111,31 +110,31 @@ const Carousel = () => {
                 <div className="carousel-track" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                     {allBanners.map((slide, index) => {
                         const imageUrl = `${API_BASE_URL}/uploads/banners/${slide.image}`;
-                        
+
                         return (
                             <div key={index} className="carousel-slide">
                                 {/* Use the full URL path for images */}
-                                <img 
-                                    src={imageUrl} 
-                                    alt={slide.title || "Slide"} 
+                                <img
+                                    src={imageUrl}
+                                    alt={slide.title || "Slide"}
                                     className="carousel-image"
                                     crossOrigin="anonymous"
                                     onError={() => handleImageError(slide._id, imageUrl)}
-                                    style={{ 
+                                    style={{
                                         display: imageErrors[slide._id] ? 'none' : 'block',
                                         backgroundColor: '#f0f0f0'
                                     }}
                                 />
                                 {imageErrors[slide._id] && (
-                                    <div className="carousel-fallback" 
-                                         style={{ 
-                                             height: '100%', 
-                                             width: '100%', 
-                                             backgroundColor: '#f0f0f0',
-                                             display: 'flex',
-                                             alignItems: 'center',
-                                             justifyContent: 'center'
-                                         }}>
+                                    <div className="carousel-fallback"
+                                        style={{
+                                            height: '100%',
+                                            width: '100%',
+                                            backgroundColor: '#f0f0f0',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
                                         <p>Image not available</p>
                                     </div>
                                 )}
