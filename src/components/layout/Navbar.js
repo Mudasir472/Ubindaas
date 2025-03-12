@@ -5,59 +5,20 @@ import '../../styles/components/navbar.css';
 import logo from "../../assets/logo.jpeg";
 import axios from "axios";
 
-
-
-// Categories data
-// const allcategories = {
-
-//   "Women's Fashion": {
-//     subcategories: [
-//       {
-//         title: "Shop All Ethnic Wear",
-//         items: ["Kurtis & Kurtas", "Suits", "Sarees", "Lehengas", "Bottoms", "Blouses & Fabrics", "Dupattas", "Ethnic dresses"]
-//       },
-//       {
-//         title: "Shop All Western Wear",
-//         items: ["Tops & T-shirts", "Dresses", "Jeans", "Shirts", "Trousers", "Skirts", "Shorts", "Jackets & Blazers", "Leggings", "Capris", "Jumpsuits", "Shrugs", "Sweaters", "Sweatshirts"]
-//       },
-//       {
-//         title: "Activewear & Sportswear",
-//         items: ["T-shirts", "Shorts", "Sets", "Jackets", "Track Pants", "Innerwear"]
-//       }
-//     ]
-//   },
-//   "Men's Fashion": {
-//     subcategories: [
-//       {
-//         title: "Tops",
-//         items: ["T-shirts", "Polo T-shirts", "Shirts", "Formal Shirts", "Sweatshirts", "Jackets", "Suits", "Blazers"]
-//       },
-//       {
-//         title: "Bottoms",
-//         items: ["Jeans", "Chinos", "Trousers", "Formal Trousers", "Shorts", "Joggers", "Trackpants"]
-//       },
-//       {
-//         title: "Activewear",
-//         items: ["T-Shirts & Jerseys", "Sports Shorts", "Sports Jackets", "Joggers"]
-//       }
-
-
-//     ]
-//   },
-
-// };
-
 // Memoized Navigation Icons component with Lucide icons
 const NavigationIcons = memo(() => (
   <div className="navbar-right">
     <Link to="/cart" className="icon-link" aria-label="Shopping Cart">
       <ShoppingCart size={20} />
+      <span className="icon-text">Cart</span>
     </Link>
     <Link to="profile/wishlist" className="icon-link" aria-label="Wishlist">
       <Heart size={20} />
+      <span className="icon-text">Wishlist</span>
     </Link>
     <Link to="/profile" className="icon-link" aria-label="Profile">
       <User size={20} />
+      <span className="icon-text">Profile</span>
     </Link>
   </div>
 ));
@@ -66,9 +27,24 @@ const DashNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [categories, setCategories] = useState({});
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Update window width on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      // Close mobile menu if screen becomes large
+      if (window.innerWidth > 768 && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     const fetchCategories = async () => {
-
       try {
         const response = await axios.get(`http://localhost:5000/api/categories`);
         setCategories(response?.data?.data);
@@ -82,12 +58,12 @@ const DashNavBar = () => {
 
   const categorizedData = Array.isArray(categories)
     ? categories.reduce((acc, item) => {
-      if (!acc[item.gender]) {
-        acc[item.gender] = [];
-      }
-      acc[item.gender].push(item);
-      return acc;
-    }, {})
+        if (!acc[item.gender]) {
+          acc[item.gender] = [];
+        }
+        acc[item.gender].push(item);
+        return acc;
+      }, {})
     : {};
 
   const toggleMobileMenu = () => {
@@ -98,6 +74,22 @@ const DashNavBar = () => {
   const toggleCategory = (category) => {
     setActiveCategory(activeCategory === category ? null : category);
   };
+
+  // Close mobile menu when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (isMobileMenuOpen && mobileMenu && !mobileMenu.contains(event.target) && 
+          mobileMenuBtn && !mobileMenuBtn.contains(event.target)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   return (
     <nav className="navbar">
@@ -114,31 +106,6 @@ const DashNavBar = () => {
                 <ChevronDown size={16} />
               </button>
               <div className="dropdown-content">
-                {/* {Object.entries(allcategories).map(([category, { subcategories }]) => (
-                  <div key={category} className="category-item">
-                    <span>{category}</span>
-                    {subcategories.length > 0 && (
-                      <div className="subcategories-panel">
-                        <div className="subcategories-grid">
-                          {subcategories.map((section, idx) => (
-                            <div key={idx} className="subcategory-column">
-                              <h3>{section.title}</h3>
-                              <ul>
-                                {section.items.map((item, itemIdx) => (
-                                  <li key={itemIdx}>
-                                    <Link to={`/category/${item.toLowerCase().replace(/\s+/g, '-')}`}>
-                                      {item}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))} */}
                 {Object.entries(categorizedData).map(([gender, items]) => (
                   <div key={gender} className="category-item">
                     <span>{gender.charAt(0).toUpperCase() + gender.slice(1)}</span>
@@ -155,46 +122,9 @@ const DashNavBar = () => {
                     </div>
                   </div>
                 ))}
-
               </div>
             </div>
           </div>
-          {/* <div className="categories-wrapper">
-            <div className="dropdown">
-              <button className="dropdown-btn">
-                <span>Categories</span>
-                <ChevronDown size={16} />
-              </button>
-              <div className="dropdown-content">
-                {Object.entries(allcategories).map(([category, { subcategories }]) => (
-                  <div key={category} className="category-item">
-                    <span>{category}</span>
-                    {subcategories.length > 0 && (
-                      <div className="subcategories-panel">
-                        <div className="subcategories-grid">
-                          {subcategories.map((section, idx) => (
-                            <div key={idx} className="subcategory-column">
-                              <h3>{section.title}</h3>
-                              <ul>
-                                {section.items.map((item, itemIdx) => (
-                                  <li key={itemIdx}>
-                                    <Link to={`/category/${item.toLowerCase().replace(/\s+/g, "-")}`}>
-                                      {item}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div> */}
-
         </div>
 
         <div className="navbar-center">
@@ -209,64 +139,82 @@ const DashNavBar = () => {
           </div>
         </div>
 
-        <NavigationIcons />
+        <div className="navbar-right desktop-icons">
+          <NavigationIcons />
+        </div>
 
-        <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+        <div className="navbar-right mobile-nav-icons">
+          <Link to="/cart" className="icon-link" aria-label="Shopping Cart">
+            <ShoppingCart size={20} />
+          </Link>
+          <Link to="profile/wishlist" className="icon-link" aria-label="Wishlist">
+            <Heart size={20} />
+          </Link>
+          <Link to="/profile" className="icon-link" aria-label="Profile">
+            <User size={20} />
+          </Link>
+        </div>
+        
+        <button className="mobile-menu-btn" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Overlay style */}
       {isMobileMenuOpen && (
-        <div className="mobile-menu">
+        <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-menu-header">
+            <Link to="/" className="mobile-logo">
+              <img src={logo} alt="Logo" className="logo-img" />
+            </Link>
+            <button className="mobile-close-btn" onClick={toggleMobileMenu}>
+              <X size={24} />
+            </button>
+          </div>
+          
           <div className="mobile-search">
             <Search className="search-icon" size={18} />
             <input type="text" placeholder="Search for products, brands and more" />
+            <button className="mobile-search-btn">Search</button>
           </div>
 
           <div className="mobile-categories">
-            {Object.entries(categories).map(([category, { subcategories }]) => (
-              <div key={category} className="mobile-category">
+            {Object.entries(categorizedData).map(([gender, items]) => (
+              <div key={gender} className="mobile-category">
                 <button
                   className="mobile-category-btn"
-                  onClick={() => toggleCategory(category)}
+                  onClick={() => toggleCategory(gender)}
                 >
-                  <span>{category}</span>
+                  <span>{gender.charAt(0).toUpperCase() + gender.slice(1)}</span>
                   <ChevronDown
-                    className={`transform transition-transform ${activeCategory === category ? 'rotate-180' : ''
-                      }`}
+                    className={`transform transition-transform ${activeCategory === gender ? 'rotate-180' : ''}`}
                   />
                 </button>
 
-                {activeCategory === category && subcategories.length > 0 && (
+                {activeCategory === gender && items?.length > 0 && (
                   <div className="mobile-subcategories">
-                    {subcategories.map((section, idx) => (
-                      <div key={idx} className="mobile-subcategory-section">
-                        <h3>{section.title}</h3>
-                        <ul>
-                          {section.items.map((item, itemIdx) => (
-                            <li key={itemIdx}>
-                              <Link to={`/category/${item.toLowerCase().replace(/\s+/g, '-')}`}>
-                                {item}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    <ul>
+                      {items.map((item) => (
+                        <li key={item._id}>
+                          <Link 
+                            to={`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                            onClick={toggleMobileMenu}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>
             ))}
           </div>
-
-          <div className="mobile-links">
-            <Link to="/Cart" className="mobile-link">Cart</Link>
-            <Link to="profile/wishlist" className="mobile-link">Wishlist</Link>
-            <Link to="/profile" className="mobile-link">Profile</Link>
-          </div>
         </div>
       )}
+      
+      {/* Overlay background for mobile menu */}
+      {isMobileMenuOpen && <div className="mobile-menu-overlay" onClick={toggleMobileMenu}></div>}
     </nav>
   );
 };
