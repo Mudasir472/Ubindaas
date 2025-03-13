@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '@fontsource/poppins'; // Defaults to weight 400 (Regular)
 import '@fontsource/poppins/700.css'; // Optional: Import a specific weight
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -30,9 +30,13 @@ import toast, { Toaster } from "react-hot-toast";
 import CollectionDetails from './components/layout/CollectionDetails';
 
 const App = () => {
+  const [cartItems, setCartItems] = useState([]);
 
-  const cartItems = JSON.parse(localStorage.getItem('cart'))
-  console.log(cartItems);
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(items);
+  }, []);
+
 
   return (
     <BrowserRouter>

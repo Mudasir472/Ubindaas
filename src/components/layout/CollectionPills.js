@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-<<<<<<< HEAD
 import '../../styles/components/collection-pills.css';
 import axios from 'axios';
 import config from '../../config';
-=======
->>>>>>> 5c6b066e1056be774585e9a89cac08afab43f720
 
 const CategoryShowcase = () => {
   const scrollRef = useRef(null);

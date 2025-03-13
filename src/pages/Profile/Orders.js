@@ -50,6 +50,7 @@ function Orders() {
 
     // Add more orders
   ];
+console.log(allOrders);
 
   return (
     <div className="orders-page">
@@ -89,8 +90,8 @@ function Orders() {
                     </div>
 
                     <div className="order-items">
-                      {order.items.map(item => (
-                        <div key={item.id} className="order-item">
+                      {order?.items?.map(item => (
+                        <div key={item._id} className="order-item">
                           <img style={{ height: '125px' }} src={item.image || 'https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700'} alt={item.name} />
                           <div className="item-details">
                             <h4>{item?.name || 'DENIM BUSTIER TOP'}</h4>

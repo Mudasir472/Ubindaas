@@ -8,15 +8,15 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem("user"); //it was authToken
+  const isAuthenticated = !!localStorage.getItem("authToken");
 
   const handleCheckout = () => {
     const authToken = localStorage.getItem("authToken");
     const isAuthenticated = !!authToken;
-    
-    console.log('Checkout Auth Check:', { 
-      isAuthenticated, 
-      authToken 
+
+    console.log('Checkout Auth Check:', {
+      isAuthenticated,
+      authToken
     });
 
     if (isAuthenticated) {
@@ -44,7 +44,7 @@ const Cart = () => {
 
   const updateQuantity = (itemId, change) => {
     const updatedItems = cartItems.map(item => {
-      if (item.id === itemId) {
+      if (item._id === itemId) {
         const newQuantity = item.quantity + change;
         if (newQuantity >= 1 && newQuantity <= item.maxQuantity) {
           return { ...item, quantity: newQuantity };
@@ -59,7 +59,7 @@ const Cart = () => {
   };
 
   const removeItem = (itemId) => {
-    const updatedItems = cartItems.filter(item => item.id !== itemId);
+    const updatedItems = cartItems.filter(item => item._id !== itemId);
     setCartItems(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
     calculateSubtotal(updatedItems);
@@ -77,15 +77,15 @@ const Cart = () => {
   return (
     <div className="cart-page">
       <h1>Shopping Cart ({cartItems.length} items)</h1>
-      
+
       <div className="cart-container">
         <div className="cart-items">
           {cartItems.map((item) => (
-            <div key={item.id} className="cart-item">
+            <div key={item._id} className="cart-item">
               <div className="item-image">
-                <img src={item.image} alt={item.name} />
+                <img src={`http://localhost:5000/uploads/products/${item.image}`} alt={item.name} />
               </div>
-              
+
               <div className="item-details">
                 <div className="item-info">
                   <h3>{item.brand}</h3>
@@ -95,15 +95,15 @@ const Cart = () => {
 
                 <div className="item-actions">
                   <div className="quantity-controls">
-                    <button 
-                      onClick={() => updateQuantity(item.id, -1)}
+                    <button
+                      onClick={() => updateQuantity(item._id, -1)}
                       disabled={item.quantity <= 1}
                     >
                       <Minus size={16} />
                     </button>
                     <span>{item.quantity}</span>
-                    <button 
-                      onClick={() => updateQuantity(item.id, 1)}
+                    <button
+                      onClick={() => updateQuantity(item._id, 1)}
                       disabled={item.quantity >= item.maxQuantity}
                     >
                       <Plus size={16} />
@@ -114,9 +114,9 @@ const Cart = () => {
                     <span>₹{(item.price * item.quantity).toFixed(2)}</span>
                   </div>
 
-                  <button 
+                  <button
                     className="remove-item"
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item._id)}
                   >
                     <X size={16} />
                   </button>
@@ -128,17 +128,17 @@ const Cart = () => {
 
         <div className="cart-summary">
           <h2>Order Summary</h2>
-          
+
           <div className="summary-row">
             <span>Subtotal</span>
             <span>₹{subtotal.toFixed(2)}</span>
           </div>
-          
+
           <div className="summary-row">
             <span>Shipping</span>
             <span>FREE</span>
           </div>
-          
+
           <div className="summary-total">
             <span>Total</span>
             <span>₹{subtotal.toFixed(2)}</span>

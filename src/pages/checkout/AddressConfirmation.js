@@ -18,6 +18,7 @@ const AddressConfirmation = ({ cartItems }) => {
     country: '',
     isDefault: false
   });
+console.log(cartItems);
 
   useEffect(() => {
     fetchAddresses();
@@ -79,9 +80,11 @@ const AddressConfirmation = ({ cartItems }) => {
       alert('Please select a delivery address');
       return;
     }
+    console.log("placed");
+    
     try {
       const token = localStorage.getItem('authToken');
-      await axios.post(
+      const resp = await axios.post(
         'http://localhost:5000/api/orders/create', {
         items: cartItems?.map(item => ({
           product: item._id,
@@ -95,6 +98,8 @@ const AddressConfirmation = ({ cartItems }) => {
       },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
+      console.log(resp);
+      
       toast.success('Order Placed Successfully ✅');
       navigate('/profile/orders');
     } catch (error) {
@@ -157,7 +162,7 @@ const AddressConfirmation = ({ cartItems }) => {
           {cartItems.map((item) => (
             <div key={item._id} className="card mb-2 p-2">
               <div className="d-flex align-items-center">
-                <img src={item.image} alt={item.name} className="me-2" style={{ width: '50px', height: '50px' }} />
+                <img src={`http://localhost:5000/uploads/products/${item.image}`} alt={item.name} className="me-2" style={{ width: '50px', height: '50px' }} />
                 <div>
                   <p className="mb-0">{item.name}</p>
                   <p className="mb-0">Qty: {item.quantity} | ₹{item.price}</p>

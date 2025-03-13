@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function ProductGrid() {
   const [offer, setOffer] = useState(null);
-  const [allProducts, setAllProducts] = useState(null);
+  const [allProducts, setAllProducts] = useState([]); 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -17,7 +17,7 @@ function ProductGrid() {
     priceRanges: [],
     discounts: []
   });
-  // console.log(allProducts);
+  const [filteredProducts, setFilteredProducts] = useState([]); 
 
   const handleQuickView = (product) => {
     setSelectedProduct(product);
@@ -30,138 +30,13 @@ function ProductGrid() {
   const fetchAllProducts = async () => {
     try {
       const resp = await axios.get('http://localhost:5000/api/products/');
-      // console.log(resp?.data?.data?.products);
-      setAllProducts(resp?.data?.data?.products)
+      setAllProducts(resp?.data?.data?.products || []); 
+      setFilteredProducts(resp?.data?.data?.products || []); 
     } catch (err) {
       console.log(err);
     }
-  }
-
-  const initialProducts = [
-    {
-      id: 1,
-      title: "CAVIAR BLACK KOREAN MINI SKORT",
-      price: 1199,
-      originalPrice: 1899,
-      discount: 37,
-      rating: 4.33,
-      category: "Bottoms",
-      image: "https://freakins.com/cdn/shop/files/4thjuly24_14382_20ecb707-0627-4380-b13c-3eb8e885116b.jpg?v=1720520146&width=700"
-    },
-    {
-      id: 2,
-      title: "GOTHIC CHAINED BLACK DENIM TOP",
-      price: 1099,
-      originalPrice: 2899,
-      discount: 62,
-      rating: 4.62,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/products/MyFreakins01272.jpg?v=1670596442&width=700"
-    },
-    {
-      id: 3,
-      title: "DENIM BUSTIER TOP",
-      price: 999,
-      originalPrice: 2699,
-      discount: 63,
-      rating: 4.75,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
-    },
-    {
-      id: 4,
-      title: "JEAN CORSET TOP CURVE",
-      price: 999,
-      originalPrice: 2199,
-      discount: 55,
-      rating: 4.62,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/files/09JUNEPART2_8062-Edit.jpg?v=1718194545&width=700"
-    },
-    {
-      id: 5,
-      title: "CAVIAR BLACK KOREAN MINI SKORT",
-      price: 1199,
-      originalPrice: 1899,
-      discount: 37,
-      rating: 4.33,
-      category: "Bottoms",
-      image: "https://freakins.com/cdn/shop/files/4thjuly24_14382_20ecb707-0627-4380-b13c-3eb8e885116b.jpg?v=1720520146&width=700"
-    },
-    {
-      id: 6,
-      title: "GOTHIC CHAINED BLACK DENIM TOP",
-      price: 1099,
-      originalPrice: 2899,
-      discount: 62,
-      rating: 4.62,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/products/MyFreakins01272.jpg?v=1670596442&width=700"
-    },
-    {
-      id: 7,
-      title: "DENIM BUSTIER TOP",
-      price: 999,
-      originalPrice: 2699,
-      discount: 63,
-      rating: 4.75,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
-    },
-    {
-      id: 8,
-      title: "JEAN CORSET TOP CURVE",
-      price: 999,
-      originalPrice: 2199,
-      discount: 55,
-      rating: 4.62,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/files/09JUNEPART2_8062-Edit.jpg?v=1718194545&width=700"
-    },
-    {
-      id: 9,
-      title: "CAVIAR BLACK KOREAN MINI SKORT",
-      price: 1199,
-      originalPrice: 1899,
-      discount: 37,
-      rating: 4.33,
-      category: "Bottoms",
-      image: "https://freakins.com/cdn/shop/files/4thjuly24_14382_20ecb707-0627-4380-b13c-3eb8e885116b.jpg?v=1720520146&width=700"
-    },
-    {
-      id: 10,
-      title: "GOTHIC CHAINED BLACK DENIM TOP",
-      price: 1099,
-      originalPrice: 2899,
-      discount: 62,
-      rating: 4.62,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/products/MyFreakins01272.jpg?v=1670596442&width=700"
-    },
-    {
-      id: 11,
-      title: "DENIM BUSTIER TOP",
-      price: 999,
-      originalPrice: 2699,
-      discount: 63,
-      rating: 4.75,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
-    },
-    {
-      id: 12,
-      title: "JEAN CORSET TOP CURVE",
-      price: 999,
-      originalPrice: 2199,
-      discount: 55,
-      rating: 4.62,
-      category: "Tops",
-      image: "https://freakins.com/cdn/shop/files/09JUNEPART2_8062-Edit.jpg?v=1718194545&width=700"
-    }
-  ];
-
-  const [products] = useState(initialProducts);
-  const [filteredProducts, setFilteredProducts] = useState(initialProducts);
+  };
+  console.log(allProducts);
 
   const handleApplyFilters = (newFilters) => {
     setActiveFilters(newFilters);
@@ -173,13 +48,12 @@ function ProductGrid() {
   };
 
   useEffect(() => {
-    let result = [...products];
+    let result = [...allProducts]; 
 
-    // Only apply filters if they exist
     if (Object.values(activeFilters).some(arr => arr.length > 0)) {
       if (activeFilters.categories.length > 0) {
         result = result.filter(product =>
-          activeFilters.categories.includes(product.category)
+          activeFilters.categories.includes(product.category?.name) 
         );
       }
 
@@ -214,7 +88,7 @@ function ProductGrid() {
           case 'price-high':
             return b.price - a.price;
           case 'rating':
-            return b.rating - a.rating;
+            return b.averageRating - a.averageRating;
           default:
             return 0;
         }
@@ -222,37 +96,34 @@ function ProductGrid() {
     }
 
     setFilteredProducts(result);
-  }, [activeFilters, sortBy, products]);
+  }, [activeFilters, sortBy, allProducts]); 
 
   useEffect(() => {
     const fetchOffer = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/banners');
-        // console.log(response.data?.data);
-        setOffer(response.data?.data)
-
+        setOffer(response.data?.data);
       } catch (error) {
         console.log(error);
-
       }
-    }
+    };
     fetchOffer();
-  }, [])
+  }, []);
+
   const offerBanner = Array.isArray(offer)
     ? offer.find((ele) => ele?.bannerFor === 'offer')
     : [];
 
-
   useEffect(() => {
-    fetchAllProducts()
-  }, [])
+    fetchAllProducts();
+  }, []);
+
   return (
     <div className="products-section">
       <div className="filters-bar">
         <div className="sort-options">
           <h2 style={{ display: 'flex', justifyContent: 'center' }}>
             <img src="/new-arrival.png" style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" />
-            {/* <img src={offerBanner?.image} style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" /> */}
           </h2>
         </div>
         <button
@@ -276,7 +147,7 @@ function ProductGrid() {
       <div className="product-grid">
         {Array.isArray(filteredProducts) && filteredProducts.map(product => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             product={product}
             onQuickView={() => handleQuickView(product)}
           />

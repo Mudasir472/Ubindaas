@@ -13,7 +13,7 @@ function QuickView({ product, onClose }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   if (!product) return null;
   const sizes = ['XS', 'S', 'M', 'L', 'XL'];
-  const { title, price, originalPrice, discount, rating, image } = product;
+  const { _id, name, price, salePrice, discount, averageRating, images } = product;
 
   const handleAddToWishlist = async () => {
     try {
@@ -37,11 +37,11 @@ function QuickView({ product, onClose }) {
     }
 
     const cartItem = {
-      id: `${product.id}-${selectedSize}`,
-      name: product.title,
-      brand: product.brand,
-      price: product.price,
-      image: product?.image,
+      _id: product?._id,
+      name: product?.name,
+      brand: product?.brand,
+      price: product?.price,
+      image: product?.images[0],
       size: selectedSize,
       quantity: quantity,
       maxQuantity: 10
@@ -76,7 +76,7 @@ function QuickView({ product, onClose }) {
 
         <div className="quick-view-content">
           <div className="product-image1">
-            <img src={image} alt={title} />
+            <img src={`http://localhost:5000/uploads/products/${images[0]}`} alt={name} className="product-image" />
             {discount && (
               <span className="discount-badge1">
                 {discount}% OFF
@@ -85,17 +85,17 @@ function QuickView({ product, onClose }) {
           </div>
 
           <div className="product-details1">
-            <h2 className="product-title">{title}</h2>
+            <h2 className="product-title">{name}</h2>
 
             <div className="rating-container1">
               <FiStar className="star-icon1" />
-              <span>{rating}</span>
+              <span>{averageRating}</span>
             </div>
 
             <div className="price-container1">
               <span className="current-price1">₹{price}</span>
-              {originalPrice && (
-                <span className="original-price1">₹{originalPrice}</span>
+              {salePrice && (
+                <span className="original-price1">₹{salePrice}</span>
               )}
               {discount && (
                 <span className="discount-text1">{discount}% OFF</span>
