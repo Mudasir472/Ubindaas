@@ -2,12 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { Heart, Minus, Plus, Share2, Star, Truck, X } from 'lucide-react';
 import RelatedProducts from '../components/product/RelatedProducts';
-import { Link } from 'react-router-dom';
+import FeaturedProducts from "../components/product/FeaturedProducts"
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios'
 import "../styles/pages/product-details.css";
 import Reviews from './Reviews';
 
 const ProductDetails = () => {
+  const { id } = useParams()
+  const [products, setProducts] = useState([]);
+  const [currProduct, setCurrProduct] = useState([]);
+
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -57,11 +62,16 @@ const ProductDetails = () => {
       console.error("Error adding to wishlist:", error.response?.data || error);
     }
   };
+  useEffect(() => {
+    const currProduct = Array.isArray(products) && products.find((item) => item._id === id);
+    setCurrProduct(currProduct);
+  }, [products, id]);
+
 
   const fetchProducts = async () => {
     try {
       const resp = await axios.get('http://localhost:5000/api/products');
-      console.log("res", resp?.data?.data?.products);
+      setProducts(resp?.data?.data?.products);
 
     } catch (error) {
       console.log(error);
@@ -72,6 +82,7 @@ const ProductDetails = () => {
   useEffect(() => {
     fetchProducts()
   }, [])
+
 
 
   const handleQuantityChange = (change) => {
@@ -88,18 +99,17 @@ const ProductDetails = () => {
     }
 
     const cartItem = {
-      id: `${product.id}-${selectedSize}`,
-      name: product.title,
-      brand: product.brand,
-      price: product.price,
-      image: product.images[0],
+      id: currProduct._id,
+      name: currProduct?.name,
+      price: currProduct?.price,
+      image: currProduct?.images[0],
       size: selectedSize,
       quantity: quantity,
       maxQuantity: 10
     };
 
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+    const existingItemIndex = cart.findIndex(item => item._id === cartItem.id);
 
     if (existingItemIndex !== -1) {
       const newQuantity = cart[existingItemIndex].quantity + quantity;
@@ -142,8 +152,10 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchRatings = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/ratings/product${product?.id}`);
+        const response = await axios.get(`http://localhost:5000/api/ratings/product/${currProduct?._id}`);
         setRatings(response.data.data);
+        console.log(response?.data);
+
       } catch (err) {
         console.log(err);
         // setError("Error fetching ratings");
@@ -151,29 +163,29 @@ const ProductDetails = () => {
     };
 
     // now we can display reviews of current product on frontend
+    if (currProduct?._id) fetchRatings();
+  }, [currProduct?._id]);
 
-    if (product?.id) fetchRatings();
-  }, [product?.id]);
   return (
     <div className="product-details">
       <div className="product-container">
         {/* Left Column - Images */}
         <div className="product-gallery">
           <div className="thumbnails-container">
-            {product.images.map((img, idx) => (
+            {Array.isArray(currProduct?.images) && currProduct?.images?.map((img, idx) => (
               <div
                 key={idx}
                 className={`thumbnail ${selectedImage === idx ? 'active' : ''}`}
                 onClick={() => setSelectedImage(idx)}
               >
-                <img src={img} alt={`Product view ${idx + 1}`} />
+                <img src={`http://localhost:5000/uploads/products/${img}`} alt={`Product view ${idx + 1}`} />
               </div>
             ))}
           </div>
           <div className="main-image-container" onClick={() => setIsModalOpen(true)}>
             <img
-              src={product.images[selectedImage]}
-              alt={product.title}
+              src={currProduct?.images?.[0] ? `http://localhost:5000/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"}
+              alt={currProduct?.name || "Product Image"}
               className="main-image"
             />
             <span className="zoom-hint">Click to zoom</span>
@@ -183,22 +195,22 @@ const ProductDetails = () => {
         {/* Right Column - Product Info */}
         <div className="product-info">
           <div className="brand-title">
-            <h2 className="brand">{product.brand}</h2>
-            <h1 className="title">{product.title}</h1>
+            <h2 className="brand">{currProduct?.slug}</h2>
+            <h1 className="title">{currProduct?.name}</h1>
           </div>
 
           <div className="rating">
             <div className="stars">
-              {renderStars(product.rating)}
-              <span className="rating-number">{product.rating}</span>
+              {renderStars(currProduct?.ratingCount)}
+              <span className="rating-number">{currProduct?.ratingCount}</span>
             </div>
-            <span className="rating-count">({product.ratingCount} Reviews)</span>
+            <span className="rating-count">({currProduct?.ratingCount} Reviews)</span>
           </div>
 
           <div className="price-section">
-            <span className="current-price">₹{product.price}</span>
-            <span className="original-price">₹{product.originalPrice}</span>
-            <span className="discount">({product.discount}% OFF)</span>
+            <span className="current-price">₹{currProduct?.salePrice}</span>
+            <span className="original-price">₹{product?.price}</span>
+            <span className="discount">({product?.discount}% OFF)</span>
           </div>
 
           <div className="size-section">
@@ -207,7 +219,7 @@ const ProductDetails = () => {
               <button className="size-guide">Size Guide</button>
             </div>
             <div className="size-options">
-              {product.sizes.map((size) => (
+              {currProduct?.sizes?.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
@@ -274,7 +286,7 @@ const ProductDetails = () => {
 
           <div className="product-description">
             <h3>Product Details</h3>
-            <p>{product.description}</p>
+            <p>{currProduct?.description}</p>
             <ul>
               {product.details.map((detail, index) => (
                 <li key={index}>{detail}</li>
@@ -292,17 +304,33 @@ const ProductDetails = () => {
             <X size={24} />
           </button>
           <div className="modal-content">
-            <img src={product.images[selectedImage]} alt={product.title} />
+            <img src={currProduct?.images?.[0] ? `http://localhost:5000/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"} alt={currProduct?.name} />
           </div>
         </div>
       )}
 
       {/* Related Products */}
-      <RelatedProducts />
+
+      <FeaturedProducts />
       <div>
         <div>
           <h2>Review Section</h2>
-          <Reviews id={product?.id} />
+          <div>
+            <div>
+              {ratings?.length > 0 ? (
+                ratings?.map((review) => (
+                  <div key={review?._id} className="p-4 border-b">
+                    <h3 className="font-semibold">{review?.userId?.name}</h3>
+                    <p className="text-yellow-500">Rating: {review.rating} ⭐</p>
+                    <p className="text-gray-600">{review.review || "No review provided."}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No reviews available.</p>
+              )}
+            </div>
+          </div>
+          <Reviews id={currProduct?._id} />
         </div>
 
       </div>

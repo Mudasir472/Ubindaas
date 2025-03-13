@@ -56,22 +56,23 @@ const CategoryShowcase = () => {
 
     }
   }
-  console.log(collections);
-
   useEffect(() => {
     fetchCollections();
   }, [])
+
+  console.log();
+  
   return (
-    <div className="category-container" style={{ 
-      padding: '2vh 0', 
-      width: '100%', 
+    <div className="category-container" style={{
+      padding: '2vh 0',
+      width: '100%',
       overflow: 'hidden',
       backgroundColor: 'var(--background-light, #fff5f8)'
     }}>
-      <div className="category-header" style={{ 
-        textAlign: 'center', 
-        marginBottom: '4vh', 
-        position: 'relative' 
+      <div className="category-header" style={{
+        textAlign: 'center',
+        marginBottom: '4vh',
+        position: 'relative'
       }}>
         <h2 className="category-title" style={{
           fontSize: 'clamp(1.25rem, 2vw + 0.5rem, 2rem)', // Responsive font size

@@ -22,7 +22,6 @@ const Carousel = () => {
 
             // Test image loading
             if (bannersData.length > 0) {
-                console.log("Banner data received:", bannersData);
                 bannersData.forEach(banner => {
                     if (banner.image) {
                         const testImage = new Image();

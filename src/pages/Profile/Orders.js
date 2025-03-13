@@ -50,8 +50,6 @@ function Orders() {
 
     // Add more orders
   ];
-console.log(allOrders);
-
   return (
     <div className="orders-page">
       <div className="orders-container">
@@ -88,15 +86,20 @@ console.log(allOrders);
                         {order?.status}
                       </span>
                     </div>
-
+                    {console.log(order)
+                    }
                     <div className="order-items">
-                      {order?.items?.map(item => (
+                      {order?.items?.map((item) => (
                         <div key={item._id} className="order-item">
-                          <img style={{ height: '125px' }} src={item.image || 'https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700'} alt={item.name} />
+                          <img
+                            style={{ height: '125px' }}
+                            src={`http://localhost:5000/uploads/products/${item.product?.images[0]}` || 'https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700'}
+                            alt={item.product?.name}
+                          />
                           <div className="item-details">
-                            <h4>{item?.name || 'DENIM BUSTIER TOP'}</h4>
-                            <p>Size: {item?.size || 'S'}</p>
-                            <span className="item-price">₹{item.price || '1099'}</span>
+                            <h4>{item.product?.name || 'DENIM BUSTIER TOP'}</h4>
+                            <p>Size: {item.size || 'S'}</p>
+                            <span className="item-price">₹{item.product?.price || '1099'}</span>
                           </div>
                         </div>
                       ))}

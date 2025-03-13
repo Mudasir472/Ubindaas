@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function ProductGrid() {
   const [offer, setOffer] = useState(null);
-  const [allProducts, setAllProducts] = useState([]); 
+  const [allProducts, setAllProducts] = useState([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -17,11 +17,12 @@ function ProductGrid() {
     priceRanges: [],
     discounts: []
   });
-  const [filteredProducts, setFilteredProducts] = useState([]); 
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const handleQuickView = (product) => {
     setSelectedProduct(product);
   };
+
 
   const handleCloseQuickView = () => {
     setSelectedProduct(null);
@@ -30,13 +31,12 @@ function ProductGrid() {
   const fetchAllProducts = async () => {
     try {
       const resp = await axios.get('http://localhost:5000/api/products/');
-      setAllProducts(resp?.data?.data?.products || []); 
-      setFilteredProducts(resp?.data?.data?.products || []); 
+      setAllProducts(resp?.data?.data?.products || []);
+      setFilteredProducts(resp?.data?.data?.products || []);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(allProducts);
 
   const handleApplyFilters = (newFilters) => {
     setActiveFilters(newFilters);
@@ -48,12 +48,12 @@ function ProductGrid() {
   };
 
   useEffect(() => {
-    let result = [...allProducts]; 
+    let result = [...allProducts];
 
     if (Object.values(activeFilters).some(arr => arr.length > 0)) {
       if (activeFilters.categories.length > 0) {
         result = result.filter(product =>
-          activeFilters.categories.includes(product.category?.name) 
+          activeFilters.categories.includes(product.category?.name)
         );
       }
 
@@ -96,7 +96,7 @@ function ProductGrid() {
     }
 
     setFilteredProducts(result);
-  }, [activeFilters, sortBy, allProducts]); 
+  }, [activeFilters, sortBy, allProducts]);
 
   useEffect(() => {
     const fetchOffer = async () => {

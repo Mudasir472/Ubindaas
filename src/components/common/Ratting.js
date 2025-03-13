@@ -78,6 +78,8 @@ const Ratting = () => {
     try {
       const response = await axios.get('http://localhost:5000/api/ratings/getAllRatings');
       setAllReviews(response?.data?.ratings);
+      console.log(response?.data?.ratings);
+
     } catch (err) {
       console.log(err);
     }
@@ -93,7 +95,7 @@ const Ratting = () => {
     if (container) {
       const scrollAmount = direction === 'left' ? -330 : 330; // Width of card + margin
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      
+
       // Update scroll position for arrow visibility
       setScrollPosition(container.scrollLeft + scrollAmount);
     }
@@ -108,8 +110,8 @@ const Ratting = () => {
 
   // Determine if arrows should be visible based on scroll position
   const showLeftArrow = scrollPosition > 0;
-  const showRightArrow = scrollContainerRef.current ? 
-    scrollPosition < scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth - 10 : 
+  const showRightArrow = scrollContainerRef.current ?
+    scrollPosition < scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth - 10 :
     true;
 
   // Use actual reviews if available, otherwise use dummy data
@@ -118,42 +120,42 @@ const Ratting = () => {
   return (
     <div className="customer-reviews">
       <h2 className="reviews-title">CUSTOMER REVIEWS</h2>
-      
+
       <div className="reviews-scroll-container">
         {showLeftArrow && (
           <button className="scroll-arrow scroll-left" onClick={() => scroll('left')}>
             <LeftArrow />
           </button>
         )}
-        
-        <div 
-          className="reviews-container" 
+
+        <div
+          className="reviews-container"
           ref={scrollContainerRef}
           onScroll={handleScroll}
         >
-          {displayReviews.map((review, index) => (
+          {displayReviews?.map((review, index) => (
             <div key={index} className="review-card">
               <div className="review-image-container">
-                <img src={review.image} alt={`${review.name}'s review`} className="review-image" />
+                <img src={review?.userId?.image?.url} alt={`${review?.userId?.name}'s review`} className="review-image" />
               </div>
               <div className="review-stars">
-                {[...Array(review.stars)].map((_, i) => (
+                {[...Array(review.rating)].map((_, i) => (
                   <StarIcon key={i} />
                 ))}
               </div>
               <p className="review-text">{review.review}</p>
-              <p className="review-name">{review.name}</p>
+              <p className="review-name">{review?.userId?.name}</p>
             </div>
           ))}
         </div>
-        
+
         {showRightArrow && (
           <button className="scroll-arrow scroll-right" onClick={() => scroll('right')}>
             <RightArrow />
           </button>
         )}
       </div>
-      
+
     </div>
   );
 };

@@ -6,7 +6,6 @@ import ReviewBlock from "./ReviewBlock";
 
 function Reviews({ id }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [reviews, setReviews] = useState([]);
     const [reviewData, setReviewData] = useState({ rating: 5, review: '' });
     const [ratings, setRatings] = useState([0, 0, 0, 0, 0]);
     const navigate = useNavigate();
@@ -17,13 +16,12 @@ function Reviews({ id }) {
         setShowAll((prevShowAll) => !prevShowAll);
     };
 
-    const token = localStorage.getItem("token");
-    const visibleReviews = showAll ? reviews : reviews.slice(0, 2);
+    const token = localStorage.getItem("authToken");
 
     const submitReview = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`http://localhost:5000/ratings/${id}`, reviewData, {
+            const res = await axios.post(`http://localhost:5000/api/ratings/${id}`, reviewData, {
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials: true,
             });
@@ -39,15 +37,15 @@ function Reviews({ id }) {
         }
     };
 
-    useEffect(() => {
-        const counts = [0, 0, 0, 0, 0];
-        reviews.forEach((review) => {
-            counts[review.rating - 1] += 1;
-        });
-        const total = reviews.length || 1;
-        const percentages = counts.map((count) => (count / total) * 100);
-        setRatings(percentages);
-    }, [reviews]);
+    // useEffect(() => {
+    //     const counts = [0, 0, 0, 0, 0];
+    //     newReview?.forEach((review) => {
+    //         counts[review.rating - 1] += 1;
+    //     });
+    //     const total = newReview?.length || 1;
+    //     const percentages = counts.map((count) => (count / total) * 100);
+    //     setRatings(percentages);
+    // }, [newReview]);
 
     const handleReviewChange = (e) => {
         const { name, value } = e.target;
@@ -83,30 +81,9 @@ function Reviews({ id }) {
                         </p>
                         <p>Top Rating</p>
                     </div>
-                    <div className="w-50">
-                        {ratings.reverse().map((value, index) => (
-                            <p key={index}>
-                                {ratings.length - index} stars
-                                <span className="ms-2">
-                                    <progress className="w-100" value={value} max="100"></progress>
-                                </span>
-                            </p>
-                        ))}
-                    </div>
+                    
                 </div>
-                <div className="mt-4">
-                    {visibleReviews.map((review, index) => (
-                        <ReviewBlock review={review} index={index} key={index} />
-                    ))}
-                    <hr />
-                    {reviews.length > 2 && (
-                        <div className="text-center">
-                            <button className="btn btn-outline-warning w-25" onClick={handleToggle}>
-                                {showAll ? "Show Less" : "More..."}
-                            </button>
-                        </div>
-                    )}
-                </div>
+                
                 <button className="btn btn-warning w-25 mt-3" onClick={() => setIsModalOpen(true)}>
                     Write a Review
                 </button>
@@ -143,10 +120,10 @@ function Reviews({ id }) {
                                         <label htmlFor="comment">Comment</label>
                                         <textarea
                                             className="form-control"
-                                            id="comment"
-                                            name="comment"
+                                            id="review"
+                                            name="review"
                                             rows="4"
-                                            value={reviewData.comment}
+                                            value={reviewData.review}
                                             onChange={handleReviewChange}
                                         ></textarea>
                                     </div>

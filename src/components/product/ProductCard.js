@@ -7,9 +7,6 @@ function ProductCard({ product, onQuickView }) {
   const navigate = useNavigate();
   const { _id, name, price, salePrice, discount, averageRating, images } = product;
 
-  console.log(images);
-
-
   const handleClick = () => {
     navigate(`/product/${_id}`);
   };
