@@ -23,17 +23,20 @@ function Wishlist() {
       const token = localStorage.getItem('authToken');
       const response = await axios.get('http://localhost:5000/api/customer/wishlist', {
         headers: {
-          Authorization: `Bearer ${token}`
+          authorization: `Bearer ${token}`
         },
         withCredentials: true,
       });
-      setWishItems(response.data);
+
+      setWishItems(response?.data?.wishlist);
 
     } catch (err) {
       console.log(err);
 
     }
   }
+  console.log(wishItems);
+
   useEffect(() => {
     fetchWishListItems();
   }, []);
@@ -42,7 +45,7 @@ function Wishlist() {
       <div className="wishlist-container">
         <div className="wishlist-header">
           <h1>My Wishlist</h1>
-          <span>{wishItems?.length } items</span>
+          <span>{wishItems?.length} items</span>
         </div>
 
         {
@@ -50,18 +53,20 @@ function Wishlist() {
             <h2>No items</h2>
           </>) : (<>
             <div className="wishlist-grid">
-                {(wishItems || wishlistItems)?.map(item => (
-                <div key={item.id} className="wishlist-item">
+              {(wishItems)?.map(item => (
+                <div key={item._id} className="wishlist-item">
                   <button className="remove-btn">
                     <FiHeart />
                   </button>
 
                   <div className="item-image">
-                    <img src={item.image} alt={item.title} />
+                    {console.log(item)}
+
+                    <img src={`http://localhost:5000/uploads/products/${item?.images[0]}`} alt={item.title} />
                   </div>
 
                   <div className="item-detailss">
-                    <h3>{item.title}</h3>
+                    <h3>{item.name}</h3>
                     <div className="price-details">
                       <span className="current-price">₹{item.price}</span>
                       <span className="original-price">₹{item.originalPrice}</span>
@@ -69,11 +74,11 @@ function Wishlist() {
                     </div>
 
                     <button
-                      className={`add-to-cart ${!item.inStock ? 'out-of-stock' : ''}`}
-                      disabled={!item.inStock}
+                      className={`add-to-cart ${!item?.stock > 0 ? 'out-of-stock' : ''}`}
+                      disabled={!item?.stock > 0}
                     >
                       <FiShoppingBag />
-                      {item.inStock ? 'Add to Cart' : 'Out of Stock'}
+                      {item?.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
                     </button>
                   </div>
                 </div>

@@ -47,12 +47,20 @@ const ProductDetails = () => {
       "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
     ]
   };
-  const handleAddToWishlist = async () => {
+  const handleAddToWishlist = async (currProduct) => {
     try {
+      const token = localStorage.getItem('authToken');
+      console.log(token);
+
       const response = await axios.post(
-        "http://localhost:5000/api/customer/wishlist",
-        { productId: product._id, userid: user._id },
-        { withCredentials: true }
+        'http://localhost:5000/api/customer/wishlist',
+        { productId: currProduct._id }, // Request payload (body)
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
       );
 
       if (response.data.success) {
@@ -279,7 +287,7 @@ const ProductDetails = () => {
             </button>
           </div>
 
-          <button onClick={handleAddToWishlist} className="wishlist-button">
+          <button onClick={() => { handleAddToWishlist(currProduct) }} className="wishlist-button">
             <Heart size={18} />
             {isWishlisted ? 'WISHLISHED' : 'WISHLISH'}
           </button>
