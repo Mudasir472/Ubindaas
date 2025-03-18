@@ -262,7 +262,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          
+
 
           <div className="delivery-check">
             <div className="pincode-input">
@@ -305,7 +305,7 @@ const ProductDetails = () => {
                 muted
                 loop
               >
-                <source src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/1742292816748-502479524.mp4`} type="video/mp4" />
+                <source src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${currProduct?.video}`} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
