@@ -2,38 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import '../../styles/components/collection-pills.css';
 import axios from 'axios';
-import config from '../../config';
 
 const CategoryShowcase = () => {
   const scrollRef = useRef(null);
   const [collections, setCollections] = useState(null)
-  const API_BASE_URL = config.API_BASE_URL;
-  const categories = [
-    {
-      name: "Anushka's Collection",
-      image: 'https://www.lavanyathelabel.com/cdn/shop/files/Saree_d2031e56-de46-4b42-b13f-194d70e87ff6.png?v=1735369166'
-    },
-    {
-      name: "Khushi's Collection",
-      image: 'https://www.lavanyathelabel.com/cdn/shop/files/Anarkali_1924d254-fd94-45da-bbca-8e41bffad806.png?v=1735369287'
-    },
-    {
-      name: "Nayara's Collections",
-      image: 'https://www.lavanyathelabel.com/cdn/shop/files/Patiala2.png?v=1735807812'
-    },
-    {
-      name: "Manya's Collections",
-      image: 'https://www.lavanyathelabel.com/cdn/shop/files/Lehenga_d96062c2-b3bc-4468-8052-3f0dd8332b85.png?v=1735369417'
-    },
-    {
-      name: "Raziya's Collections",
-      image: 'https://www.lavanyathelabel.com/cdn/shop/files/Suit.png?v=1735369491'
-    },
-    {
-      name: "Swati's Collection",
-      image: 'https://www.lavanyathelabel.com/cdn/shop/files/SHARARA_adb5ea37-a576-4125-bc42-d314c329768e.png?v=1735369557'
-    }
-  ];
+  
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -48,7 +21,7 @@ const CategoryShowcase = () => {
 
   const fetchCollections = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/collection`)
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/collection`)
       setCollections(response?.data);
 
     } catch (error) {
@@ -61,7 +34,7 @@ const CategoryShowcase = () => {
   }, [])
 
   console.log();
-  
+
   return (
     <div className="category-container" style={{
       padding: '2vh 0',

@@ -18,7 +18,7 @@ function Orders() {
     const fetchOrders = async () => {
       const token = localStorage.getItem('authToken');
       try {
-        const response = await axios.get(`http://localhost:5000/api/orders/my-orders`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders/my-orders`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
 
@@ -93,7 +93,7 @@ function Orders() {
                         <div key={item._id} className="order-item">
                           <img
                             style={{ height: '125px' }}
-                            src={`http://localhost:5000/uploads/products/${item.product?.images[0]}` || 'https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700'}
+                            src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${item.product?.images[0]}` || 'https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700'}
                             alt={item.product?.name}
                           />
                           <div className="item-details">

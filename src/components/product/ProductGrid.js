@@ -30,7 +30,7 @@ function ProductGrid() {
 
   const fetchAllProducts = async () => {
     try {
-      const resp = await axios.get('http://localhost:5000/api/products/');
+      const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/`);
       setAllProducts(resp?.data?.data?.products || []);
       setFilteredProducts(resp?.data?.data?.products || []);
     } catch (err) {
@@ -101,7 +101,7 @@ function ProductGrid() {
   useEffect(() => {
     const fetchOffer = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/banners');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/banners`);
         setOffer(response.data?.data);
       } catch (error) {
         console.log(error);
@@ -113,6 +113,7 @@ function ProductGrid() {
   const offerBanner = Array.isArray(offer)
     ? offer.find((ele) => ele?.bannerFor === 'offer')
     : [];
+  console.log(offerBanner);
 
   useEffect(() => {
     fetchAllProducts();

@@ -71,17 +71,14 @@
     left: 0;
     right: 0;
     padding: 10px 10px 10px;
-    background: linear-gradient(to top, 
-      rgba(12, 27, 168, 0.6) 0%,
-      rgba(18, 63, 207, 0.176) 50%,
-      transparent 100%);
+    background: black;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: white;
     z-index: 2;
   }
   
-  .product-title {
+  .productTitle {
     font-size: 18px;
     font-weight: 600;
     margin: 0;

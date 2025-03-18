@@ -7,11 +7,13 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios'
 import "../styles/pages/product-details.css";
 import Reviews from './Reviews';
+import { Modal, Button } from "react-bootstrap";
 
 const ProductDetails = () => {
   const { id } = useParams()
   const [products, setProducts] = useState([]);
   const [currProduct, setCurrProduct] = useState([]);
+  const [isVideoOpen, setIsVideoOpen] = useState(true);
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -53,7 +55,7 @@ const ProductDetails = () => {
       console.log(token);
 
       const response = await axios.post(
-        'http://localhost:5000/api/customer/wishlist',
+        `${process.env.REACT_APP_API_BASE_URL}/api/customer/wishlist`,
         { productId: currProduct._id }, // Request payload (body)
         {
           headers: {
@@ -78,7 +80,7 @@ const ProductDetails = () => {
 
   const fetchProducts = async () => {
     try {
-      const resp = await axios.get('http://localhost:5000/api/products');
+      const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products`);
       setProducts(resp?.data?.data?.products);
 
     } catch (error) {
@@ -160,7 +162,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchRatings = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/ratings/product/${currProduct?._id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/ratings/product/${currProduct?._id}`);
         setRatings(response.data.data);
         console.log(response?.data);
 
@@ -186,13 +188,13 @@ const ProductDetails = () => {
                 className={`thumbnail ${selectedImage === idx ? 'active' : ''}`}
                 onClick={() => setSelectedImage(idx)}
               >
-                <img src={`http://localhost:5000/uploads/products/${img}`} alt={`Product view ${idx + 1}`} />
+                <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${img}`} alt={`Product view ${idx + 1}`} />
               </div>
             ))}
           </div>
           <div className="main-image-container" onClick={() => setIsModalOpen(true)}>
             <img
-              src={currProduct?.images?.[0] ? `http://localhost:5000/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"}
+              src={currProduct?.images?.[0] ? `${process.env.REACT_APP_API_BASE_URL}/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"}
               alt={currProduct?.name || "Product Image"}
               className="main-image"
             />
@@ -260,6 +262,8 @@ const ProductDetails = () => {
             </div>
           </div>
 
+          
+
           <div className="delivery-check">
             <div className="pincode-input">
               <input
@@ -279,7 +283,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="actions">
-            <button className="buy-now" onClick={buyNow}>
+            <button className="buy-now bg-[black]" onClick={buyNow}>
               Buy Now
             </button>
             <button className="add-to-bag" onClick={addToCart}>
@@ -291,6 +295,21 @@ const ProductDetails = () => {
             <Heart size={18} />
             {isWishlisted ? 'WISHLISHED' : 'WISHLISH'}
           </button>
+          {isVideoOpen && (
+            <div className="position-relative d-flex align-items-center justify-content-end" style={{ cursor: "pointer" }}>
+              <video
+                style={{ height: '123px' }}
+                className="img-fluid rounded border left-0"
+                // controls
+                autoPlay
+                muted
+                loop
+              >
+                <source src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/1742292816748-502479524.mp4`} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
 
           <div className="product-description">
             <h3>Product Details</h3>
@@ -312,7 +331,7 @@ const ProductDetails = () => {
             <X size={24} />
           </button>
           <div className="modal-content">
-            <img src={currProduct?.images?.[0] ? `http://localhost:5000/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"} alt={currProduct?.name} />
+            <img src={currProduct?.images?.[0] ? `${process.env.REACT_APP_API_BASE_URL}/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"} alt={currProduct?.name} />
           </div>
         </div>
       )}
@@ -344,6 +363,7 @@ const ProductDetails = () => {
       </div>
 
     </div>
+
   );
 };
 

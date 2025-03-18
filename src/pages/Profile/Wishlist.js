@@ -5,23 +5,10 @@ import axios from 'axios';
 
 function Wishlist() {
   const [wishItems, setWishItems] = useState(null);
-  const wishlistItems = [
-    {
-      id: 1,
-      title: "DENIM BUSTIER TOP",
-      price: 999,
-      originalPrice: 2699,
-      discount: 63,
-      size: "M",
-      image: "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700",
-      inStock: true
-    }
-    // Add more items
-  ];
   const fetchWishListItems = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.get('http://localhost:5000/api/customer/wishlist', {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/wishlist`, {
         headers: {
           authorization: `Bearer ${token}`
         },
@@ -62,7 +49,7 @@ function Wishlist() {
                   <div className="item-image">
                     {console.log(item)}
 
-                    <img src={`http://localhost:5000/uploads/products/${item?.images[0]}`} alt={item.title} />
+                    <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${item?.images[0]}`} alt={item.title} />
                   </div>
 
                   <div className="item-detailss">

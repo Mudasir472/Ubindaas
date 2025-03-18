@@ -47,7 +47,7 @@ function Profile() {
     try {
       const token = localStorage.getItem('authToken');
       const response = await axios.put(
-        `http://localhost:5000/api/customer/change-password`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/customer/change-password`,
         {
           currentPassword: passwordData.currentPassword,
           newPassword: passwordData.newPassword,
@@ -71,7 +71,7 @@ function Profile() {
     try {
       const token = localStorage.getItem('authToken');
       const response = await axios.put(
-        `http://localhost:5000/api/customer/profile`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/customer/profile`,
         updateData,
         {
           headers: { Authorization: `Bearer ${token}` },

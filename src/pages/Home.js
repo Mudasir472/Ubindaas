@@ -15,6 +15,11 @@ function Home() {
       <CollectionPills />
       <ProductGrid />
       <FeaturesProducts/>
+      <div className="sort-options">
+        <h2 style={{ display: 'flex', justifyContent: 'center' }}>
+          <img src="/new-arrival.png" style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" />
+        </h2>
+      </div>
       <h1 className="shop-heading">Shop Bold. Shop Bindass</h1>
 
       <ProductStories/>

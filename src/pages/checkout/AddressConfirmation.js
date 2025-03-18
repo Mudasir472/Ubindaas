@@ -18,7 +18,7 @@ const AddressConfirmation = ({ cartItems }) => {
     country: '',
     isDefault: false
   });
-console.log(cartItems);
+  console.log(cartItems);
 
   useEffect(() => {
     fetchAddresses();
@@ -27,7 +27,7 @@ console.log(cartItems);
   const fetchAddresses = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.get('http://localhost:5000/api/customer/addresses', {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/addresses`, {
         headers: { 'Authorization': `Bearer ${token}` },
         withCredentials: true,
       });
@@ -48,7 +48,7 @@ console.log(cartItems);
     e.preventDefault();
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.post('http://localhost:5000/api/customer/addresses', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/customer/addresses`, formData, {
         headers: { 'Authorization': `Bearer ${token}` },
         withCredentials: true,
       });
@@ -81,11 +81,11 @@ console.log(cartItems);
       return;
     }
     console.log("placed");
-    
+
     try {
       const token = localStorage.getItem('authToken');
       const resp = await axios.post(
-        'http://localhost:5000/api/orders/create', {
+        `${process.env.REACT_APP_API_BASE_URL} /api/orders/create`, {
         items: cartItems?.map(item => ({
           product: item._id,
           quantity: item.quantity,
@@ -99,7 +99,7 @@ console.log(cartItems);
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       console.log(resp);
-      
+
       toast.success('Order Placed Successfully ✅');
       navigate('/profile/orders');
     } catch (error) {
@@ -162,7 +162,7 @@ console.log(cartItems);
           {cartItems.map((item) => (
             <div key={item._id} className="card mb-2 p-2">
               <div className="d-flex align-items-center">
-                <img src={`http://localhost:5000/uploads/products/${item.image}`} alt={item.name} className="me-2" style={{ width: '50px', height: '50px' }} />
+                <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${item.image}`} alt={item.name} className="me-2" style={{ width: '50px', height: '50px' }} />
                 <div>
                   <p className="mb-0">{item.name}</p>
                   <p className="mb-0">Qty: {item.quantity} | ₹{item.price}</p>
@@ -178,7 +178,7 @@ console.log(cartItems);
 
       <div className="mt-3">
         <div className='d-flex items-center justify-content-center'>
-          <button className="btn btn-success w-32" onClick={placeOrder} disabled={!selectedAddress}>Place Order</button>
+          <button className="btn btn-dark w-32" onClick={placeOrder} disabled={!selectedAddress}>Place Order</button>
         </div>
       </div>
     </div >

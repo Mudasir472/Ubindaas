@@ -76,7 +76,7 @@ const Ratting = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/ratings/getAllRatings');
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/ratings/getAllRatings`);
       setAllReviews(response?.data?.ratings);
       console.log(response?.data?.ratings);
 

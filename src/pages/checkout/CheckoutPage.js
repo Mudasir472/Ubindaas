@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import axios from 'axios'
 
 const CheckoutPage = ({ cartItems }) => {
     const [paymentMethod, setPaymentMethod] = useState("cod");
@@ -14,7 +15,7 @@ const CheckoutPage = ({ cartItems }) => {
                 return;
             }
             const resp = await axios.post(
-                "http://localhost:5000/api/orders/create",
+                `${process.env.REACT_APP_API_BASE_URL}/api/orders/create`,
                 {
                     items: Array.isArray(cartItems?.cartItems)
                         ? cartItems.cartItems.map(item => ({

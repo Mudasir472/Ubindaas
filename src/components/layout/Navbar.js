@@ -46,7 +46,7 @@ const DashNavBar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/categories`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/categories`);
         setCategories(response?.data?.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -58,12 +58,12 @@ const DashNavBar = () => {
 
   const categorizedData = Array.isArray(categories)
     ? categories.reduce((acc, item) => {
-        if (!acc[item.gender]) {
-          acc[item.gender] = [];
-        }
-        acc[item.gender].push(item);
-        return acc;
-      }, {})
+      if (!acc[item.gender]) {
+        acc[item.gender] = [];
+      }
+      acc[item.gender].push(item);
+      return acc;
+    }, {})
     : {};
 
   const toggleMobileMenu = () => {
@@ -80,9 +80,9 @@ const DashNavBar = () => {
     const handleClickOutside = (event) => {
       const mobileMenu = document.querySelector('.mobile-menu');
       const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-      
-      if (isMobileMenuOpen && mobileMenu && !mobileMenu.contains(event.target) && 
-          mobileMenuBtn && !mobileMenuBtn.contains(event.target)) {
+
+      if (isMobileMenuOpen && mobileMenu && !mobileMenu.contains(event.target) &&
+        mobileMenuBtn && !mobileMenuBtn.contains(event.target)) {
         setIsMobileMenuOpen(false);
       }
     };
@@ -154,7 +154,7 @@ const DashNavBar = () => {
             <User size={20} />
           </Link>
         </div>
-        
+
         <button className="mobile-menu-btn" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -171,7 +171,7 @@ const DashNavBar = () => {
               <X size={24} />
             </button>
           </div>
-          
+
           <div className="mobile-search">
             <Search className="search-icon" size={18} />
             <input type="text" placeholder="Search for products, brands and more" />
@@ -196,7 +196,7 @@ const DashNavBar = () => {
                     <ul>
                       {items.map((item) => (
                         <li key={item._id}>
-                          <Link 
+                          <Link
                             to={`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                             onClick={toggleMobileMenu}
                           >
@@ -212,7 +212,7 @@ const DashNavBar = () => {
           </div>
         </div>
       )}
-      
+
       {/* Overlay background for mobile menu */}
       {isMobileMenuOpen && <div className="mobile-menu-overlay" onClick={toggleMobileMenu}></div>}
     </nav>

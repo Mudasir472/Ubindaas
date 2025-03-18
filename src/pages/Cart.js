@@ -83,7 +83,7 @@ const Cart = () => {
           {cartItems.map((item) => (
             <div key={item._id} className="cart-item">
               <div className="item-image">
-                <img src={`http://localhost:5000/uploads/products/${item.image}`} alt={item.name} />
+                <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${item.image}`} alt={item.name} />
               </div>
 
               <div className="item-details">

@@ -18,7 +18,7 @@ function ProductGrid() {
 
   const fetchAllProducts = async () => {
     try {
-      const resp = await axios.get('http://localhost:5000/api/products/');
+      const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/`);
       const featuredProducts = resp?.data?.data?.products.filter(product => product.featured === true) || [];
       setAllProducts(featuredProducts);
     } catch (err) {
@@ -45,6 +45,7 @@ function ProductGrid() {
             onQuickView={() => handleQuickView(product)}
           />
         ))}
+        
       </div>
       {selectedProduct && (
         <QuickView

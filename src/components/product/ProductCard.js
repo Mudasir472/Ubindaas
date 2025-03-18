@@ -19,7 +19,7 @@ function ProductCard({ product, onQuickView }) {
   return (
     <div className="product-card" onClick={handleClick}>
       <div className="product-image-container">
-        {images && <img src={`http://localhost:5000/uploads/products/${images[0]}`} alt={name} className="product-image" />}
+        {images && <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${images[0]}`} alt={name} className="product-image" />}
         {discount && (
           <span className="discount-badge">
             {discount}% OFF

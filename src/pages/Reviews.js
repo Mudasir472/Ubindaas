@@ -21,7 +21,7 @@ function Reviews({ id }) {
     const submitReview = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`http://localhost:5000/api/ratings/${id}`, reviewData, {
+            const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/ratings/${id}`, reviewData, {
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials: true,
             });
@@ -58,7 +58,7 @@ function Reviews({ id }) {
     useEffect(() => {
         const fetchAllReviews = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/ratings/getAllRatings`, {
+                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/ratings/getAllRatings`, {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true,
                 });
@@ -81,10 +81,10 @@ function Reviews({ id }) {
                         </p>
                         <p>Top Rating</p>
                     </div>
-                    
+
                 </div>
-                
-                <button className="btn btn-warning w-25 mt-3" onClick={() => setIsModalOpen(true)}>
+
+                <button className="btn btn-dark w-25 mt-3" onClick={() => setIsModalOpen(true)}>
                     Write a Review
                 </button>
             </div>
@@ -129,7 +129,7 @@ function Reviews({ id }) {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="submit" className="btn btn-warning w-100">Submit Review</button>
+                                    <button type="submit" className="btn btn-dark w-100">Submit Review</button>
                                 </div>
                             </form>
                         </div>

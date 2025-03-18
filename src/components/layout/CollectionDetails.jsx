@@ -2,18 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import config from "../../config";
 
 function CollectionDetails() {
     const { collectionId } = useParams();
     const [currproducts, setCurrProducts] = useState([]);
     const [collection, setCollection] = useState(null);
-    const API_BASE_URL = config.API_BASE_URL;
 
 
     const fetchCollectionsById = async () => {
         try {
-            const resp = await axios.get(`${API_BASE_URL}/api/collection/${collectionId}`)
+            const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/collection/${collectionId}`)
             setCurrProducts(resp?.data?.products) //all products on current collection
             setCollection(resp?.data);
 

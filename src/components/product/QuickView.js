@@ -18,7 +18,7 @@ function QuickView({ product, onClose }) {
   const handleAddToWishlist = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/customer/wishlist",
+        `${process.env.REACT_APP_API_BASE_URL}/api/customer/wishlist`,
         { productId: product._id, userid: user._id },
         { withCredentials: true }
       );
@@ -76,7 +76,7 @@ function QuickView({ product, onClose }) {
 
         <div className="quick-view-content">
           <div className="product-image1">
-            <img src={`http://localhost:5000/uploads/products/${images[0]}`} alt={name} className="product-image" />
+            <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${images[0]}`} alt={name} className="product-image" />
             {discount && (
               <span className="discount-badge1">
                 {discount}% OFF

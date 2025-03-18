@@ -4,7 +4,7 @@ import '../../styles/pages/addresses.css';
 import axios from 'axios';
 import toast from 'react-hot-toast'
 
-function Addresses({  }) {
+function Addresses({ }) {
   const [addresses, setAddresses] = useState([
     {
       id: 1,
@@ -20,7 +20,7 @@ function Addresses({  }) {
     // Add more addresses
   ]);
 
- 
+
   useEffect(() => {
     fetchAddresses();
   }, []);
@@ -28,7 +28,7 @@ function Addresses({  }) {
   const fetchAddresses = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.get('http://localhost:5000/api/customer/addresses', {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/customer/addresses`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -49,7 +49,7 @@ function Addresses({  }) {
   const handleDeleteAddress = async (id) => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.delete(`http://localhost:5000/api/customer/addresses/${id}`, {
+      const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/customer/addresses/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

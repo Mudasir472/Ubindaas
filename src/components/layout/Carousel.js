@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import '../../styles/components/carousel.css';
-import config from "../../config"
 import axios from 'axios';
 
 
@@ -13,10 +12,9 @@ const Carousel = () => {
     const [imageErrors, setImageErrors] = useState({});
 
     // Define the base URL for your API and static assets
-    const API_BASE_URL = config.API_BASE_URL;
     const getBanners = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/banners`);
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/banners`);
             const bannersData = response?.data?.data || [];
             setBanners(bannersData);
 
@@ -25,7 +23,7 @@ const Carousel = () => {
                 bannersData.forEach(banner => {
                     if (banner.image) {
                         const testImage = new Image();
-                        const imageUrl = `${API_BASE_URL}/uploads/banners/${banner.image}`;
+                        const imageUrl = `${process.env.REACT_APP_API_BASE_URL}/uploads/banners/${banner.image}`;
                         testImage.src = imageUrl;
                     }
                 });
@@ -108,7 +106,7 @@ const Carousel = () => {
 
                 <div className="carousel-track" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                     {allBanners.map((slide, index) => {
-                        const imageUrl = `${API_BASE_URL}/uploads/banners/${slide.image}`;
+                        const imageUrl = `${process.env.REACT_APP_API_BASE_URL}/uploads/banners/${slide.image}`;
 
                         return (
                             <div key={index} className="carousel-slide">

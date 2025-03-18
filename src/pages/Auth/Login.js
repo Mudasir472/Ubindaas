@@ -6,8 +6,6 @@ import '../../styles/pages/auth.css';
 import { LoginContext } from '../../context/AuthContext';
 import toast from "react-hot-toast"
 
-// Define API base URL
-const API_BASE_URL = 'http://localhost:5000';
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +21,6 @@ function Login() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -38,7 +35,7 @@ function Login() {
         [name]: ''
       }));
     }
-    
+
     // Clear general login error when user makes changes
     if (loginError) {
       setLoginError('');
@@ -68,20 +65,21 @@ function Login() {
 
     if (validateForm()) {
       setIsLoading(true);
-      
+
       try {
+
         const response = await axios.post(
-          `${API_BASE_URL}/api/auth/login`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/login`,
           formData,
           { withCredentials: true }
         );
-        
+
         // Make sure we have valid response data
         if (response.data?.result?.user && response.data?.result?.authToken) {
           setLoginData(response.data.result.user);
           localStorage.setItem('authToken', JSON.stringify(response.data.result.authToken));
           localStorage.setItem('user', JSON.stringify(response.data.result.user));
-          
+
           toast.success("Login Successful");
           navigate(from, { replace: true });
         } else {
@@ -92,12 +90,12 @@ function Login() {
         }
       } catch (error) {
         console.error("Login error:", error);
-        
+
         // Extract the error message from the response if available
-        const errorMessage = error.response?.data?.error || 
-                             error.message || 
-                             "Login failed. Please check your credentials.";
-        
+        const errorMessage = error.response?.data?.error ||
+          error.message ||
+          "Login failed. Please check your credentials.";
+
         toast.error(errorMessage);
         setLoginError(errorMessage);
       } finally {

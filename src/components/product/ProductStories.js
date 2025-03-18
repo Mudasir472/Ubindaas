@@ -14,7 +14,7 @@ const ProductStories = () => {
   // Fetch all products from the API
   const fetchAllProducts = async () => {
     try {
-      const resp = await axios.get('http://localhost:5000/api/products/');
+      const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/`);
       setAllProducts(resp?.data?.data?.products || []);
     } catch (err) {
       console.log(err);
@@ -29,7 +29,6 @@ const ProductStories = () => {
   const productsWithVideos = allProducts.filter(product => {
     return product.video && typeof product.video === 'string' && product.video.trim() !== '';
   });
-  console.log(productsWithVideos);
 
 
   useEffect(() => {
@@ -126,12 +125,12 @@ const ProductStories = () => {
             className="modal-video"
             controls
             autoPlay
-            src={`http://localhost:5000/uploads/videos/${story?.video}`}
+            src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${story?.video}`}
           />
 
           <div className="modal-info">
             <div>
-              <h3 className="product-title">{story.title}</h3>
+              <h3 className="productTitle">{story.title}</h3>
               <p className="product-price">{story.price}</p>
             </div>
             <button className="modal-add-to-cart">
@@ -163,7 +162,7 @@ const ProductStories = () => {
           >
             <div className="story-media-container">
               <img
-                src={`http://localhost:5000/uploads/products/${product.images[0]}`}
+                src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${product.images[0]}`}
                 alt={product.name}
                 className="story-image"
               />
@@ -171,7 +170,7 @@ const ProductStories = () => {
                 <video
                   ref={el => videoRefs.current[product._id] = el}
                   className="story-video"
-                  src={`http://localhost:5000/uploads/videos/${product?.video}`}
+                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${product?.video}`}
                   muted
                   loop
                   playsInline
@@ -182,7 +181,7 @@ const ProductStories = () => {
                 </div>
               )}
               <div className="story-overlay">
-                <h3 className="product-title">{product.name}</h3>
+                <h3 className="productTitle">{product.name}</h3>
                 <p className="product-price">{product.price}</p>
               </div>
             </div>
