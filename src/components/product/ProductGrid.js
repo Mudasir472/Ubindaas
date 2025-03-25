@@ -98,22 +98,22 @@ function ProductGrid() {
     setFilteredProducts(result);
   }, [activeFilters, sortBy, allProducts]);
 
-  useEffect(() => {
-    const fetchOffer = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/banners`);
-        setOffer(response.data?.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchOffer();
-  }, []);
+  // useEffect(() => {
+  //   const fetchOffer = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/banners`);
+  //       setOffer(response.data?.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchOffer();
+  // }, []);
 
-  const offerBanner = Array.isArray(offer)
-    ? offer.find((ele) => ele?.bannerFor === 'offer')
-    : [];
-  console.log(offerBanner);
+  // const offerBanner = Array.isArray(offer)
+  //   ? offer.find((ele) => ele?.bannerFor === 'offer')
+  //   : [];
+  // console.log(offerBanner);
 
   useEffect(() => {
     fetchAllProducts();
@@ -122,20 +122,8 @@ function ProductGrid() {
   return (
     <div className="products-section">
       <div className="filters-bar">
-        <div className="sort-options">
-          <h2 style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src="/new-arrival.png" style={{ width: '100%', height: '130px' }} alt="New Arrivals Banner" />
-          </h2>
-        </div>
-        <button
-          className="filter-btn"
-          onClick={() => setIsFilterOpen(true)}
-        >
-          <FiFilter />
-          {Object.values(activeFilters).flat().length > 0
-            ? `Filters (${Object.values(activeFilters).flat().length})`
-            : 'Filters'}
-        </button>
+        
+        
       </div>
 
       <FilterSidebar
@@ -145,7 +133,7 @@ function ProductGrid() {
         onApplyFilters={handleApplyFilters}
       />
 
-      <div className="product-grid">
+      <div className="product-grid mt-5">
         {Array.isArray(filteredProducts) && filteredProducts.map(product => (
           <ProductCard
             key={product._id}

@@ -6,18 +6,7 @@ import toast from 'react-hot-toast'
 
 function Addresses({ }) {
   const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      name: 'John Doe',
-      type: 'Home',
-      address: '123 Main St',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400001',
-      phone: '9876543210',
-      isDefault: true
-    }
-    // Add more addresses
+    
   ]);
 
 

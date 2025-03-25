@@ -78,7 +78,6 @@ const Ratting = () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/ratings/getAllRatings`);
       setAllReviews(response?.data?.ratings);
-      console.log(response?.data?.ratings);
 
     } catch (err) {
       console.log(err);
@@ -136,7 +135,7 @@ const Ratting = () => {
           {displayReviews?.map((review, index) => (
             <div key={index} className="review-card">
               <div className="review-image-container">
-                <img src={review?.userId?.image?.url} alt={`${review?.userId?.name}'s review`} className="review-image" />
+                {/* <img src={review?.userId?.image?.url} alt={`${review?.userId?.name}'s review`} className="review-image" /> */}
               </div>
               <div className="review-stars">
                 {[...Array(review.rating)].map((_, i) => (

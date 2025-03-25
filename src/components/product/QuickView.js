@@ -66,6 +66,7 @@ function QuickView({ product, onClose }) {
     setIsAddedToCart(true);
     setTimeout(() => setIsAddedToCart(false), 2000);
   };
+  const discountPercentage = ((product?.price - product?.salePrice) / product?.price) * 100;
 
   return (
     <div className="quick-view-overlay" onClick={onClose}>
@@ -93,12 +94,12 @@ function QuickView({ product, onClose }) {
             </div>
 
             <div className="price-container1">
-              <span className="current-price1">₹{price}</span>
+              <span className="current-price1">₹{product?.salePrice}</span>
               {salePrice && (
-                <span className="original-price1">₹{salePrice}</span>
+                <span className="original-price1">₹{product?.price}</span>
               )}
-              {discount && (
-                <span className="discount-text1">{discount}% OFF</span>
+              {discountPercentage && (
+                <span className="discount-texxt text-primary">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
               )}
             </div>
 

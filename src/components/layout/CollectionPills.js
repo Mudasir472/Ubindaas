@@ -33,8 +33,6 @@ const CategoryShowcase = () => {
     fetchCollections();
   }, [])
 
-  console.log();
-
   return (
     <div className="category-container" style={{
       padding: '2vh 0',
@@ -42,10 +40,11 @@ const CategoryShowcase = () => {
       overflow: 'hidden',
       backgroundColor: 'var(--background-light, #fff5f8)'
     }}>
-      <div className="category-header" style={{
+      <div className="category-header mt-5" style={{
         textAlign: 'center',
         marginBottom: '4vh',
         position: 'relative'
+
       }}>
         <h2 className="category-title" style={{
           fontSize: 'clamp(1.25rem, 2vw + 0.5rem, 2rem)', // Responsive font size
@@ -55,29 +54,9 @@ const CategoryShowcase = () => {
           padding: '0 3vw',
           position: 'relative'
         }}>
-          <span style={{
-            position: 'absolute',
-            left: 0,
-            top: '50%',
-            width: 'clamp(20px, 2.5vw, 30px)', // Responsive width
-            height: '2px',
-            background: 'var(--primary-color, #ff9eb6)',
-            transform: 'rotate(-45deg)',
-            transformOrigin: 'center',
-            transition: 'width 0.3s'
-          }}></span>
+          
           SHOP BY COLLECTION
-          <span style={{
-            position: 'absolute',
-            right: 0,
-            top: '50%',
-            width: 'clamp(20px, 2.5vw, 30px)', // Responsive width
-            height: '2px',
-            background: 'var(--primary-color, #ff9eb6)',
-            transform: 'rotate(45deg)',
-            transformOrigin: 'center',
-            transition: 'width 0.3s'
-          }}></span>
+          
         </h2>
       </div>
 
@@ -150,7 +129,7 @@ const CategoryShowcase = () => {
                 transition: 'box-shadow 0.3s'
               }}>
                 <img
-                  src={`${category?.modelImageUrl}` || `https://www.lavanyathelabel.com/cdn/shop/files/Patiala2.png?v=1735807812`}
+                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/collections/${category?.modelImageUrl}` || `https://www.lavanyathelabel.com/cdn/shop/files/Patiala2.png?v=1735807812`}
                   alt={category.name}
                   style={{
                     position: 'absolute',

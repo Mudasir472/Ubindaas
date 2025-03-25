@@ -1,9 +1,10 @@
 /* PrivacyPolicy.css */
 
 /* Additional custom styles can be added here if needed */
-.container {
+.containers {
     min-height: 100vh;
     background-color: #ffffff;
+    max-width: 947px!important;
   }
   
   /* Override default list styles if needed */

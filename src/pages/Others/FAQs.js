@@ -26,8 +26,8 @@ const FAQSection = ({ title, questions }) => {
               aria-expanded={openQuestions[index]}
             >
               <span>{qa.question}</span>
-              {openQuestions[index] ? 
-                <ChevronUp className="chevron-icon" /> : 
+              {openQuestions[index] ?
+                <ChevronUp className="chevron-icon" /> :
                 <ChevronDown className="chevron-icon" />
               }
             </button>
@@ -103,8 +103,6 @@ const FAQsPage = () => {
 
   return (
     <div className="faq-page">
-      <Navbar />
-      
       <main className="faq-main">
         <div className="faq-header">
           <h1>Frequently Asked Questions</h1>
@@ -113,10 +111,10 @@ const FAQsPage = () => {
 
         <div className="faq-content">
           {Object.entries(faqData).map(([section, questions]) => (
-            <FAQSection 
-              key={section} 
-              title={section} 
-              questions={questions} 
+            <FAQSection
+              key={section}
+              title={section}
+              questions={questions}
             />
           ))}
         </div>
@@ -135,7 +133,7 @@ const FAQsPage = () => {
         </div>
       </main>
 
-      
+
     </div>
   );
 };

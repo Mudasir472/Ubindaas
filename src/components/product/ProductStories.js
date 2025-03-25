@@ -9,28 +9,15 @@ const ProductStories = () => {
   const [modalDimensions, setModalDimensions] = useState({ width: 0, height: 0 });
   const videoRefs = useRef({});
   const modalVideoRef = useRef(null);
-  const [allProducts, setAllProducts] = useState([]);
-
-  // Fetch all products from the API
-  const fetchAllProducts = async () => {
-    try {
-      const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/`);
-      setAllProducts(resp?.data?.data?.products || []);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  const [allStories, setAllStories] = useState([]);
+  // fetch all stories
+  const fetchStories = async (req, res) => {
+    const resp = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/stories/`);
+    setAllStories(resp?.data?.data);
+  }
   useEffect(() => {
-    fetchAllProducts();
-  }, []);
-
-  // Filter products that have a valid video URL
-  const productsWithVideos = allProducts.filter(product => {
-    return product.video && typeof product.video === 'string' && product.video.trim() !== '';
-  });
-
-
+    fetchStories();
+  }, [])
   useEffect(() => {
     if (modalVideoRef.current) {
       const video = modalVideoRef.current;
@@ -74,16 +61,16 @@ const ProductStories = () => {
 
   const VideoModal = ({ story, onClose }) => {
     const nextStory = () => {
-      if (activeStoryIndex < productsWithVideos.length - 1) {
+      if (activeStoryIndex < allStories.length - 1) {
         setActiveStoryIndex(activeStoryIndex + 1);
-        setSelectedVideo(productsWithVideos[activeStoryIndex + 1]);
+        setSelectedVideo(allStories[activeStoryIndex + 1]);
       }
     };
 
     const prevStory = () => {
       if (activeStoryIndex > 0) {
         setActiveStoryIndex(activeStoryIndex - 1);
-        setSelectedVideo(productsWithVideos[activeStoryIndex - 1]);
+        setSelectedVideo(allStories[activeStoryIndex - 1]);
       }
     };
 
@@ -105,14 +92,14 @@ const ProductStories = () => {
             </button>
           )}
 
-          {activeStoryIndex < productsWithVideos.length - 1 && (
+          {activeStoryIndex < allStories.length - 1 && (
             <button className="modal-nav-button next" onClick={nextStory}>
               <ChevronRight size={32} />
             </button>
           )}
 
           <div className="progress-bar">
-            {productsWithVideos.map((_, idx) => (
+            {allStories.map((_, idx) => (
               <div
                 key={idx}
                 className={`progress-segment ${idx === activeStoryIndex ? 'active' : ''}`}
@@ -130,8 +117,8 @@ const ProductStories = () => {
 
           <div className="modal-info">
             <div>
-              <h3 className="productTitle">{story.title}</h3>
-              <p className="product-price">{story.price}</p>
+              <h3 className="productTitle">{story?.products?.name}</h3>
+              <p className="product-price">{story?.products?.salePrice}</p>
             </div>
             <button className="modal-add-to-cart">
               Add to Cart
@@ -149,28 +136,28 @@ const ProductStories = () => {
       </button>
 
       <div id="stories-scroll" className="stories-scroll">
-        {productsWithVideos.map((product, index) => (
+        {Array.isArray(allStories) && allStories.map((story, index) => (
           <div
-            key={product._id}
+            key={story._id}
             className="story-card"
-            onMouseEnter={() => handleMouseEnter(product._id)}
-            onMouseLeave={() => handleMouseLeave(product._id)}
+            onMouseEnter={() => handleMouseEnter(story._id)}
+            onMouseLeave={() => handleMouseLeave(story._id)}
             onClick={() => {
-              setSelectedVideo(product);
+              setSelectedVideo(story);
               setActiveStoryIndex(index);
             }}
           >
             <div className="story-media-container">
               <img
-                src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${product.images[0]}`}
-                alt={product.name}
+                src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${story.image}`}
+                alt={story.status}
                 className="story-image"
               />
-              {product.video ? (
+              {story.video ? (
                 <video
-                  ref={el => videoRefs.current[product._id] = el}
+                  ref={el => videoRefs.current[story._id] = el}
                   className="story-video"
-                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${product?.video}`}
+                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${story?.video}`}
                   muted
                   loop
                   playsInline
@@ -181,8 +168,8 @@ const ProductStories = () => {
                 </div>
               )}
               <div className="story-overlay">
-                <h3 className="productTitle">{product.name}</h3>
-                <p className="product-price">{product.price}</p>
+                <h3 className="productTitle">{story?.products?.name}</h3>
+                <p className="product-price">{story?.products?.salePrice}</p>
               </div>
             </div>
           </div>

@@ -189,7 +189,7 @@
 }
 
 .quantity-selector span {
-  width: 48px;
+  /* width: 48px; */
   text-align: center;
 }
 
@@ -425,18 +425,19 @@
 .main-image-container {
   flex: 1;
   position: relative;
-  cursor: zoom-in;
+  
 }
 
 .main-image {
   width: 100%;
   height: auto;
+  cursor: zoom-in;
   aspect-ratio: 3/4;
   object-fit: cover;
 }
 
 .zoom-hint {
-  position: absolute;
+  /* position: absolute; */
   bottom: 10px;
   right: 10px;
   background: rgba(0, 0, 0, 0.7);

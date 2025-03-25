@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../../styles/components/Others/AboutUs.css';
+import { Link } from 'react-router-dom';
 
 const AboutUs = () => {
   useEffect(() => {
@@ -16,7 +17,7 @@ const AboutUs = () => {
     <div className="about-container">
       <div className="hero-section">
         <h1 className="about-title fade-in">About Us</h1>
-        
+
         <div className="breadcrumb fade-in">
           <span className="breadcrumb-item">Home</span>
           <span className="separator">›</span>
@@ -29,18 +30,18 @@ const AboutUs = () => {
       <div className="content-wrapper">
         <div className="content-card fade-in">
           <p className="welcome-text">
-                                 Welcome to <span className="brand-name highlight">Ubindass</span>, 
-            your one-stop destination for stylish and affordable clothing! 
+            Welcome to <span className="brand-name highlight">Ubindass</span>,
+            your one-stop destination for stylish and affordable clothing!
             <span className="accent-line"></span>
           </p>
 
           <div className="feature-block fade-in">
             <div className="feature-icon">✨</div>
             <p className="brand-description">
-              At <span className="brand-name">Ubindass</span>, we believe that fashion 
-              is an expression of individuality, and we're committed to bringing you 
-              fresh styles that match your personality, all without breaking the bank. 
-              Our brand is all about empowering you to express yourself through your 
+              At <span className="brand-name">Ubindass</span>, we believe that fashion
+              is an expression of individuality, and we're committed to bringing you
+              fresh styles that match your personality, all without breaking the bank.
+              Our brand is all about empowering you to express yourself through your
               wardrobe while staying comfortable and trendy.
             </p>
           </div>
@@ -48,23 +49,23 @@ const AboutUs = () => {
           <div className="feature-block fade-in">
             <div className="feature-icon">🎯</div>
             <p className="collection-info">
-              Whether you're looking for casual wear or a standout piece for a special 
-              occasion, Ubindass has got you covered. Our collection is carefully curated 
-              to ensure you always have access to the latest trends with the perfect mix 
+              Whether you're looking for casual wear or a standout piece for a special
+              occasion, Ubindass has got you covered. Our collection is carefully curated
+              to ensure you always have access to the latest trends with the perfect mix
               of style, quality, and affordability.
             </p>
           </div>
 
           <div className="cta-section fade-in">
             <p className="closing-text">
-              Shop with us today and discover why 
-              <span className="brand-name highlight">Ubindass</span> 
+              Shop with us today and discover why
+              <span className="brand-name highlight">Ubindass</span>
               is becoming a favorite among fashion-forward individuals!
             </p>
-            <button className="shop-now-btn">
+            <Link to={'/'}><button className="shop-now-btn p-3 btn btn-dark">
               Shop Now
               <span className="btn-arrow">→</span>
-            </button>
+            </button></Link>
           </div>
         </div>
       </div>

@@ -17,8 +17,8 @@ function ProductCard({ product, onQuickView }) {
   };
 
   return (
-    <div className="product-card" onClick={handleClick}>
-      <div className="product-image-container">
+    <div className="product-cards" style={{ cursor: 'pointer' }} onClick={handleClick}>
+      <div className="product-image-containerr">
         {images && <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${images[0]}`} alt={name} className="product-image" />}
         {discount && (
           <span className="discount-badge">
@@ -36,11 +36,11 @@ function ProductCard({ product, onQuickView }) {
       </div>
 
       <div className="product-info">
-        <h3 className="product-title">{name}</h3>
+        <p className="product-title">{name}</p>
         <div className="price-container">
-          <span className="current-price">₹{price}</span>
-          {salePrice && (
-            <span className="original-price">₹{salePrice}</span>
+          <span className="current-price">₹{salePrice}</span>
+          {price && (
+            <span className="original-price">₹{price}</span>
           )}
         </div>
       </div>

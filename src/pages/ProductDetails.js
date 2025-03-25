@@ -1,4 +1,5 @@
 // src/pages/ProductDetails.js
+
 import React, { useEffect, useState } from 'react';
 import { Heart, Minus, Plus, Share2, Star, Truck, X } from 'lucide-react';
 import RelatedProducts from '../components/product/RelatedProducts';
@@ -8,6 +9,7 @@ import axios from 'axios'
 import "../styles/pages/product-details.css";
 import Reviews from './Reviews';
 import { Modal, Button } from "react-bootstrap";
+
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -24,35 +26,15 @@ const ProductDetails = () => {
 
   const user = JSON.parse(localStorage.getItem('user'));
   const [isWishlisted, setIsWishlisted] = useState(false);
-  // Mock Product Data
-  const product = {
-    id: 1,
-    brand: "Libas",
-    title: "Pink Embroidered Kurta",
-    price: 799,
-    originalPrice: 1999,
-    discount: 60,
-    rating: 4.2,
-    ratingCount: 128,
-    description: "Pink embroidered kurta with straight fit and three-quarter sleeves.",
-    details: [
-      "Material: Cotton",
-      "Length: Calf Length",
-      "Pattern: Embroidered",
-      "Style: Casual",
-      "Care: Machine wash"
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    images: [
-      "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700",
-      "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700",
-      "https://freakins.com/cdn/shop/files/DSC08030_1411f6b1-7db5-484a-b5cc-25a8ee9480b2.jpg?v=1719254956&width=700"
-    ]
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // count discount percentage
+  const discountPercentage = ((currProduct?.price - currProduct?.salePrice) / currProduct?.price) * 100;
   const handleAddToWishlist = async (currProduct) => {
     try {
       const token = localStorage.getItem('authToken');
-      console.log(token);
 
       const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/customer/wishlist`,
@@ -113,6 +95,7 @@ const ProductDetails = () => {
       name: currProduct?.name,
       price: currProduct?.price,
       image: currProduct?.images[0],
+      salePrice: currProduct?.salePrice,
       size: selectedSize,
       quantity: quantity,
       maxQuantity: 10
@@ -164,7 +147,6 @@ const ProductDetails = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/ratings/product/${currProduct?._id}`);
         setRatings(response.data.data);
-        console.log(response?.data);
 
       } catch (err) {
         console.log(err);
@@ -175,6 +157,10 @@ const ProductDetails = () => {
     // now we can display reviews of current product on frontend
     if (currProduct?._id) fetchRatings();
   }, [currProduct?._id]);
+
+  // whatsapp num and message
+  const message = `💎 Hello! I'm interested in this stunning piece from your collection. Could you share more details, including pricing, customization options, and availability? Looking forward to your response!`
+  const number = "+916006189840"
 
   return (
     <div className="product-details">
@@ -192,13 +178,14 @@ const ProductDetails = () => {
               </div>
             ))}
           </div>
-          <div className="main-image-container" onClick={() => setIsModalOpen(true)}>
-            <img
+          <div className="main-image-container" >
+            <img onClick={() => setIsModalOpen(true)}
+              style={{ borderRadius: '12px' }}
               src={currProduct?.images?.[0] ? `${process.env.REACT_APP_API_BASE_URL}/uploads/products/${currProduct.images[0]}` : "fallback-image.jpg"}
               alt={currProduct?.name || "Product Image"}
-              className="main-image"
+              className="main-image "
             />
-            <span className="zoom-hint">Click to zoom</span>
+            <span className="zoom-hint">Click img to zoom</span>
           </div>
         </div>
 
@@ -206,21 +193,22 @@ const ProductDetails = () => {
         <div className="product-info">
           <div className="brand-title">
             <h2 className="brand">{currProduct?.slug}</h2>
-            <h1 className="title">{currProduct?.name}</h1>
           </div>
 
-          <div className="rating">
+          <div className="ratings d-flex align-items-center gap-3 border-bottom pb-3">
             <div className="stars">
               {renderStars(currProduct?.ratingCount)}
-              <span className="rating-number">{currProduct?.ratingCount}</span>
             </div>
-            <span className="rating-count">({currProduct?.ratingCount} Reviews)</span>
+            <div>
+              <span className="rating-number">{currProduct?.ratingCount}</span>
+              <span className="rating-count">({currProduct?.ratingCount} Reviews)</span>
+            </div>
           </div>
 
           <div className="price-section">
             <span className="current-price">₹{currProduct?.salePrice}</span>
-            <span className="original-price">₹{product?.price}</span>
-            <span className="discount">({product?.discount}% OFF)</span>
+            <span className="original-price">₹{currProduct?.price}</span>
+            <span className="discount">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
           </div>
 
           <div className="size-section">
@@ -241,7 +229,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className="quantity-selector">
+          <div className="quantity-selector ps-4">
             <span>Quantity:</span>
             <div className="quantity-controls">
               <button
@@ -275,9 +263,9 @@ const ProductDetails = () => {
               <button>Check</button>
             </div>
             {pincode.length === 6 && (
-              <div className="delivery-status">
+              <div className="delivery-status d-flex align-items-center">
                 <Truck size={16} />
-                <p>Expected delivery by 27 Feb</p>
+                <span>Expected delivery by 27 Feb</span>
               </div>
             )}
           </div>
@@ -296,29 +284,44 @@ const ProductDetails = () => {
             {isWishlisted ? 'WISHLISHED' : 'WISHLISH'}
           </button>
           {isVideoOpen && (
-            <div className="position-relative d-flex align-items-center justify-content-end" style={{ cursor: "pointer" }}>
-              <video
-                style={{ height: '123px' }}
-                className="img-fluid rounded border left-0"
-                // controls
-                autoPlay
-                muted
-                loop
-              >
-                <source src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${currProduct?.video}`} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+            <div className="position-relative d-flex align-items-center justify-content-end" >
+              {currProduct?.video && (
+                <video
+                  style={{ height: '123px', cursor: 'pointer' }}
+                  className="img-fluid rounded border left-0"
+                  autoPlay
+                  muted
+                  loop
+                >
+                  <source src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${currProduct.video}`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
             </div>
           )}
 
           <div className="product-description">
-            <h3>Product Details</h3>
+            <h3 className='text-bold'>Product Details</h3>
             <p>{currProduct?.description}</p>
-            <ul>
-              {product.details.map((detail, index) => (
+            {/* WhatsApp Button */}
+            <a
+              href={`https://wa.me/${number}?text=${message}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-success d-flex align-items-center justify-content-center gap-2 fw-bold px-4 py-2 rounded shadow-lg text-white"
+              style={{ width: '16rem', fontSize: '1.1rem', transition: '0.3s ease-in-out' }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+              onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+            >
+              <i className="bi bi-whatsapp fs-4"></i>
+              Chat on WhatsApp
+            </a>
+
+            {/* <ul>
+              {products?.details?.map((detail, index) => (
                 <li key={index}>{detail}</li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>

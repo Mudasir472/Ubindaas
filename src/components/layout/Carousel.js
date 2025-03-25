@@ -17,7 +17,6 @@ const Carousel = () => {
             const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/banners`);
             const bannersData = response?.data?.data || [];
             setBanners(bannersData);
-
             // Test image loading
             if (bannersData.length > 0) {
                 bannersData.forEach(banner => {
@@ -41,13 +40,8 @@ const Carousel = () => {
     }, []);
 
     const allBanners = Array.isArray(banners)
-        ? banners.filter((ele) => ele?.bannerFor === 'carousal' && ele.status === 'active')
+        ? banners.filter((ele) => ele.status === 'active')
         : [];
-
-    // Debug info about filtered banners
-    useEffect(() => {
-
-    }, [banners, allBanners]);
 
     const nextSlide = () => {
         if (!isAnimating && allBanners.length > 0) {
@@ -87,15 +81,7 @@ const Carousel = () => {
     return (
         <div className="carousel-container">
             <div className="carousel">
-                <div className="carousel-progress pt-1">
-                    {allBanners.map((_, index) => (
-                        <div
-                            key={index}
-                            className={`progress-bar ${currentSlide === index ? 'active' : ''}`}
-                            style={{ height: '4px' }}
-                        />
-                    ))}
-                </div>
+
 
                 <button className="carousel-nav prev" onClick={prevSlide} aria-label="Previous slide">
                     <FiChevronLeft />

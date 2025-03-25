@@ -99,7 +99,7 @@ const DashNavBar = () => {
             <img src={logo} alt="Logo" className="logo-img" />
           </Link>
 
-          <div className="categories-wrapper">
+          {/* <div className="categories-wrapper">
             <div className="dropdown">
               <button className="dropdown-btn">
                 <span>Categories </span>
@@ -124,7 +124,7 @@ const DashNavBar = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="navbar-center">
