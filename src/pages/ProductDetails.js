@@ -220,7 +220,12 @@ const ProductDetails = () => {
           <div className="price-section">
             <span className="current-price">₹{currProduct?.salePrice}</span>
             <span className="original-price">₹{currProduct?.price}</span>
-            <span className="discount">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
+            <span style={{
+              backgroundColor: 'blue',
+              color: 'white',
+              padding:'11px',
+              borderRadius:'8px'
+            }} className="discount fw-semibold">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
           </div>
 
           <div className="size-section">
