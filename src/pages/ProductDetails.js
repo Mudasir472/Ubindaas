@@ -90,16 +90,28 @@ const ProductDetails = () => {
       return;
     }
 
+    if (!currProduct?.sizes?.includes(selectedSize)) {
+      alert('Selected size is out of stock');
+      return;
+    }
+    if (currProduct?.stock <= 0) {
+      alert('Item is out of stock');
+      return;
+    }
+
+
     const cartItem = {
-      id: currProduct._id,
+      _id: currProduct._id,
       name: currProduct?.name,
       price: currProduct?.price,
       image: currProduct?.images[0],
       salePrice: currProduct?.salePrice,
       size: selectedSize,
       quantity: quantity,
+      stock: currProduct?.stock,
       maxQuantity: 10
     };
+
 
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const existingItemIndex = cart.findIndex(item => item._id === cartItem.id);

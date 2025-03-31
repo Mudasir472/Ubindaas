@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +9,8 @@ const AddressConfirmation = ({ cartItems }) => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+
+  const [selectedPayment, setSelectedPayment] = useState(null);
   const [formData, setFormData] = useState({
     type: '',
     street: '',
@@ -77,17 +79,18 @@ const AddressConfirmation = ({ cartItems }) => {
   const totalMRP = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalDiscount = cartItems.reduce((sum, item) => sum + (item.price - item.salePrice) * item.quantity, 0);
   const totalAmount = totalMRP - totalDiscount;
-  const placeOrder = async () => {
+  const placeOrder = async () => {  //when cod
     if (!selectedAddress) {
       alert('Please select a delivery address');
       return;
     }
-    console.log("placed");
 
     try {
+
       const token = localStorage.getItem('authToken');
       const resp = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL} /api/orders/create`, {
+
+        `${process.env.REACT_APP_API_BASE_URL}/api/orders/create`, {
         items: cartItems?.map(item => ({
           product: item._id,
           quantity: item.quantity,
@@ -100,14 +103,59 @@ const AddressConfirmation = ({ cartItems }) => {
       },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
-      console.log(resp);
-
       toast.success('Order Placed Successfully ✅');
       navigate('/profile/orders');
     } catch (error) {
       console.error('Order Failed', error);
     }
   };
+
+  // when use razorpay
+  const handlePayment = async () => {
+    try {
+      const token = localStorage.getItem('authToken')
+      const orderDetails = {
+        items: cartItems?.map(item => ({
+          product: item._id,
+          quantity: item.quantity,
+          price: item.price,
+          size: item?.size
+        })),
+        shippingAddress: selectedAddress,
+        paymentMethod: "Razorpay",
+        totalAmount,
+      };
+
+      const { data } = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/payment/create-order`, {
+        amount: totalAmount,
+        currency: "INR",
+      });
+
+      const options = {
+        key: "your_razorpay_key_id",
+        amount: totalAmount,
+        currency: 'INR',
+        name: "Ubindaas Ecom",
+        description: "Online Payment",
+        order_id: data.id,
+        handler: async function (response) {
+          await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/payment/verify-payment`, {
+            ...response,
+            orderDetails,
+          }, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
+
+          alert("Payment Successful!");
+        },
+        theme: { color: "#3399cc" },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment error:", error);
+    }
+  };
+
 
 
 
@@ -126,6 +174,30 @@ const AddressConfirmation = ({ cartItems }) => {
             ))}
 
             <button className="btn btn-outline-primary" onClick={() => setShowAddForm(true)}>+ Add New Address</button>
+
+            <div className="d-flex flex-column w-50 mt-5">
+              <h5 className="mb-3">Select Payment Method</h5>
+
+              {/* Cash on Delivery */}
+              <div className={`p-3 border rounded ${selectedPayment === "cod" ? "border-dark" : ""}`}
+                onClick={() => setSelectedPayment("cod")}
+                style={{ cursor: "pointer" }}>
+                <h6 className="m-0">Cash on Delivery</h6>
+              </div>
+              {selectedPayment === "cod" && (
+                <button onClick={placeOrder} className="btn btn-dark mt-2" style={{ width: "150px" }}>Continue</button>
+              )}
+
+              {/* Online Payment */}
+              <div className={`p-3 border rounded mt-3 ${selectedPayment === "online" ? "border-dark" : ""}`}
+                onClick={() => setSelectedPayment("online")}
+                style={{ cursor: "pointer" }}>
+                <h6 className="m-0">Online Payment</h6>
+              </div>
+              {selectedPayment === "online" && (
+                <button className="btn btn-dark mt-2" style={{ width: "150px" }}>Continue</button>
+              )}
+            </div>
           </div>
           <div className='d-flex flex-column w-50 items-center justify-content-between'>
 
@@ -179,20 +251,6 @@ const AddressConfirmation = ({ cartItems }) => {
                     </tr>
                   </tbody>
                 </table>
-              </div>
-            </div>
-
-            <div className="col-md-10">
-              <h5>Payment Methods</h5>
-              <select className="form-select mb-3" >
-                <option value="cod">Cash on Delivery</option>
-                <option disabled value="upi">UPI</option>
-                <option disabled value="card">Credit/Debit Card</option>
-              </select>
-            </div>
-            <div className="mt-3">
-              <div className='d-flex items-center justify-content-center'>
-                <button className="btn btn-dark w-32" onClick={placeOrder} disabled={!selectedAddress}>Place Order</button>
               </div>
             </div>
           </div>

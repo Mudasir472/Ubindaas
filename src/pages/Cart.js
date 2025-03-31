@@ -3,21 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { Minus, Plus, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/pages/cart.css';
+import toast from 'react-hot-toast';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const navigate = useNavigate();
+  const [itemOutOfStock, setItemOutOfStock] = useState(null);
   const isAuthenticated = !!localStorage.getItem("authToken");
 
   const handleCheckout = () => {
     const authToken = localStorage.getItem("authToken");
     const isAuthenticated = !!authToken;
-
-    console.log('Checkout Auth Check:', {
-      isAuthenticated,
-      authToken
-    });
+    if (itemOutOfStock?.length > 0) {
+      toast.error("Item out of stock");
+      return;
+    }
+    
 
     if (isAuthenticated) {
       navigate('/checkout/address');
@@ -26,6 +28,11 @@ const Cart = () => {
       navigate('/login');
     }
   };
+
+  useEffect(() => {
+    const outOfStockItem = cartItems.filter(item => item?.stock <= 0);
+    setItemOutOfStock(outOfStockItem || null); // Store item if out of stock, otherwise null
+  }, [cartItems]);
 
   useEffect(() => {
     loadCartItems();
@@ -38,7 +45,7 @@ const Cart = () => {
   };
 
   const calculateSubtotal = (items) => {
-    const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = items.reduce((sum, item) => sum + (item.salePrice * item.quantity), 0);
     setSubtotal(total);
   };
 
@@ -73,6 +80,7 @@ const Cart = () => {
       </div>
     );
   }
+
 
   return (
     <div className="cart-page">

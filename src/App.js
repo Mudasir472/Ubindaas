@@ -28,6 +28,7 @@ import TermConditions from "./pages/Others/TermConditions";
 import AddressConfirmation from './pages/checkout/AddressConfirmation';
 import toast, { Toaster } from "react-hot-toast";
 import CollectionDetails from './components/layout/CollectionDetails';
+import Payment from './pages/checkout/Payment';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -110,6 +111,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <AddressConfirmation cartItems={cartItems} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/checkout/payment"
+              element={
+                <ProtectedRoute>
+                  <Payment />
                 </ProtectedRoute>
               }
             />

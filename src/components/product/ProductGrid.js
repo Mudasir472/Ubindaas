@@ -18,7 +18,7 @@ function ProductGrid() {
     discounts: []
   });
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  const [showAll, setShowAll] = useState(false);
   const handleQuickView = (product) => {
     setSelectedProduct(product);
   };
@@ -98,23 +98,6 @@ function ProductGrid() {
     setFilteredProducts(result);
   }, [activeFilters, sortBy, allProducts]);
 
-  // useEffect(() => {
-  //   const fetchOffer = async () => {
-  //     try {
-  //       const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/banners`);
-  //       setOffer(response.data?.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchOffer();
-  // }, []);
-
-  // const offerBanner = Array.isArray(offer)
-  //   ? offer.find((ele) => ele?.bannerFor === 'offer')
-  //   : [];
-  // console.log(offerBanner);
-
   useEffect(() => {
     fetchAllProducts();
   }, []);
@@ -122,8 +105,8 @@ function ProductGrid() {
   return (
     <div className="products-section">
       <div className="filters-bar">
-        
-        
+
+
       </div>
 
       <FilterSidebar
@@ -134,7 +117,7 @@ function ProductGrid() {
       />
 
       <div className="product-grid mt-5">
-        {Array.isArray(filteredProducts) && filteredProducts.map(product => (
+        {filteredProducts.slice(0, showAll ? filteredProducts.length : 4).map(product => (
           <ProductCard
             key={product._id}
             product={product}
@@ -142,6 +125,17 @@ function ProductGrid() {
           />
         ))}
       </div>
+
+      <p className='d-flex align-items-center justify-content-end'>
+        {filteredProducts.length > 4 && (
+          <button
+            className="view-all-btn mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? 'Show Less' : 'View All'}
+          </button>
+        )}
+      </p>
       {selectedProduct && (
         <QuickView
           product={selectedProduct}
