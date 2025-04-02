@@ -16,6 +16,7 @@ function Orders() {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const user = JSON.parse(localStorage.getItem('user'))
       const token = localStorage.getItem('authToken');
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders/my-orders`, {
@@ -23,7 +24,8 @@ function Orders() {
           withCredentials: true,
 
         });
-        setOrders(response?.data?.orders);
+        const userOrders = response?.data?.orders?.filter(order => order?.customer?._id === user?._id);
+        setOrders(userOrders);
       } catch (err) {
         toast.error(err.message || "Failed to fetch courses.");
       }
@@ -86,8 +88,6 @@ function Orders() {
                         {order?.status}
                       </span>
                     </div>
-                    {console.log(order)
-                    }
                     <div className="order-items">
                       {order?.items?.map((item) => (
                         <div key={item._id} className="order-item">
