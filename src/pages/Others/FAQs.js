@@ -74,7 +74,7 @@ const FAQsPage = () => {
     'Returns & Exchanges': [
       {
         question: 'What is your return policy?',
-        answer: 'We offer a 30-day return policy for unworn items in original condition with tags attached. Returns must be initiated through your account dashboard.'
+        answer: 'We offer a 5-day return policy for unworn items in original condition with tags attached. Returns must be initiated through your account dashboard.'
       },
       {
         question: 'How do I initiate a return?',

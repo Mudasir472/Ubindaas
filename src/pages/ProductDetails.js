@@ -204,7 +204,7 @@ const ProductDetails = () => {
         {/* Right Column - Product Info */}
         <div className="product-info">
           <div className="brand-title">
-            <h2 className="brand d-flex justify-content-center">{currProduct?.name}</h2>
+            <h2 className="brand">{currProduct?.name}</h2>
           </div>
 
           <div className="ratings d-flex align-items-center gap-3 border-bottom pb-3">
@@ -221,12 +221,9 @@ const ProductDetails = () => {
             <span className="current-price">₹{currProduct?.salePrice}</span>
             <span className="original-price">₹{currProduct?.price}</span>
             <span style={{
-                fontsize:'5px',
+              fontsize: '5px',
 
-              backgroundColor: '#0e6efd',
-              color: 'white',
-              padding:'6px',
-              borderRadius:'6px 2px'
+              color: '#0e6efd',
             }} className="discount">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
           </div>
 
@@ -327,8 +324,8 @@ const ProductDetails = () => {
               href={`https://wa.me/${number}?text=${message}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-success d-flex align-items-center justify-content-center gap-2 fw-bold px-4 py-2 rounded shadow-lg text-white"
-              style={{ width: '16rem', fontSize: '1.1rem', transition: '0.3s ease-in-out' }}
+              className=" btn-success d-flex align-items-center justify-content-center gap-2 fw-bold px-4 py-2 shadow-lg text-white"
+              style={{ width: '16rem', borderRadius: '0!important', backgroundColor: "#198754", fontSize: '1.1rem', transition: '0.3s ease-in-out' }}
               onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
               onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
             >

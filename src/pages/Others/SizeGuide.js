@@ -43,11 +43,7 @@ const SizeGuide = () => {
           </div>
 
           <div>
-            <img
-              src="/images/size-guide-tops.png"
-              alt="T-shirt size guide illustration"
-              className="w-full h-auto rounded-lg shadow-md mb-4"
-            />
+            
             <p className="text-sm font-semibold">How to Measure:</p>
             <ul className="list-disc list-inside text-sm text-gray-700">
               <li>Chest: Measure under your arms, around the fullest part of your chest.</li>
@@ -92,11 +88,7 @@ const SizeGuide = () => {
           </div>
 
           <div>
-            <img
-              src="/images/size-guide-bottoms.png"
-              alt="Bottoms size guide illustration"
-              className="w-full h-auto rounded-lg shadow-md mb-4"
-            />
+            
             <p className="text-sm font-semibold">How to Measure:</p>
             <ul className="list-disc list-inside text-sm text-gray-700">
               <li>Waist: Measure around your natural waistline, keeping the tape a bit loose.</li>

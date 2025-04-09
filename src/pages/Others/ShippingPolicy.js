@@ -47,7 +47,7 @@ const ShippingPolicy = () => {
 
       <section className="policy-section">
         <h2>Delayed or Lost Packages</h2>
-        <p>If your package is delayed or lost, please contact our customer service at support@ubindass.in. We will work with the carrier to locate your package or arrange a replacement if necessary.</p>
+        <p>If your package is delayed or lost, please contact our customer service at support@ubindass.com. We will work with the carrier to locate your package or arrange a replacement if necessary.</p>
       </section>
 
       <section className="policy-section">

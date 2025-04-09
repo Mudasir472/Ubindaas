@@ -29,10 +29,10 @@ function ProductCard({ product, onQuickView }) {
           <FiStar className="star-icon" />
           <span>{averageRating}</span>
         </div>
-        <button className="quick-view-btn" onClick={handleQuickView}>
+        {/* <button className="quick-view-btn" onClick={handleQuickView}>
           <FiEye />
           Quick View
-        </button>
+        </button> */}
       </div>
 
       <div className="product-info">

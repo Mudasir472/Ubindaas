@@ -36,7 +36,25 @@ function ProductGrid() {
 
   return (
     <div className="products-section">
-      <h2>Featured Products</h2>
+      <div className="category-header mt-5" style={{
+        textAlign: 'center',
+        marginBottom: '4vh',
+        position: 'relative'
+
+      }}>
+        <h2 className="category-title" style={{
+          fontSize: 'clamp(1.25rem, 2vw + 0.5rem, 2rem)', // Responsive font size
+          fontWeight: '500',
+          textTransform: 'uppercase',
+          display: 'inline-block',
+          padding: '0 3vw',
+          position: 'relative'
+        }}>
+
+          FEATURED PRODUCTS
+
+        </h2>
+      </div>
       <div className="product-grid">
         {Array.isArray(allProducts) && allProducts.map(product => (
           <ProductCard

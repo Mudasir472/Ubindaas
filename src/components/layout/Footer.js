@@ -15,7 +15,6 @@ const Footer = () => {
               <li><a href="/ShippingPolicy">Shipping policy</a></li>
               <li><a href="/ReturnPolicy">Returns & exchanges</a></li>
               <li><a href="/PrivacyPolicy">Privacy policy</a></li>
-              <li><a href="/terms">Loyalty points</a></li>
             </ul>
           </Col>
           <Col md={3} sm={6} className="mb-3">
@@ -74,7 +73,8 @@ const Footer = () => {
         </Row>
         <Row className="mt-3 text-center">
           <Col>
-            <p>Designed & developed by <a href="https://opamtech.com" target="_blank">Opam Technology</a></p>
+            <p>Designed & developed by </p>
+            {/* <a href="https://opamtech.com" target="_blank">Opam Technology</a> */}
           </Col>
         </Row>
       </Container>
