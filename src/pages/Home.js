@@ -45,8 +45,25 @@ function Home() {
       </div>
       <FeaturesProducts />
 
-      <h1 className="shop-heading">Shop Bold. Shop Bindass</h1>
+      <div className="category-header mt-5" style={{
+        textAlign: 'center',
+        marginBottom: '4vh',
+        position: 'relative'
 
+      }}>
+        <h2 className="category-title" style={{
+          fontSize: 'clamp(1.25rem, 2vw + 0.5rem, 2rem)', // Responsive font size
+          fontWeight: '500',
+          textTransform: 'uppercase',
+          display: 'inline-block',
+          padding: '0 3vw',
+          position: 'relative'
+        }}>
+
+          Shop Bold & Shop Bindass
+
+        </h2>
+      </div>
       <ProductStories />
 
       <Ratting />
