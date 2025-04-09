@@ -3,6 +3,7 @@ import { FiClock, FiChevronDown } from 'react-icons/fi';
 import '../../styles/pages/orders.css';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 function Orders() {
   const [activeTab, setActiveTab] = useState('all');
@@ -109,9 +110,11 @@ function Orders() {
                       <span className="order-total">
                         Total: ₹{order.totalAmount}
                       </span>
-                      <button className="track-order-btn">
-                        Track Order
-                      </button>
+                      <Link target='_blank' to={order?.trackingInfo?.url}>
+                        <button className="track-order-btn">
+                          Track Order
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 ))}

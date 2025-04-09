@@ -119,7 +119,7 @@ const Cart = () => {
                   </div>
 
                   <div className="item-price">
-                    <span>₹{(item.price * item.quantity).toFixed(2)}</span>
+                    <span>₹{(item.salePrice * item.quantity).toFixed(2)}</span>
                   </div>
 
                   <button
@@ -140,6 +140,10 @@ const Cart = () => {
           <div className="summary-row">
             <span>Subtotal</span>
             <span>₹{subtotal.toFixed(2)}</span>
+          </div>
+          <div className="summary-row">
+            <span>Discount</span>
+            <span>- ₹{cartItems.reduce((sum, item) => sum + (item.price - item.salePrice) * item.quantity, 0)}</span>
           </div>
 
           <div className="summary-row">

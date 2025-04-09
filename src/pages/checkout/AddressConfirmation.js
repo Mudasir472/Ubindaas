@@ -20,7 +20,6 @@ const AddressConfirmation = ({ cartItems }) => {
     country: '',
     isDefault: false
   });
-  console.log(cartItems);
 
   useEffect(() => {
     fetchAddresses();
@@ -129,15 +128,18 @@ const AddressConfirmation = ({ cartItems }) => {
       const { data } = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/payment/create-order`, {
         amount: totalAmount,
         currency: "INR",
+      }, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
 
       const options = {
-        key: "your_razorpay_key_id",
+        key: "rzp_live_tjPUP9GxlIrxyu",
         amount: totalAmount,
         currency: 'INR',
         name: "Ubindaas Ecom",
         description: "Online Payment",
-        order_id: data.id,
+        order_id: data.id || data?._id,
         handler: async function (response) {
           await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/payment/verify-payment`, {
             ...response,
@@ -151,13 +153,12 @@ const AddressConfirmation = ({ cartItems }) => {
 
       const rzp = new window.Razorpay(options);
       rzp.open();
+      toast.success('Order Placed Successfully ✅');
+      navigate('/profile/orders');
     } catch (error) {
       console.error("Payment error:", error);
     }
   };
-
-
-
 
   return (
     <div className="container mt-4">
@@ -177,7 +178,6 @@ const AddressConfirmation = ({ cartItems }) => {
 
             <div className="d-flex flex-column w-50 mt-5">
               <h5 className="mb-3">Select Payment Method</h5>
-
               {/* Cash on Delivery */}
               <div className={`p-3 border rounded ${selectedPayment === "cod" ? "border-dark" : ""}`}
                 onClick={() => setSelectedPayment("cod")}
@@ -195,7 +195,7 @@ const AddressConfirmation = ({ cartItems }) => {
                 <h6 className="m-0">Online Payment</h6>
               </div>
               {selectedPayment === "online" && (
-                <button className="btn btn-dark mt-2" style={{ width: "150px" }}>Continue</button>
+                <button onClick={handlePayment} className="btn btn-dark mt-2" style={{ width: "150px" }}>Continue</button>
               )}
             </div>
           </div>
@@ -214,7 +214,7 @@ const AddressConfirmation = ({ cartItems }) => {
                     <div>
                       <p className="mb-0">{item.name}</p>
                       <p className="mb-0">
-                        Qty: {item.quantity} | ₹{item.price}
+                        Qty: {item.quantity} | ₹{item.salePrice}
                       </p>
                     </div>
                   </div>
