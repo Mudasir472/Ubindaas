@@ -21,7 +21,7 @@ const Footer = () => {
             <h6 className="fw-bold mb-3">SHOP</h6>
             <ul className="list-unstyled">
               <li><a href="/about">Men</a></li>
-              <li><a href="/contact">Women</a></li>
+              <li><a href="/women">Women</a></li>
             </ul>
           </Col>
           <Col md={3} sm={6} className="mb-3">
@@ -71,12 +71,7 @@ const Footer = () => {
             </div>
           </Col>
         </Row>
-        <Row className="mt-3 text-center">
-          <Col>
-            <p>Designed & developed by </p>
-            {/* <a href="https://opamtech.com" target="_blank">Opam Technology</a> */}
-          </Col>
-        </Row>
+        
       </Container>
     </footer>
   );

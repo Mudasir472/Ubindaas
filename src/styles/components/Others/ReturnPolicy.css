@@ -1,84 +1,63 @@
-.return-policy-container {
-    max-width: 947px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  .breadcrumb {
-    margin-bottom: 20px;
-    color: #666;
-    font-size: 14px;
-  }
-  
-  .breadcrumb span {
-    margin: 0 5px;
-  }
-  
-  .main-title {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 30px;
-    font-weight: bold;
-  }
-  
-  .section-title {
-    font-size: 28px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .intro-text {
-    margin-bottom: 30px;
-    font-size: 16px;
-  }
-  
-  .policy-section {
-    margin-bottom: 30px;
-  }
-  
-  .policy-section h3 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  
-  .policy-section ul,
-  .policy-section ol {
-    padding-left: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .policy-section li {
-    margin-bottom: 15px;
-    font-size: 16px;
-  }
-  
-  .policy-section strong {
-    font-weight: bold;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .return-policy-container {
-      padding: 15px;
-    }
-  
-    .main-title {
-      font-size: 28px;
-    }
-  
-    .section-title {
-      font-size: 24px;
-    }
-  
-    .policy-section h3 {
-      font-size: 18px;
-    }
-  
-    .policy-section li {
-      font-size: 14px;
-    }
-  }
+.return-wrapper {
+  background-color: white;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000;
+}
+
+.return-container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.return-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+section h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+ul,
+ol {
+  padding-left: 20px;
+}
+
+ul li,
+ol li {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}

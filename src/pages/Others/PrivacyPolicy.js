@@ -1,48 +1,106 @@
 import React from 'react';
-import "../../styles/components/Others/PrivacyPolicy.css"
+import "../../styles/components/Others/PrivacyPolicy.css";
+
 const PrivacyPolicy = () => {
   return (
-    <div className="containers mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold text-center mb-6">Privacy Policy</h1>
-      
-      <div className="flex items-center justify-center gap-2 text-gray-600 mb-8">
-        <span>Home</span>
-        <span>›</span>
-        <span>Pages</span>
-        <span>›</span>
-        <span>Privacy Policy</span>
-      </div>
+    <div className="privacy-wrapper">
+      <div className="privacy-container">
+        <h1 className="privacy-title">Privacy Policy</h1>
 
-      <div className="space-y-6">
-        <p className="text-gray-700 leading-relaxed">
-          Your personal information is always kept confidential. The privacy policy is displayed on the website. The type of info collected from the customers and usage of this information is published here. We have a policy of not disclosing any information to third parties. Using our website means you have agreed to the terms and conditions of the website. It applies to the people who have not got any transactions or who have not registered to the site and had business. Personal information is mainly used to locate or contact a person. Other information like name address, phone number, fax, credit card information, financial profiles, identification number and e-mail address are also available with us and are always confidential.
+        <p>
+          At UBINDASS, we respect your privacy and are committed to protecting your personal
+          information. This Privacy Policy outlines how we collect, use, and safeguard your data when
+          you visit our website and use our services.
         </p>
 
-        <h2 className="text-2xl font-bold mt-8 mb-4">Terms Of Our Privacy Policy</h2>
+        <section>
+          <h2>1. Information We Collect</h2>
+          <ul>
+            <li>
+              <strong>Personal Information:</strong> When you place an order, sign up for an account,
+              subscribe to our newsletter, or contact us, we may collect details such as your name,
+              email address, phone number, shipping address, and payment details.
+            </li>
+            <li>
+              <strong>Non-Personal Information:</strong> We may collect technical information such as
+              IP address, browser type, device information, and browsing behavior to improve our
+              website performance.
+            </li>
+            <li>
+              <strong>Cookies & Tracking Technologies:</strong> We use cookies to enhance your browsing
+              experience and gather analytics about site traffic and interaction.
+            </li>
+          </ul>
+        </section>
 
-        <h2 className="text-2xl font-bold mt-8 mb-4">Personal Information That We collect</h2>
-        
-        <p className="text-gray-700 leading-relaxed">
-          Necessary information is collected for becoming a subscriber or member of our website. Our system collects the IP address of your computer automatically. But this detail does not give information about any particular person. But U Bindass website doesn't collect information about children.
-        </p>
+        <section>
+          <h2>2. How We Use Your Information</h2>
+          <ul>
+            <li>To process and fulfill your orders, including payments, shipping, and returns.</li>
+            <li>To communicate with you regarding your orders, promotions, and updates.</li>
+            <li>To improve our website, products, and customer service.</li>
+            <li>To detect and prevent fraudulent transactions and ensure security.</li>
+            <li>To personalize your shopping experience based on your preferences.</li>
+          </ul>
+        </section>
 
-        <h2 className="text-2xl font-bold mt-8 mb-4">Uses Of The Information Collected</h2>
-        
-        <p className="text-gray-700 mb-4">All the personal information collected is kept confidential. The information may be used for:</p>
-        
-        <ul className="list-disc pl-8 space-y-2 text-gray-700">
-          <li>Send news about the website.</li>
-          <li>Calculate the number of visitors</li>
-          <li>Monitor the website</li>
-          <li>Know the geographical location of the users</li>
-          <li>Contact to give information bout the website.</li>
-          <li>Give a better shopping experience online.</li>
-          <li>Update about the recent offers on the website.</li>
-        </ul>
+        <section>
+          <h2>3. Sharing of Information</h2>
+          <ul>
+            <li>We do not sell or rent your personal information to third parties.</li>
+            <li>
+              We may share your data with trusted partners such as payment gateways, logistics
+              providers, and marketing platforms to fulfill your orders and improve our services.
+            </li>
+            <li>
+              In compliance with legal obligations, we may disclose information if required by law or
+              to protect our rights.
+            </li>
+          </ul>
+        </section>
 
-        <p className="text-gray-700 leading-relaxed mt-6">
-          Some of the personal information is shared with the courier companies like addresses/contact details. We have to give some information to vendors. This personal information helps U Bindass to perform their duties and fulfil the order requirements. But private information cannot be accessed by unauthorised persons or organisations. The Company will disclose your information, including, without limitation, your name,city, state, telephone number, email address, user ID history, quoting and listing history, and complaints, to law enforcement or other government officials if required to do so by law, regulation or other government authority or otherwise in cooperation with an investigation of government authority. Cookies are used to save your personal information on your computer. It helps to calculate the number of times you use our website. Cookies do not keep any personal data of the visitors. When the user browses , cookies are replaced according to the interests of the users. Here none of your particulars like e-mail address, telephone, name or postal address is collected. We give you a safe shopping experience. U Bindass gives some aggregate particulars like website statics or demographics to sponsors, advertisers and other third parties. Third parties are not authorised to get any of your personal information. U Bindass has many links to other websites. But once you leave U Bindass website, our privacy policy ends.
-        </p>
+        <section>
+          <h2>4. Data Security</h2>
+          <ul>
+            <li>
+              We implement industry-standard security measures to protect your personal information
+              from unauthorized access, loss, or misuse.
+            </li>
+            <li>
+              However, no online transmission is 100% secure, and we encourage you to use strong
+              passwords and keep your login details confidential.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5. Your Rights & Choices</h2>
+          <ul>
+            <li>You can update or delete your account details at any time by logging into your profile.</li>
+            <li>You can opt-out of marketing communications by clicking the unsubscribe link in emails.</li>
+            <li>You can disable cookies in your browser settings, but this may impact your website experience.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>6. Changes to this Policy</h2>
+          <ul>
+            <li>
+              We may update this Privacy Policy from time to time. Any changes will be posted on our
+              website with the revised date.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>7. Contact Us</h2>
+          <p>
+            For any privacy-related concerns, please contact us at{" "}
+            <a href="mailto:support@ubindass.in">support@ubindass.in</a> or call us at{" "}
+            <a href="tel:+917275999340">+91 7275999340</a>.
+          </p>
+          <p>Thank you for trusting UBINDASS!</p>
+        </section>
       </div>
     </div>
   );

@@ -168,7 +168,7 @@
 .quantity-selector {
   display: flex;
   align-items: center;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
 }
 
 .quantity-selector button {

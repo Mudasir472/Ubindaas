@@ -1,33 +1,56 @@
-/* PrivacyPolicy.css */
+.privacy-wrapper {
+  background-color: white;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000;
+}
 
-/* Additional custom styles can be added here if needed */
-.containers {
-    min-height: 100vh;
-    background-color: #ffffff;
-    max-width: 947px!important;
-  }
-  
-  /* Override default list styles if needed */
-  ul li {
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Ensure proper text wrapping */
-  p {
-    word-wrap: break-word;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .container {
-      padding: 1rem;
-    }
-    
-    h1 {
-      font-size: 1.75rem;
-    }
-    
-    h2 {
-      font-size: 1.5rem;
-    }
-  }
+.privacy-container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.privacy-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+section {
+  margin-bottom: 25px;
+}
+
+section h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+section ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+section ul li {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+section p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-top: 6px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

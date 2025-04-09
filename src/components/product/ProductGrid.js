@@ -126,7 +126,7 @@ function ProductGrid() {
         ))}
       </div>
 
-      <p className='d-flex align-items-center justify-content-end'>
+      <p className='d-flex align-items-center justify-content-center'>
         {filteredProducts.length > 4 && (
           <button
             className="view-all-btn mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"

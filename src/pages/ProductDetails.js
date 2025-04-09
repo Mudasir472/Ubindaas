@@ -320,8 +320,8 @@ const ProductDetails = () => {
             <h3 className='text-bold'>Product Details</h3>
             <p>{currProduct?.description}</p>
             {/* WhatsApp Button */}
-            <a
-              href={`https://wa.me/${number}?text=${message}`}
+            <Link
+              to={`https://wa.me/${number}?text=${message}`}
               target="_blank"
               rel="noopener noreferrer"
               className=" btn-success d-flex align-items-center justify-content-center gap-2 fw-bold px-4 py-2 shadow-lg text-white"
@@ -331,7 +331,7 @@ const ProductDetails = () => {
             >
               <i className="bi bi-whatsapp fs-4"></i>
               Chat on WhatsApp
-            </a>
+            </Link>
 
             {/* <ul>
               {products?.details?.map((detail, index) => (

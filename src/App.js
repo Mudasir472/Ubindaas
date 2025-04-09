@@ -29,6 +29,7 @@ import AddressConfirmation from './pages/checkout/AddressConfirmation';
 import toast, { Toaster } from "react-hot-toast";
 import CollectionDetails from './components/layout/CollectionDetails';
 import Payment from './pages/checkout/Payment';
+import WomenDressCategory from './pages/Others/WomenDressCategory';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -62,6 +63,7 @@ const App = () => {
             <Route path='/ReturnPolicy' element={<ReturnPolicy />} />
             <Route path='/PrivacyPolicy' element={<PrivacyPolicy />} />
             <Route path='/TermConditions' element={<TermConditions />} />
+            <Route path='/women' element={<WomenDressCategory />} />
 
 
 

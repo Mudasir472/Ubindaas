@@ -3,62 +3,92 @@ import '../../styles/components/Others/ShippingPolicy.css';
 
 const ShippingPolicy = () => {
   return (
-    <div className="shipping-policy">
-     
+    <div className="shipping-wrapper">
+      <div className="shipping-container">
+        <h1 className="shipping-title">Shipping Policy</h1>
 
-      <h1>Shipping Policy</h1>
+        <p>
+          Welcome to UBINDASS! We aim to provide you with the best shopping experience, ensuring that your orders reach you in a timely and efficient manner. Please read our shipping policy carefully to understand our shipping procedures.
+        </p>
 
-      <p className="welcome">
-        Welcome to Ubindass! We are committed to delivering your order quickly and efficiently. Please read our shipping policy below:
-      </p>
+        <section>
+          <h2>Shipping & Delivery</h2>
+          <ul>
+            <li>We offer free shipping on all prepaid orders across India.</li>
+            <li>For Cash on Delivery (COD) orders, a nominal charge may be applicable and will be displayed at checkout.</li>
+            <li>Orders are processed and dispatched within 24–48 business hours after confirmation.</li>
+            <li>The estimated delivery time is 7–10 business days depending on your location.</li>
+            <li>We partner with trusted courier services to ensure safe and timely deliveries.</li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Processing Time</h2>
-        <p>All orders are processed within 3-4 business days (excluding weekends and holidays) after receiving your order confirmation email.</p>
-        <p>You will receive another notification when your order has shipped.</p>
-      </section>
+        <section>
+          <h2>Order Tracking</h2>
+          <ul>
+            <li>Once your order is shipped, you will receive a tracking link via email or SMS.</li>
+            <li>You can track your order status through our website by entering your tracking ID.</li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Shipping Rates & Delivery</h2>
-        <div className="shipping-types">
-          <h3>Domestic Shipping:</h3>
-          <p>We offer free standard shipping on all orders above ₹999 within India. For orders below ₹999, a flat shipping fee of ₹100 will be applied.</p>
-          
-          <div className="shipping-options">
-            <p><strong>- Standard Shipping :</strong> 4-7 business days</p>
-            <p><strong>- Express Shipping :</strong> 2-4 business days (charges may apply)</p>
-          </div>
-          
-          <h3>- International Shipping:</h3>
-          <p>Shipping rates vary based on the destination country and will be calculated at checkout. Delivery time varies between 7-15 business days.</p>
-        </div>
-      </section>
+        <section>
+          <h2>Shipping Restrictions</h2>
+          <ul>
+            <li>We currently ship only within India.</li>
+            <li>
+              Shipping to remote or non-serviceable areas may take longer or may not be possible. In such cases, we will inform you and process a refund if necessary.
+            </li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Order Tracking</h2>
-        <p>Once your order is shipped, you will receive a confirmation email with tracking details. You can track your order through the link provided.</p>
-      </section>
+        <section>
+          <h2>Address Changes & Order Modifications</h2>
+          <ul>
+            <li>Address changes or modifications can be made only before the order is shipped.</li>
+            <li>Once dispatched, no modifications can be made to the order.</li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Shipping Restrictions</h2>
-        <p>We currently do not ship to P.O. boxes</p>
-        <p>International shipping may be subject to customs duties and taxes, which are the responsibility of the customer.</p>
-      </section>
+        <section>
+          <h2>Non-Delivery or Delay</h2>
+          <ul>
+            <li>
+              If a package is delayed due to unforeseen circumstances (such as weather conditions,
+              strikes, or natural disasters), we will do our best to keep you updated.
+            </li>
+            <li>
+              In case of non-delivery due to incorrect address or customer unavailability, the order
+              may be returned to us. Additional shipping charges may apply for re-shipment.
+            </li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Delayed or Lost Packages</h2>
-        <p>If your package is delayed or lost, please contact our customer service at support@ubindass.com. We will work with the carrier to locate your package or arrange a replacement if necessary.</p>
-      </section>
+        <section>
+          <h2>Lost or Damaged Shipments</h2>
+          <ul>
+            <li>
+              If your order is lost in transit or arrives damaged, please contact our support team at{" "}
+              <a href="mailto:support@ubindass.in">support@ubindass.in</a> within 48 hours of delivery.
+            </li>
+            <li>We will investigate and provide a resolution, which may include a replacement or refund.</li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Address Changes</h2>
-        <p>- Please ensure your shipping address is correct before finalizing your order. We are not responsible for orders delivered to incorrect or outdated addresses.</p>
-      </section>
+        <section>
+          <h2>International Shipping</h2>
+          <ul>
+            <li>Currently, we do not offer international shipping. Stay tuned for updates as we expand our services.</li>
+          </ul>
+        </section>
 
-      <section className="policy-section">
-        <h2>Contact Us</h2>
-        <p>For any shipping-related inquiries, feel free to contact us at support@ubindass.com</p>
-      </section>
+        <section>
+          <h2>Contact Us</h2>
+          <p>
+            For any further queries, please reach out to us at{" "}
+            <a href="mailto:support@ubindass.in">support@ubindass.in</a> or call our customer support at{" "}
+            <a href="tel:+917275999340">+91 7275999340</a>.
+          </p>
+        </section>
+      </div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import ProductStories from '../components/product/ProductStories';
 import FeaturesProducts from '../components/product/FeaturedProducts';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import DiscoverUbindass from './DiscoverUbindass';
 
 
 function Home() {
@@ -49,6 +50,7 @@ function Home() {
       <ProductStories />
 
       <Ratting />
+      <DiscoverUbindass />
 
     </div>
   );
