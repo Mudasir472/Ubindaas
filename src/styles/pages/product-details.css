@@ -391,7 +391,6 @@
 .product-gallery {
   display: flex;
   gap: 20px;
-  position: sticky;
   top: 20px;
 }
 
