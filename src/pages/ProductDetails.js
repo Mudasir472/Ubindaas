@@ -204,7 +204,7 @@ const ProductDetails = () => {
         {/* Right Column - Product Info */}
         <div className="product-info">
           <div className="brand-title">
-            <h2 className="brand">{currProduct?.slug}</h2>
+            <h2 className="brand d-flex justify-content-center">{currProduct?.name}</h2>
           </div>
 
           <div className="ratings d-flex align-items-center gap-3 border-bottom pb-3">
@@ -225,7 +225,7 @@ const ProductDetails = () => {
 
               backgroundColor: '#0e6efd',
               color: 'white',
-              padding:'1px',
+              padding:'6px',
               borderRadius:'6px 2px'
             }} className="discount">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
           </div>

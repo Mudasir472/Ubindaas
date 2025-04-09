@@ -100,7 +100,7 @@ function Orders() {
                           <div className="item-details">
                             <h4>{item.product?.name || 'DENIM BUSTIER TOP'}</h4>
                             <p>Size: {item.size || 'S'}</p>
-                            <span className="item-price">₹{item.product?.price || '1099'}</span>
+                            <span className="item-price">₹{item.product?.salePrice || '1099'}</span>
                           </div>
                         </div>
                       ))}
