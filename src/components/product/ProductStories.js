@@ -137,42 +137,49 @@ const ProductStories = () => {
 
       <div id="stories-scroll" className="stories-scroll">
         {Array.isArray(allStories) && allStories.map((story, index) => (
-          <div
-            key={story._id}
-            className="story-card"
-            onMouseEnter={() => handleMouseEnter(story._id)}
-            onMouseLeave={() => handleMouseLeave(story._id)}
-            onClick={() => {
-              setSelectedVideo(story);
-              setActiveStoryIndex(index);
-            }}
-          >
-            <div className="story-media-container">
-              <img
-                src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${story.image}`}
-                alt={story.status}
-                className="story-image"
-              />
-              {story.video ? (
-                <video
-                  ref={el => videoRefs.current[story._id] = el}
-                  className="story-video"
-                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${story?.video}`}
-                  muted
-                  loop
-                  playsInline
+          <>
+            <div
+              key={story._id}
+              className="story-card"
+              onMouseEnter={() => handleMouseEnter(story._id)}
+              onMouseLeave={() => handleMouseLeave(story._id)}
+              onClick={() => {
+                setSelectedVideo(story);
+                setActiveStoryIndex(index);
+              }}
+            >
+              <div className="story-media-container">
+                <img
+                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/products/${story.image}`}
+                  alt={story.status}
+                  className="story-image"
                 />
-              ) : (
-                <div className="video-fallback">
-                  <p>No video available</p>
-                </div>
-              )}
+                {story.video ? (
+                  <video
+                    ref={el => videoRefs.current[story._id] = el}
+                    className="story-video"
+                    src={`${process.env.REACT_APP_API_BASE_URL}/uploads/videos/${story?.video}`}
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : (
+                  <div className="video-fallback">
+                    <p>No video available</p>
+                  </div>
+                )}
+
+              </div>
               <div className="story-overlay">
                 <h3 className="productTitle">{story?.products?.name}</h3>
-                <p className="product-price">{story?.products?.salePrice}</p>
+                <p className="product-price d-flex align-items-center gap-2">
+                  {`₹ ${story?.products?.salePrice}`}
+                  <span style={{ fontWeight: 'normal', color:'#f36478'}}>{story?.products?.totalDiscount && `${(story?.products?.totalDiscount)}% off`}</span>
+                </p>
               </div>
             </div>
-          </div>
+          </>
+
         ))}
       </div>
 

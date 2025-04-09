@@ -224,7 +224,7 @@ const ProductDetails = () => {
               fontsize: '5px',
 
               color: '#0e6efd',
-            }} className="discount">{discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
+            }} className="discount">{`${currProduct?.totalDiscount} % OFF` || discountPercentage && `${discountPercentage.toFixed(0)} % OFF`}</span>
           </div>
 
           <div className="size-section">

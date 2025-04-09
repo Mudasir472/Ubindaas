@@ -5,7 +5,7 @@ import '../../styles/components/product-card.css';
 
 function ProductCard({ product, onQuickView }) {
   const navigate = useNavigate();
-  const { _id, name, price, salePrice, discount, averageRating, images } = product;
+  const { _id, name, price, salePrice, discount, averageRating, images, totalDiscount } = product;
 
   const handleClick = () => {
     navigate(`/product/${_id}`);
@@ -36,13 +36,19 @@ function ProductCard({ product, onQuickView }) {
       </div>
 
       <div className="product-info">
-        <p className="product-title">{name}</p>
-        <div className="price-container">
-          <span className="current-price">₹{salePrice}</span>
+        <p style={{ fontSize:'16px'}} className="product-title">{name}</p>
+        <div style={{ gap: '12px' }} className="price-container">
+          <span style={{ fontSize: '16px' }} className="current-price">₹{salePrice}</span>
           {price && (
-            <span className="original-price">₹{price}</span>
+            <span style={{ fontSize: '14px' }} className="original-price">₹{price}</span>
           )}
+          {
+            totalDiscount && (
+              <span style={{ background: '#f36478', color: '#fff', padding: '0px 8px', borderRadius: '4px' }}>{`${totalDiscount} % Off`}</span>
+            )
+          }
         </div>
+
       </div>
     </div>
   );
